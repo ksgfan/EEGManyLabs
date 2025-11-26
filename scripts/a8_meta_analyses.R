@@ -1,0 +1,374 @@
+
+rm(list = ls(all.names = TRUE))
+#install.packages("tidyverse")
+#install.packages("meta")
+#install.packages("R.matlab")
+#install.packages("DescTools")
+library(tidyverse)
+library(meta)
+library(DescTools)
+
+# paths
+project_path = '/Volumes/G_PSYPLAFOR_methlab$/EEGManyLabs'
+figure_path = file.path(project_path, 'figures')
+setwd(file.path(project_path, 'scripts'))
+
+# pipelines
+pipes_labels = c('direct', 'advanced', 'ica', 'keep_all');
+
+
+# loop over pipelines and save results
+for (pip in 1 : length(pipes_labels)){
+
+  # load data
+  dat = read.csv(file.path(project_path, 'data/csv_files', paste0('all_stats_', pipes_labels[pip], '.csv')), header = T)
+  labs = dat$Lab
+  
+  # equivalence test results
+  load(file.path(project_path, 'data/csv_files/eq_test_results.Rda'))
+  
+  
+  ############ outcome neutral test: contra vs ipsi
+  d = dat$on_cohensd
+  d_se = dat$on_cohensd_se
+  
+  meta_outcome_neutral = metagen(TE = d,
+                      seTE = d_se,
+                      studlab = labs,
+                      data = NULL,
+                      sm = "SMD",
+                      common = FALSE,
+                      random = TRUE,
+                      method.tau = "REML",
+                      hakn = TRUE,
+                      prediction = TRUE,
+                      title = "Contra vs. Ipsi")
+  summary(meta_outcome_neutral)
+  meta_outcome_neutral$pval.common
+  
+  # plot results
+  pdf(file.path(figure_path, paste0(pipes_labels[pip], "_outcome_neutral.pdf")), width = 8, height = 4)
+  forest(meta_outcome_neutral, 
+       prediction = TRUE, 
+       print.tau2 = FALSE,
+       leftcols = c("studlab", "TE", "seTE", "ci"),
+       leftlabs = c("Lab", expression("Cohen's d"), "SE", "95% CI"),
+       rightcols = c("w.random"))
+  dev.off()
+  png(file.path(figure_path, paste0(pipes_labels[pip], "_outcome_neutral.png")), width = 8, height = 4, units = "in", res = 300)
+  forest(meta_outcome_neutral, 
+       prediction = TRUE, 
+       print.tau2 = FALSE,
+       leftcols = c("studlab", "TE", "seTE", "ci"),
+       leftlabs = c("Lab", expression("Cohen's d"), "SE", "95% CI"),
+       rightcols = c("w.random"))
+  dev.off()
+  
+  ############ correct vs incorrect trials
+  d = dat$corrincorr_cohensd
+  d_se = dat$corrincorr_cohensd_se
+  meta_correct_vs_incorrect = metagen(TE = d,
+                               seTE = d_se,
+                               studlab = labs,
+                               data = NULL,
+                               sm = "SMD",
+                               common = FALSE,
+                               random = TRUE,
+                               method.tau = "REML",
+                               hakn = TRUE,
+                               prediction = TRUE,
+                               title = "Correct vs. Incorrect")
+  summary(meta_correct_vs_incorrect)
+  
+  # plot results
+  pdf(file.path(figure_path, paste0(pipes_labels[pip], "_correct_vs_incorrect.pdf")), width = 8, height = 4)
+  forest(meta_correct_vs_incorrect, 
+       prediction = TRUE, 
+       print.tau2 = FALSE,
+       leftcols = c("studlab", "TE", "seTE", "ci"),
+       leftlabs = c("Lab", expression("Cohen's d"), "SE", "95% CI"),
+       rightcols = c("w.random"))
+  dev.off()
+  png(file.path(figure_path, paste0(pipes_labels[pip], "_correct_vs_incorrectt.png")), width = 8, height = 4, units = "in", res = 300)
+  forest(meta_correct_vs_incorrect, 
+       prediction = TRUE, 
+       print.tau2 = FALSE,
+       leftcols = c("studlab", "TE", "seTE", "ci"),
+       leftlabs = c("Lab", expression("Cohen's d"), "SE", "95% CI"),
+       rightcols = c("w.random"))
+  dev.off()
+  
+  ############ set size 2 vs 4
+  d = dat$ph_2_4_cohensd
+  d_se = dat$ph_2_4_cohensd_se
+  meta_2_vs_4 = metagen(TE = d,
+                               seTE = d_se,
+                               studlab = labs,
+                               data = NULL,
+                               sm = "SMD",
+                               common = FALSE,
+                               random = TRUE,
+                               method.tau = "REML",
+                               hakn = TRUE,
+                               prediction = TRUE,
+                               title = "Set Size 2 vs Set Size 4")
+  summary(meta_2_vs_4)
+  meta_2_vs_4$pval.random
+  
+  # plot results
+  pdf(file.path(figure_path, paste0(pipes_labels[pip], "_t_test_2_vs_4.pdf")), width = 8, height = 4)
+  forest(meta_2_vs_4, 
+       prediction = TRUE, 
+       print.tau2 = FALSE,
+       leftcols = c("studlab", "TE", "seTE", "ci"),
+       leftlabs = c("Lab", expression("Cohen's d"), "SE", "95% CI"),
+       rightcols = c("w.random"))
+  dev.off()
+  png(file.path(figure_path, paste0(pipes_labels[pip], "_t_test_2_vs_4.png")), width = 8, height = 4, units = "in", res = 300)
+  forest(meta_2_vs_4, 
+       prediction = TRUE, 
+       print.tau2 = FALSE,
+       leftcols = c("studlab", "TE", "seTE", "ci"),
+       leftlabs = c("Lab", expression("Cohen's d"), "SE", "95% CI"),
+       rightcols = c("w.random"))
+  dev.off()
+  
+  ############ set size 2 vs 6
+  d = dat$ph_2_6_cohensd
+  d_se = dat$ph_2_6_cohensd_se
+  meta_2_vs_6 = metagen(TE = d,
+                     seTE = d_se,
+                     studlab = labs,
+                     data = NULL,
+                     sm = "SMD",
+                     common = FALSE,
+                     random = TRUE,
+                     method.tau = "REML",
+                     hakn = TRUE,
+                     prediction = TRUE,
+                     title = "Set Size 2 vs Set Size 6")
+  summary(meta_2_vs_6)
+  meta_2_vs_6 $pval.random
+  
+  # plot results
+  pdf(file.path(figure_path, paste0(pipes_labels[pip], "_t_test_2_vs_6.pdf")), width = 8, height = 4)
+  forest(meta_2_vs_6, 
+       prediction = TRUE, 
+       print.tau2 = FALSE,
+       leftcols = c("studlab", "TE", "seTE", "ci"),
+       leftlabs = c("Lab", expression("Cohen's d"), "SE", "95% CI"),
+       rightcols = c("w.random"))
+  dev.off()
+  png(file.path(figure_path, paste0(pipes_labels[pip], "_t_test_2_vs_6.png")), width = 8, height = 4, units = "in", res = 300)
+  forest(meta_2_vs_6, 
+       prediction = TRUE, 
+       print.tau2 = FALSE,
+       leftcols = c("studlab", "TE", "seTE", "ci"),
+       leftlabs = c("Lab", expression("Cohen's d"), "SE", "95% CI"),
+       rightcols = c("w.random"))
+  dev.off()
+  
+  ############ set size 4 vs 6
+  d = dat$ph_4_6_cohensd
+  d_se = dat$ph_4_6_cohensd_se
+  meta_4_vs_6 = metagen(TE = d,
+                     seTE = d_se,
+                     studlab = labs,
+                     data = NULL,
+                     sm = "SMD",
+                     common = FALSE,
+                     random = TRUE,
+                     method.tau = "REML",
+                     hakn = TRUE,
+                     prediction = TRUE,
+                     title = "Set Size 4 vs Set Size 6")
+  summary(meta_4_vs_6)
+  meta_2_vs_6 $pval.random
+  
+  # plot results
+  pdf(file.path(figure_path, paste0(pipes_labels[pip], "_t_test_4_vs_6.pdf")), width = 8, height = 4)
+  forest(meta_4_vs_6, 
+       prediction = TRUE, 
+       print.tau2 = FALSE,
+       leftcols = c("studlab", "TE", "seTE", "ci"),
+       leftlabs = c("Lab", expression("Cohen's d"), "SE", "95% CI"),
+       rightcols = c("w.random"))
+  dev.off()
+  png(file.path(figure_path, paste0(pipes_labels[pip], "_t_test_4_vs_6.png")), width = 8, height = 4, units = "in", res = 300)
+  forest(meta_4_vs_6, 
+       prediction = TRUE, 
+       print.tau2 = FALSE,
+       leftcols = c("studlab", "TE", "seTE", "ci"),
+       leftlabs = c("Lab", expression("Cohen's d"), "SE", "95% CI"),
+       rightcols = c("w.random"))
+  dev.off()
+  
+  ############ correlation of amplitude increase with WM capacity 2 to 4
+  r = dat$wm_corr_2_4_r * (-1) ### flip sign
+  #d = FisherZ(d) # convert to Fischer Z
+  r_se = dat$wm_corr_2_4_r_se
+  meta_correlation = metagen(TE = r,
+                     seTE = r_se,
+                     studlab = labs,
+                     data = NULL,
+                     sm = "ZCOR",
+                     common = FALSE,
+                     random = TRUE,
+                     method.tau = "REML",
+                     hakn = TRUE,
+                     prediction = F,
+                     transf = FALSE, # If transf = TRUE (default), inputs are expected to be Fisher's z transformed correlations instead of correlations for sm = "ZCOR"
+                     backtransf = T,
+                     title = "Amplitude decrease vs WM capacity")
+  summary(meta_correlation)
+  meta_correlation$Pearsons_r <- (exp(2 * meta_correlation$TE) - 1) / (exp(2 * meta_correlation$TE) + 1)
+  
+  # plot results
+  pdf(file.path(figure_path, paste0(pipes_labels[pip], "_corr_2_to_4.pdf")), width = 8, height = 4)
+  forest(meta_correlation, 
+       prediction = TRUE, 
+       print.tau2 = FALSE,
+       #leftcols = c("studlab", "TE", "seTE", "ci"),
+       leftcols = c("studlab", "Pearsons_r", "seTE", "ci"),
+       #leftlabs = c("Lab", expression("Fischer's z"), "SE", "95% CI"),
+       leftlabs = c("Lab", expression("Pearson's r"), "SE", "95% CI"),
+       rightcols = c("w.random"),
+       xlim = c(-0.5, 0.9),
+       at = seq(-0.4, 0.8, by = 0.2))
+  dev.off()
+  png(file.path(figure_path, paste0(pipes_labels[pip], "_corr_2_to_4.png")), width = 8, height = 4, units = "in", res = 300)
+  forest(meta_correlation, 
+       prediction = TRUE, 
+       print.tau2 = FALSE,
+       #leftcols = c("studlab", "TE", "seTE", "ci"),
+       leftcols = c("studlab", "Pearsons_r", "seTE", "ci"),
+       #leftlabs = c("Lab", expression("Fischer's z"), "SE", "95% CI"),
+       leftlabs = c("Lab", expression("Pearson's r"), "SE", "95% CI"),
+       rightcols = c("w.random"),
+       xlim = c(-0.5, 0.9),
+       at = seq(-0.4, 0.8, by = 0.2))
+  dev.off()
+  
+  ############ correlation of amplitude increase with WM capacity 4 to 6
+  r = dat$wm_corr_4_6_r * (-1) ### flip sign
+  #d = FisherZ(d) # convert to Fischer Z
+  r_se = dat$wm_corr_4_6_r_se
+  meta_correlation = metagen(TE = d,
+                           seTE = d_se,
+                           studlab = labs,
+                           data = NULL,
+                           sm = "ZCOR",
+                           common = FALSE,
+                           random = TRUE,
+                           method.tau = "REML",
+                           hakn = TRUE,
+                           prediction = TRUE,
+                           transf = FALSE, # If transf = TRUE (default), inputs are expected to be Fisher's z transformed correlations instead of correlations for sm = "ZCOR"
+                           backtransf = F,
+                           title = "Amplitude decrease vs WM capacity")
+  summary(meta_correlation)
+  meta_correlation$Pearsons_r <- (exp(2 * meta_correlation$TE) - 1) / (exp(2 * meta_correlation$TE) + 1)
+  
+  # plot results
+  pdf(file.path(figure_path, paste0(pipes_labels[pip], "_corr_4_to_6.pdf")), width = 8, height = 4)
+  forest(meta_correlation, 
+       prediction = TRUE, 
+       print.tau2 = FALSE,
+       #leftcols = c("studlab", "TE", "seTE", "ci"),
+       leftcols = c("studlab", "Pearsons_r", "seTE", "ci"),
+       #leftlabs = c("Lab", expression("Fischer's z"), "SE", "95% CI"),
+       leftlabs = c("Lab", expression("Pearson's r"), "SE", "95% CI"),
+       rightcols = c("w.random"),
+       xlim = c(-1, 1),
+       at = seq(-1, 1, by = 0.5))
+  dev.off()
+  png(file.path(figure_path, paste0(pipes_labels[pip], "_corr_4_to_6.png")), width = 8, height = 4, units = "in", res = 300)
+  forest(meta_correlation, 
+       prediction = TRUE, 
+       print.tau2 = FALSE,
+       #leftcols = c("studlab", "TE", "seTE", "ci"),
+       leftcols = c("studlab", "Pearsons_r", "seTE", "ci"),
+       #leftlabs = c("Lab", expression("Fischer's z"), "SE", "95% CI"),
+       leftlabs = c("Lab", expression("Pearson's r"), "SE", "95% CI"),
+       rightcols = c("w.random"),
+       xlim = c(-1, 1),
+       at = seq(-1, 1, by = 0.5))
+  dev.off()
+  
+  ########################################################################  
+  ########################################################################  
+  ########################################################################  
+  ############ meta analysis for equivalence tests result: set size 4 vs 6
+  ########################################################################  
+  ########################################################################  
+  ########################################################################  
+  d = cohens_d_h1.3
+  d_se = cohens_d_se_h1.3
+  meta_4_vs_6 = metagen(TE = d,
+                      seTE = d_se,
+                      studlab = labs,
+                      data = NULL,
+                      sm = "SMD",
+                      common = FALSE,
+                      random = TRUE,
+                      method.tau = "REML",
+                      hakn = TRUE,
+                      prediction = TRUE,
+                      title = "Set Size 4 vs Set Size 6")
+  summary(meta_4_vs_6)
+  
+  # plot results
+  pdf(file.path(figure_path, paste0(pipes_labels[pip], "_eq_set_size_4_6.pdf")), width = 8, height = 4)
+  forest(meta_4_vs_6, 
+       prediction = TRUE, 
+       print.tau2 = FALSE,
+       leftcols = c("studlab", "TE", "seTE", "ci"),
+       leftlabs = c("Lab", expression("Cohen's d"), "SE", "95% CI"),
+       rightcols = c("w.random"))
+  dev.off()
+  png(file.path(figure_path, paste0(pipes_labels[pip], "_eq_set_size_4_6.png")), width = 8, height = 4, units = "in", res = 300)
+  forest(meta_4_vs_6, 
+       prediction = TRUE, 
+       print.tau2 = FALSE,
+       leftcols = c("studlab", "TE", "seTE", "ci"),
+       leftlabs = c("Lab", expression("Cohen's d"), "SE", "95% CI"),
+       rightcols = c("w.random"))
+  dev.off()
+  
+  ############ meta analysis for equivalence tests result: H2.2 
+  d = r_h2.2
+  d_se = r_se_h2.2
+  meta_correlation = metagen(TE = d,
+                           seTE = d_se,
+                           studlab = labs,
+                           data = NULL,
+                           sm = "ZCOR",
+                           common = FALSE,
+                           random = TRUE,
+                           method.tau = "REML",
+                           hakn = TRUE,
+                           prediction = TRUE,
+                           transf = FALSE, # If transf = TRUE (default), inputs are expected to be Fisher's z transformed correlations instead of correlations for sm = "ZCOR"
+                           backtransf = F,
+                           title = "Amplitude decrease 4 to 6 vs WM capacity")
+  summary(meta_correlation)
+  
+  # plot results
+  pdf(file.path(figure_path, paste0(pipes_labels[pip], "_eq_correlation_4_to_6.pdf")), width = 8, height = 4)
+  forest(meta_correlation, 
+       prediction = TRUE, 
+       print.tau2 = FALSE,
+       leftcols = c("studlab", "TE", "seTE", "ci"),
+       leftlabs = c("Lab", expression("Fischer's z"), "SE", "95% CI"),
+       rightcols = c("w.random"))
+  dev.off()
+  png(file.path(figure_path, paste0(pipes_labels[pip], "_eq_correlation_4_to_6.png")), width = 8, height = 4, units = "in", res = 300)
+  forest(meta_correlation, 
+       prediction = TRUE, 
+       print.tau2 = FALSE,
+       leftcols = c("studlab", "TE", "seTE", "ci"),
+       leftlabs = c("Lab", expression("Fischer's z"), "SE", "95% CI"),
+       rightcols = c("w.random"))
+  dev.off()
+
+}

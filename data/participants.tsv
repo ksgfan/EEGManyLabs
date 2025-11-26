@@ -1,0 +1,305 @@
+participant_id	species	age	sex	handedness	tod	education_degree	replication	lab	old_id
+sub-Vog001	homo sapiens	n/a	f	r	n/a	n/a	Vogel & Machizawa (2004)	Dartmouth	1
+sub-Vog002	homo sapiens	n/a	f	r	n/a	n/a	Vogel & Machizawa (2004)	Dartmouth	10
+sub-Vog003	homo sapiens	n/a	f	r	n/a	n/a	Vogel & Machizawa (2004)	Dartmouth	11
+sub-Vog004	homo sapiens	n/a	f	r	n/a	n/a	Vogel & Machizawa (2004)	Dartmouth	12
+sub-Vog005	homo sapiens	n/a	f	r	n/a	n/a	Vogel & Machizawa (2004)	Dartmouth	13
+sub-Vog006	homo sapiens	n/a	f	r	n/a	n/a	Vogel & Machizawa (2004)	Dartmouth	14
+sub-Vog007	homo sapiens	n/a	f	r	n/a	n/a	Vogel & Machizawa (2004)	Dartmouth	15
+sub-Vog008	homo sapiens	n/a	m	r	n/a	n/a	Vogel & Machizawa (2004)	Dartmouth	16
+sub-Vog009	homo sapiens	n/a	m	r	n/a	n/a	Vogel & Machizawa (2004)	Dartmouth	17
+sub-Vog010	homo sapiens	n/a	o	r	n/a	n/a	Vogel & Machizawa (2004)	Dartmouth	18
+sub-Vog011	homo sapiens	n/a	f	r	n/a	n/a	Vogel & Machizawa (2004)	Dartmouth	19
+sub-Vog012	homo sapiens	n/a	n/a	l	n/a	n/a	Vogel & Machizawa (2004)	Dartmouth	2
+sub-Vog013	homo sapiens	n/a	f	r	n/a	n/a	Vogel & Machizawa (2004)	Dartmouth	20
+sub-Vog014	homo sapiens	n/a	f	r	n/a	n/a	Vogel & Machizawa (2004)	Dartmouth	21
+sub-Vog015	homo sapiens	n/a	f	r	n/a	n/a	Vogel & Machizawa (2004)	Dartmouth	22
+sub-Vog016	homo sapiens	n/a	f	r	n/a	n/a	Vogel & Machizawa (2004)	Dartmouth	23
+sub-Vog017	homo sapiens	n/a	n/a	r	n/a	n/a	Vogel & Machizawa (2004)	Dartmouth	24
+sub-Vog018	homo sapiens	n/a	m	l	n/a	n/a	Vogel & Machizawa (2004)	Dartmouth	25
+sub-Vog019	homo sapiens	n/a	f	r	n/a	n/a	Vogel & Machizawa (2004)	Dartmouth	26
+sub-Vog020	homo sapiens	n/a	f	l	n/a	n/a	Vogel & Machizawa (2004)	Dartmouth	27
+sub-Vog021	homo sapiens	n/a	m	r	n/a	n/a	Vogel & Machizawa (2004)	Dartmouth	28
+sub-Vog022	homo sapiens	n/a	f	r	n/a	n/a	Vogel & Machizawa (2004)	Dartmouth	3
+sub-Vog023	homo sapiens	n/a	n/a	n/a	n/a	n/a	Vogel & Machizawa (2004)	Dartmouth	4
+sub-Vog024	homo sapiens	n/a	n/a	n/a	n/a	n/a	Vogel & Machizawa (2004)	Dartmouth	5
+sub-Vog025	homo sapiens	n/a	m	r	n/a	n/a	Vogel & Machizawa (2004)	Dartmouth	6
+sub-Vog026	homo sapiens	n/a	m	r	n/a	n/a	Vogel & Machizawa (2004)	Dartmouth	7
+sub-Vog027	homo sapiens	n/a	f	r	n/a	n/a	Vogel & Machizawa (2004)	Dartmouth	8
+sub-Vog028	homo sapiens	n/a	f	r	n/a	n/a	Vogel & Machizawa (2004)	Dartmouth	9
+sub-Vog029	homo sapiens	19	f	r	n/a	4	Vogel & Machizawa (2004)	Florida	1
+sub-Vog030	homo sapiens	19	f	r	n/a	4	Vogel & Machizawa (2004)	Florida	10
+sub-Vog031	homo sapiens	19	f	l	n/a	4	Vogel & Machizawa (2004)	Florida	11
+sub-Vog032	homo sapiens	19	f	r	n/a	4	Vogel & Machizawa (2004)	Florida	12
+sub-Vog033	homo sapiens	19	f	r	n/a	4	Vogel & Machizawa (2004)	Florida	13
+sub-Vog034	homo sapiens	19	f	r	n/a	4	Vogel & Machizawa (2004)	Florida	14
+sub-Vog035	homo sapiens	18	f	r	n/a	4	Vogel & Machizawa (2004)	Florida	15
+sub-Vog036	homo sapiens	18	m	r	n/a	4	Vogel & Machizawa (2004)	Florida	16
+sub-Vog037	homo sapiens	23	f	l	n/a	4	Vogel & Machizawa (2004)	Florida	17
+sub-Vog038	homo sapiens	19	f	r	n/a	4	Vogel & Machizawa (2004)	Florida	18
+sub-Vog039	homo sapiens	26	m	l	n/a	4	Vogel & Machizawa (2004)	Florida	19
+sub-Vog040	homo sapiens	20	f	a	n/a	4	Vogel & Machizawa (2004)	Florida	2
+sub-Vog041	homo sapiens	18	m	n/a	n/a	4	Vogel & Machizawa (2004)	Florida	20
+sub-Vog042	homo sapiens	18	f	a	n/a	4	Vogel & Machizawa (2004)	Florida	21
+sub-Vog043	homo sapiens	21	f	r	n/a	4	Vogel & Machizawa (2004)	Florida	22
+sub-Vog044	homo sapiens	18	f	l	n/a	4	Vogel & Machizawa (2004)	Florida	23
+sub-Vog045	homo sapiens	18	f	l	n/a	4	Vogel & Machizawa (2004)	Florida	24
+sub-Vog046	homo sapiens	19	f	r	n/a	4	Vogel & Machizawa (2004)	Florida	26
+sub-Vog047	homo sapiens	18	f	r	n/a	4	Vogel & Machizawa (2004)	Florida	27
+sub-Vog048	homo sapiens	18	f	l	n/a	4	Vogel & Machizawa (2004)	Florida	28
+sub-Vog049	homo sapiens	19	f	r	n/a	4	Vogel & Machizawa (2004)	Florida	29
+sub-Vog050	homo sapiens	22	f	r	n/a	4	Vogel & Machizawa (2004)	Florida	3
+sub-Vog051	homo sapiens	18	f	r	n/a	4	Vogel & Machizawa (2004)	Florida	31
+sub-Vog052	homo sapiens	18	f	n/a	n/a	4	Vogel & Machizawa (2004)	Florida	32
+sub-Vog053	homo sapiens	26	f	r	n/a	4	Vogel & Machizawa (2004)	Florida	33
+sub-Vog054	homo sapiens	19	m	r	n/a	4	Vogel & Machizawa (2004)	Florida	34
+sub-Vog055	homo sapiens	19	f	r	n/a	4	Vogel & Machizawa (2004)	Florida	35
+sub-Vog056	homo sapiens	20	f	r	n/a	4	Vogel & Machizawa (2004)	Florida	36
+sub-Vog057	homo sapiens	21	m	r	n/a	4	Vogel & Machizawa (2004)	Florida	38
+sub-Vog058	homo sapiens	20	f	r	n/a	4	Vogel & Machizawa (2004)	Florida	4
+sub-Vog059	homo sapiens	18	f	r	n/a	4	Vogel & Machizawa (2004)	Florida	40
+sub-Vog060	homo sapiens	18	f	l	n/a	4	Vogel & Machizawa (2004)	Florida	41
+sub-Vog061	homo sapiens	20	f	r	n/a	4	Vogel & Machizawa (2004)	Florida	42
+sub-Vog062	homo sapiens	18	f	r	n/a	4	Vogel & Machizawa (2004)	Florida	43
+sub-Vog063	homo sapiens	22	f	r	n/a	4	Vogel & Machizawa (2004)	Florida	44
+sub-Vog064	homo sapiens	18	m	r	n/a	4	Vogel & Machizawa (2004)	Florida	45
+sub-Vog065	homo sapiens	19	f	r	n/a	4	Vogel & Machizawa (2004)	Florida	46
+sub-Vog066	homo sapiens	18	f	l	n/a	4	Vogel & Machizawa (2004)	Florida	47
+sub-Vog067	homo sapiens	20	f	a	n/a	4	Vogel & Machizawa (2004)	Florida	48
+sub-Vog068	homo sapiens	18	f	l	n/a	4	Vogel & Machizawa (2004)	Florida	49
+sub-Vog069	homo sapiens	21	m	r	n/a	4	Vogel & Machizawa (2004)	Florida	5
+sub-Vog070	homo sapiens	23	f	l	n/a	4	Vogel & Machizawa (2004)	Florida	50
+sub-Vog071	homo sapiens	21	f	r	n/a	4	Vogel & Machizawa (2004)	Florida	51
+sub-Vog072	homo sapiens	21	f	r	n/a	4	Vogel & Machizawa (2004)	Florida	52
+sub-Vog073	homo sapiens	21	f	r	n/a	4	Vogel & Machizawa (2004)	Florida	53
+sub-Vog074	homo sapiens	21	m	l	n/a	4	Vogel & Machizawa (2004)	Florida	54
+sub-Vog075	homo sapiens	19	f	r	n/a	4	Vogel & Machizawa (2004)	Florida	6
+sub-Vog076	homo sapiens	19	f	r	n/a	4	Vogel & Machizawa (2004)	Florida	7
+sub-Vog077	homo sapiens	20	f	r	n/a	4	Vogel & Machizawa (2004)	Florida	8
+sub-Vog078	homo sapiens	19	m	r	n/a	4	Vogel & Machizawa (2004)	Florida	9
+sub-Vog079	homo sapiens	21	f	r	n/a	5	Vogel & Machizawa (2004)	Mainz	1
+sub-Vog080	homo sapiens	28	f	r	n/a	7	Vogel & Machizawa (2004)	Mainz	10
+sub-Vog081	homo sapiens	23	f	r	n/a	7	Vogel & Machizawa (2004)	Mainz	12
+sub-Vog082	homo sapiens	22	m	r	n/a	5	Vogel & Machizawa (2004)	Mainz	13
+sub-Vog083	homo sapiens	20	f	r	n/a	5	Vogel & Machizawa (2004)	Mainz	14
+sub-Vog084	homo sapiens	20	f	r	n/a	5	Vogel & Machizawa (2004)	Mainz	15
+sub-Vog085	homo sapiens	22	f	r	n/a	5	Vogel & Machizawa (2004)	Mainz	16
+sub-Vog086	homo sapiens	23	m	r	n/a	5	Vogel & Machizawa (2004)	Mainz	17
+sub-Vog087	homo sapiens	20	f	r	n/a	5	Vogel & Machizawa (2004)	Mainz	18
+sub-Vog088	homo sapiens	21	f	r	n/a	5	Vogel & Machizawa (2004)	Mainz	19
+sub-Vog089	homo sapiens	22	f	r	n/a	7	Vogel & Machizawa (2004)	Mainz	2
+sub-Vog090	homo sapiens	25	f	a	n/a	5	Vogel & Machizawa (2004)	Mainz	20
+sub-Vog091	homo sapiens	22	m	r	n/a	5	Vogel & Machizawa (2004)	Mainz	21
+sub-Vog092	homo sapiens	20	f	r	n/a	5	Vogel & Machizawa (2004)	Mainz	22
+sub-Vog093	homo sapiens	27	m	r	n/a	5	Vogel & Machizawa (2004)	Mainz	23
+sub-Vog094	homo sapiens	33	f	r	n/a	7	Vogel & Machizawa (2004)	Mainz	24
+sub-Vog095	homo sapiens	21	f	r	n/a	5	Vogel & Machizawa (2004)	Mainz	25
+sub-Vog096	homo sapiens	27	m	r	n/a	7	Vogel & Machizawa (2004)	Mainz	26
+sub-Vog097	homo sapiens	22	m	r	n/a	5	Vogel & Machizawa (2004)	Mainz	27
+sub-Vog098	homo sapiens	23	f	l	n/a	7	Vogel & Machizawa (2004)	Mainz	28
+sub-Vog099	homo sapiens	22	m	r	n/a	5	Vogel & Machizawa (2004)	Mainz	29
+sub-Vog100	homo sapiens	22	f	r	n/a	5	Vogel & Machizawa (2004)	Mainz	30
+sub-Vog101	homo sapiens	24	f	r	n/a	7	Vogel & Machizawa (2004)	Mainz	4
+sub-Vog102	homo sapiens	22	f	r	n/a	5	Vogel & Machizawa (2004)	Mainz	6
+sub-Vog103	homo sapiens	24	m	l	n/a	5	Vogel & Machizawa (2004)	Mainz	9
+sub-Vog104	homo sapiens	25	f	r	n/a	6	Vogel & Machizawa (2004)	Münster	1
+sub-Vog105	homo sapiens	24	m	r	n/a	4	Vogel & Machizawa (2004)	Münster	10
+sub-Vog106	homo sapiens	21	m	r	n/a	3	Vogel & Machizawa (2004)	Münster	11
+sub-Vog107	homo sapiens	22	f	r	n/a	3	Vogel & Machizawa (2004)	Münster	12
+sub-Vog108	homo sapiens	20	f	r	n/a	3	Vogel & Machizawa (2004)	Münster	13
+sub-Vog109	homo sapiens	23	m	r	n/a	3	Vogel & Machizawa (2004)	Münster	14
+sub-Vog110	homo sapiens	25	m	r	n/a	6	Vogel & Machizawa (2004)	Münster	15
+sub-Vog111	homo sapiens	24	f	r	n/a	6	Vogel & Machizawa (2004)	Münster	16
+sub-Vog112	homo sapiens	22	f	r	n/a	3	Vogel & Machizawa (2004)	Münster	18
+sub-Vog113	homo sapiens	19	f	r	n/a	3	Vogel & Machizawa (2004)	Münster	19
+sub-Vog114	homo sapiens	23	f	r	n/a	6	Vogel & Machizawa (2004)	Münster	2
+sub-Vog115	homo sapiens	24	f	r	n/a	3	Vogel & Machizawa (2004)	Münster	20
+sub-Vog116	homo sapiens	21	f	r	n/a	3	Vogel & Machizawa (2004)	Münster	21
+sub-Vog117	homo sapiens	24	f	r	n/a	3	Vogel & Machizawa (2004)	Münster	22
+sub-Vog118	homo sapiens	25	f	r	n/a	6	Vogel & Machizawa (2004)	Münster	23
+sub-Vog119	homo sapiens	28	m	r	n/a	3	Vogel & Machizawa (2004)	Münster	24
+sub-Vog120	homo sapiens	21	f	r	n/a	3	Vogel & Machizawa (2004)	Münster	26
+sub-Vog121	homo sapiens	22	f	r	n/a	3	Vogel & Machizawa (2004)	Münster	27
+sub-Vog122	homo sapiens	22	f	r	n/a	3	Vogel & Machizawa (2004)	Münster	28
+sub-Vog123	homo sapiens	20	f	r	n/a	3	Vogel & Machizawa (2004)	Münster	29
+sub-Vog124	homo sapiens	25	f	r	n/a	6	Vogel & Machizawa (2004)	Münster	3
+sub-Vog125	homo sapiens	20	f	l	n/a	3	Vogel & Machizawa (2004)	Münster	30
+sub-Vog126	homo sapiens	21	f	r	n/a	3	Vogel & Machizawa (2004)	Münster	31
+sub-Vog127	homo sapiens	23	f	r	n/a	3	Vogel & Machizawa (2004)	Münster	33
+sub-Vog128	homo sapiens	21	f	r	n/a	3	Vogel & Machizawa (2004)	Münster	34
+sub-Vog129	homo sapiens	24	f	r	n/a	6	Vogel & Machizawa (2004)	Münster	5
+sub-Vog130	homo sapiens	28	f	r	n/a	6	Vogel & Machizawa (2004)	Münster	6
+sub-Vog131	homo sapiens	21	f	l	n/a	3	Vogel & Machizawa (2004)	Münster	7
+sub-Vog132	homo sapiens	25	f	r	n/a	6	Vogel & Machizawa (2004)	Münster	8
+sub-Vog133	homo sapiens	21	f	r	n/a	3	Vogel & Machizawa (2004)	Münster	9
+sub-Vog134	homo sapiens	18	m	n/a	13:00	4	Vogel & Machizawa (2004)	NorthDakota	1
+sub-Vog135	homo sapiens	31	f	n/a	Afternoon	6	Vogel & Machizawa (2004)	NorthDakota	10
+sub-Vog136	homo sapiens	33	m	n/a	Morning	6	Vogel & Machizawa (2004)	NorthDakota	11
+sub-Vog137	homo sapiens	34	m	n/a	9:00	6	Vogel & Machizawa (2004)	NorthDakota	12
+sub-Vog138	homo sapiens	18	m	n/a	Afternoon	4	Vogel & Machizawa (2004)	NorthDakota	13
+sub-Vog139	homo sapiens	20	f	n/a	9:00	4	Vogel & Machizawa (2004)	NorthDakota	14
+sub-Vog140	homo sapiens	27	m	n/a	Afternoon	6	Vogel & Machizawa (2004)	NorthDakota	15
+sub-Vog141	homo sapiens	22	m	n/a	13:00	4	Vogel & Machizawa (2004)	NorthDakota	16
+sub-Vog142	homo sapiens	35	m	n/a	9:00	6	Vogel & Machizawa (2004)	NorthDakota	17
+sub-Vog143	homo sapiens	19	f	n/a	Afternoon	4	Vogel & Machizawa (2004)	NorthDakota	18
+sub-Vog144	homo sapiens	26	f	n/a	13:00	6	Vogel & Machizawa (2004)	NorthDakota	20
+sub-Vog145	homo sapiens	31	f	n/a	Morning	6	Vogel & Machizawa (2004)	NorthDakota	21
+sub-Vog146	homo sapiens	19	f	n/a	9:00	4	Vogel & Machizawa (2004)	NorthDakota	22
+sub-Vog147	homo sapiens	18	f	n/a	13:00	NaN	Vogel & Machizawa (2004)	NorthDakota	23
+sub-Vog148	homo sapiens	19	f	n/a	Morning	4	Vogel & Machizawa (2004)	NorthDakota	24
+sub-Vog149	homo sapiens	25	m	n/a	9:00	6	Vogel & Machizawa (2004)	NorthDakota	25
+sub-Vog150	homo sapiens	20	m	n/a	Afternoon	4	Vogel & Machizawa (2004)	NorthDakota	26
+sub-Vog151	homo sapiens	25	m	n/a	Afternoon	6	Vogel & Machizawa (2004)	NorthDakota	27
+sub-Vog152	homo sapiens	32	m	n/a	9:00	6	Vogel & Machizawa (2004)	NorthDakota	28
+sub-Vog153	homo sapiens	32	m	n/a	Afternoon	6	Vogel & Machizawa (2004)	NorthDakota	29
+sub-Vog154	homo sapiens	19	f	n/a	10:30	4	Vogel & Machizawa (2004)	NorthDakota	3
+sub-Vog155	homo sapiens	23	m	n/a	9:00	4	Vogel & Machizawa (2004)	NorthDakota	30
+sub-Vog156	homo sapiens	33	m	n/a	Morning	6	Vogel & Machizawa (2004)	NorthDakota	32
+sub-Vog157	homo sapiens	26	f	n/a	Afternoon	6	Vogel & Machizawa (2004)	NorthDakota	33
+sub-Vog158	homo sapiens	21	f	n/a	9:00	4	Vogel & Machizawa (2004)	NorthDakota	5
+sub-Vog159	homo sapiens	24	m	n/a	Morning	6	Vogel & Machizawa (2004)	NorthDakota	7
+sub-Vog160	homo sapiens	29	f	n/a	9:00	6	Vogel & Machizawa (2004)	NorthDakota	8
+sub-Vog161	homo sapiens	19	f	n/a	13:00	4	Vogel & Machizawa (2004)	NorthDakota	9
+sub-Vog162	homo sapiens	n/a	n/a	n/a	n/a	n/a	Vogel & Machizawa (2004)	Ohio	1
+sub-Vog163	homo sapiens	n/a	n/a	n/a	n/a	n/a	Vogel & Machizawa (2004)	Ohio	10
+sub-Vog164	homo sapiens	n/a	n/a	n/a	n/a	n/a	Vogel & Machizawa (2004)	Ohio	11
+sub-Vog165	homo sapiens	n/a	n/a	n/a	n/a	n/a	Vogel & Machizawa (2004)	Ohio	12
+sub-Vog166	homo sapiens	n/a	n/a	n/a	n/a	n/a	Vogel & Machizawa (2004)	Ohio	13
+sub-Vog167	homo sapiens	n/a	n/a	n/a	n/a	n/a	Vogel & Machizawa (2004)	Ohio	14
+sub-Vog168	homo sapiens	n/a	n/a	n/a	n/a	n/a	Vogel & Machizawa (2004)	Ohio	15
+sub-Vog169	homo sapiens	n/a	n/a	n/a	n/a	n/a	Vogel & Machizawa (2004)	Ohio	16
+sub-Vog170	homo sapiens	n/a	n/a	n/a	n/a	n/a	Vogel & Machizawa (2004)	Ohio	17
+sub-Vog171	homo sapiens	n/a	n/a	n/a	n/a	n/a	Vogel & Machizawa (2004)	Ohio	18
+sub-Vog172	homo sapiens	n/a	n/a	n/a	n/a	n/a	Vogel & Machizawa (2004)	Ohio	2
+sub-Vog173	homo sapiens	n/a	n/a	n/a	n/a	n/a	Vogel & Machizawa (2004)	Ohio	20
+sub-Vog174	homo sapiens	n/a	n/a	n/a	n/a	n/a	Vogel & Machizawa (2004)	Ohio	21
+sub-Vog175	homo sapiens	n/a	n/a	n/a	n/a	n/a	Vogel & Machizawa (2004)	Ohio	22
+sub-Vog176	homo sapiens	n/a	n/a	n/a	n/a	n/a	Vogel & Machizawa (2004)	Ohio	23
+sub-Vog177	homo sapiens	n/a	n/a	n/a	n/a	n/a	Vogel & Machizawa (2004)	Ohio	24
+sub-Vog178	homo sapiens	n/a	n/a	n/a	n/a	n/a	Vogel & Machizawa (2004)	Ohio	25
+sub-Vog179	homo sapiens	n/a	n/a	n/a	n/a	n/a	Vogel & Machizawa (2004)	Ohio	3
+sub-Vog180	homo sapiens	n/a	n/a	n/a	n/a	n/a	Vogel & Machizawa (2004)	Ohio	4
+sub-Vog181	homo sapiens	n/a	n/a	n/a	n/a	n/a	Vogel & Machizawa (2004)	Ohio	5
+sub-Vog182	homo sapiens	n/a	n/a	n/a	n/a	n/a	Vogel & Machizawa (2004)	Ohio	6
+sub-Vog183	homo sapiens	n/a	n/a	n/a	n/a	n/a	Vogel & Machizawa (2004)	Ohio	7
+sub-Vog184	homo sapiens	n/a	n/a	n/a	n/a	n/a	Vogel & Machizawa (2004)	Ohio	8
+sub-Vog185	homo sapiens	n/a	n/a	n/a	n/a	n/a	Vogel & Machizawa (2004)	Ohio	9
+sub-Vog186	homo sapiens	n/a	n/a	n/a	n/a	n/a	Vogel & Machizawa (2004)	Reykjavik	1
+sub-Vog187	homo sapiens	n/a	n/a	n/a	n/a	n/a	Vogel & Machizawa (2004)	Reykjavik	10
+sub-Vog188	homo sapiens	n/a	n/a	n/a	n/a	n/a	Vogel & Machizawa (2004)	Reykjavik	11
+sub-Vog189	homo sapiens	n/a	n/a	n/a	n/a	n/a	Vogel & Machizawa (2004)	Reykjavik	12
+sub-Vog190	homo sapiens	n/a	n/a	n/a	n/a	n/a	Vogel & Machizawa (2004)	Reykjavik	13
+sub-Vog191	homo sapiens	n/a	n/a	n/a	n/a	n/a	Vogel & Machizawa (2004)	Reykjavik	14
+sub-Vog192	homo sapiens	n/a	n/a	n/a	n/a	n/a	Vogel & Machizawa (2004)	Reykjavik	15
+sub-Vog193	homo sapiens	n/a	n/a	n/a	n/a	n/a	Vogel & Machizawa (2004)	Reykjavik	16
+sub-Vog194	homo sapiens	n/a	n/a	n/a	n/a	n/a	Vogel & Machizawa (2004)	Reykjavik	17
+sub-Vog195	homo sapiens	n/a	n/a	n/a	n/a	n/a	Vogel & Machizawa (2004)	Reykjavik	18
+sub-Vog196	homo sapiens	n/a	n/a	n/a	n/a	n/a	Vogel & Machizawa (2004)	Reykjavik	19
+sub-Vog197	homo sapiens	n/a	n/a	n/a	n/a	n/a	Vogel & Machizawa (2004)	Reykjavik	20
+sub-Vog198	homo sapiens	n/a	n/a	n/a	n/a	n/a	Vogel & Machizawa (2004)	Reykjavik	21
+sub-Vog199	homo sapiens	n/a	n/a	n/a	n/a	n/a	Vogel & Machizawa (2004)	Reykjavik	22
+sub-Vog200	homo sapiens	n/a	n/a	n/a	n/a	n/a	Vogel & Machizawa (2004)	Reykjavik	23
+sub-Vog201	homo sapiens	n/a	n/a	n/a	n/a	n/a	Vogel & Machizawa (2004)	Reykjavik	24
+sub-Vog202	homo sapiens	n/a	n/a	n/a	n/a	n/a	Vogel & Machizawa (2004)	Reykjavik	25
+sub-Vog203	homo sapiens	n/a	n/a	n/a	n/a	n/a	Vogel & Machizawa (2004)	Reykjavik	26
+sub-Vog204	homo sapiens	n/a	n/a	n/a	n/a	n/a	Vogel & Machizawa (2004)	Reykjavik	27
+sub-Vog205	homo sapiens	n/a	n/a	n/a	n/a	n/a	Vogel & Machizawa (2004)	Reykjavik	28
+sub-Vog206	homo sapiens	n/a	n/a	n/a	n/a	n/a	Vogel & Machizawa (2004)	Reykjavik	29
+sub-Vog207	homo sapiens	n/a	n/a	n/a	n/a	n/a	Vogel & Machizawa (2004)	Reykjavik	3
+sub-Vog208	homo sapiens	n/a	n/a	n/a	n/a	n/a	Vogel & Machizawa (2004)	Reykjavik	31
+sub-Vog209	homo sapiens	n/a	n/a	n/a	n/a	n/a	Vogel & Machizawa (2004)	Reykjavik	32
+sub-Vog210	homo sapiens	n/a	n/a	n/a	n/a	n/a	Vogel & Machizawa (2004)	Reykjavik	4
+sub-Vog211	homo sapiens	n/a	n/a	n/a	n/a	n/a	Vogel & Machizawa (2004)	Reykjavik	5
+sub-Vog212	homo sapiens	n/a	n/a	n/a	n/a	n/a	Vogel & Machizawa (2004)	Reykjavik	6
+sub-Vog213	homo sapiens	n/a	n/a	n/a	n/a	n/a	Vogel & Machizawa (2004)	Reykjavik	7
+sub-Vog214	homo sapiens	n/a	n/a	n/a	n/a	n/a	Vogel & Machizawa (2004)	Reykjavik	8
+sub-Vog215	homo sapiens	n/a	n/a	n/a	n/a	n/a	Vogel & Machizawa (2004)	Reykjavik	9
+sub-Vog216	homo sapiens	19	f	r	12:00	4	Vogel & Machizawa (2004)	Sheffield	1
+sub-Vog217	homo sapiens	20	f	r	15:00	4	Vogel & Machizawa (2004)	Sheffield	10
+sub-Vog218	homo sapiens	18	f	r	12:00	4	Vogel & Machizawa (2004)	Sheffield	11
+sub-Vog219	homo sapiens	19	m	r	15:00	4	Vogel & Machizawa (2004)	Sheffield	12
+sub-Vog220	homo sapiens	20	f	a	18:00	4	Vogel & Machizawa (2004)	Sheffield	13
+sub-Vog221	homo sapiens	19	f	r	15:00	4	Vogel & Machizawa (2004)	Sheffield	14
+sub-Vog222	homo sapiens	20	f	r	12:00	4	Vogel & Machizawa (2004)	Sheffield	15
+sub-Vog223	homo sapiens	18	f	r	15:00	4	Vogel & Machizawa (2004)	Sheffield	17
+sub-Vog224	homo sapiens	19	f	a	12:00	4	Vogel & Machizawa (2004)	Sheffield	18
+sub-Vog225	homo sapiens	32	m	r	15:00	2	Vogel & Machizawa (2004)	Sheffield	19
+sub-Vog226	homo sapiens	18	f	r	15:00	4	Vogel & Machizawa (2004)	Sheffield	2
+sub-Vog227	homo sapiens	18	f	r	15:00	4	Vogel & Machizawa (2004)	Sheffield	20
+sub-Vog228	homo sapiens	20	f	r	09:00	4	Vogel & Machizawa (2004)	Sheffield	21
+sub-Vog229	homo sapiens	24	f	r	14:00	2	Vogel & Machizawa (2004)	Sheffield	22
+sub-Vog230	homo sapiens	19	f	r	13:00	4	Vogel & Machizawa (2004)	Sheffield	23
+sub-Vog231	homo sapiens	19	f	r	09:00	4	Vogel & Machizawa (2004)	Sheffield	24
+sub-Vog232	homo sapiens	19	f	r	10:00	4	Vogel & Machizawa (2004)	Sheffield	25
+sub-Vog233	homo sapiens	18	f	r	13:00	4	Vogel & Machizawa (2004)	Sheffield	26
+sub-Vog234	homo sapiens	23	m	r	09:00	6	Vogel & Machizawa (2004)	Sheffield	3
+sub-Vog235	homo sapiens	19	f	r	12:00	4	Vogel & Machizawa (2004)	Sheffield	4
+sub-Vog236	homo sapiens	19	f	r	15:00	4	Vogel & Machizawa (2004)	Sheffield	5
+sub-Vog237	homo sapiens	19	f	r	09:00	4	Vogel & Machizawa (2004)	Sheffield	6
+sub-Vog238	homo sapiens	19	f	r	12:00	4	Vogel & Machizawa (2004)	Sheffield	7
+sub-Vog239	homo sapiens	23	m	r	15:00	6	Vogel & Machizawa (2004)	Sheffield	8
+sub-Vog240	homo sapiens	20	m	r	09:00	4	Vogel & Machizawa (2004)	Sheffield	9
+sub-Vog241	homo sapiens	26	m	r	09:00	5	Vogel & Machizawa (2004)	Zürich (Prof. Langer)	10
+sub-Vog242	homo sapiens	25	f	r	09:00	5	Vogel & Machizawa (2004)	Zürich (Prof. Langer)	11
+sub-Vog243	homo sapiens	25	f	r	13:30	3	Vogel & Machizawa (2004)	Zürich (Prof. Langer)	12
+sub-Vog244	homo sapiens	23	f	r	09:30	3	Vogel & Machizawa (2004)	Zürich (Prof. Langer)	13
+sub-Vog245	homo sapiens	23	f	r	13:00	3	Vogel & Machizawa (2004)	Zürich (Prof. Langer)	14
+sub-Vog246	homo sapiens	22	f	r	09:00	3	Vogel & Machizawa (2004)	Zürich (Prof. Langer)	15
+sub-Vog247	homo sapiens	21	m	r	13:00	3	Vogel & Machizawa (2004)	Zürich (Prof. Langer)	16
+sub-Vog248	homo sapiens	25	f	r	13:30	5	Vogel & Machizawa (2004)	Zürich (Prof. Langer)	17
+sub-Vog249	homo sapiens	25	f	r	09:30	5	Vogel & Machizawa (2004)	Zürich (Prof. Langer)	18
+sub-Vog250	homo sapiens	21	f	r	09:00	3	Vogel & Machizawa (2004)	Zürich (Prof. Langer)	19
+sub-Vog251	homo sapiens	23	f	r	09:30	3	Vogel & Machizawa (2004)	Zürich (Prof. Langer)	20
+sub-Vog252	homo sapiens	21	m	r	09:30	3	Vogel & Machizawa (2004)	Zürich (Prof. Langer)	21
+sub-Vog253	homo sapiens	21	f	r	13:30	3	Vogel & Machizawa (2004)	Zürich (Prof. Langer)	22
+sub-Vog254	homo sapiens	21	f	r	09:30	3	Vogel & Machizawa (2004)	Zürich (Prof. Langer)	23
+sub-Vog255	homo sapiens	22	f	r	09:30	3	Vogel & Machizawa (2004)	Zürich (Prof. Langer)	24
+sub-Vog256	homo sapiens	22	f	r	13:30	3	Vogel & Machizawa (2004)	Zürich (Prof. Langer)	25
+sub-Vog257	homo sapiens	21	m	r	09:30	3	Vogel & Machizawa (2004)	Zürich (Prof. Langer)	26
+sub-Vog258	homo sapiens	21	f	r	13:30	3	Vogel & Machizawa (2004)	Zürich (Prof. Langer)	27
+sub-Vog259	homo sapiens	21	f	r	09:30	3	Vogel & Machizawa (2004)	Zürich (Prof. Langer)	28
+sub-Vog260	homo sapiens	24	m	r	09:00	5	Vogel & Machizawa (2004)	Zürich (Prof. Langer)	29
+sub-Vog261	homo sapiens	23	f	r	09:00	3	Vogel & Machizawa (2004)	Zürich (Prof. Langer)	30
+sub-Vog262	homo sapiens	20	f	r	09:30	3	Vogel & Machizawa (2004)	Zürich (Prof. Langer)	31
+sub-Vog263	homo sapiens	27	m	r	09:30	3	Vogel & Machizawa (2004)	Zürich (Prof. Langer)	32
+sub-Vog264	homo sapiens	29	m	r	09:00	3	Vogel & Machizawa (2004)	Zürich (Prof. Langer)	33
+sub-Vog265	homo sapiens	24	f	r	13:30	3	Vogel & Machizawa (2004)	Zürich (Prof. Langer)	34
+sub-Vog266	homo sapiens	22	m	r	13:45	3	Vogel & Machizawa (2004)	Zürich (Prof. Langer)	35
+sub-Vog267	homo sapiens	23	m	r	13:00	5	Vogel & Machizawa (2004)	Zürich (Prof. Langer)	36
+sub-Vog268	homo sapiens	19	f	r	09:00	3	Vogel & Machizawa (2004)	Zürich (Prof. Langer)	37
+sub-Vog269	homo sapiens	34	f	r	13:30	5	Vogel & Machizawa (2004)	Zürich (Prof. Langer)	38
+sub-Vog270	homo sapiens	20	m	r	09:30	3	Vogel & Machizawa (2004)	Zürich (Prof. Langer)	39
+sub-Vog271	homo sapiens	24	m	r	09:00	3	Vogel & Machizawa (2004)	Zürich (Prof. Langer)	40
+sub-Vog272	homo sapiens	24	f	r	09:00	3	Vogel & Machizawa (2004)	Zürich (Prof. Langer)	41
+sub-Vog273	homo sapiens	24	m	r	09:00	4	Vogel & Machizawa (2004)	Zürich (Prof. Langer)	42
+sub-Vog274	homo sapiens	21	f	r	13:30	3	Vogel & Machizawa (2004)	Zürich (Prof. Langer)	43
+sub-Vog275	homo sapiens	23	f	r	09:00	5	Vogel & Machizawa (2004)	Zürich (Prof. Langer)	44
+sub-Vog276	homo sapiens	25	m	r	13:30	3	Vogel & Machizawa (2004)	Zürich (Prof. Langer)	45
+sub-Vog277	homo sapiens	23	f	r	13:30	3	Vogel & Machizawa (2004)	Zürich (Prof. Langer)	46
+sub-Vog278	homo sapiens	26	m	r	09:00	3	Vogel & Machizawa (2004)	Zürich (Prof. Langer)	47
+sub-Vog279	homo sapiens	28	m	r	09:00	5	Vogel & Machizawa (2004)	Zürich (Prof. Langer)	48
+sub-Vog280	homo sapiens	22	f	r	13:30	3	Vogel & Machizawa (2004)	Zürich (Prof. Langer)	49
+sub-Vog281	homo sapiens	25	m	r	10:15	6	Vogel & Machizawa (2004)	Zürich (Prof. Sauseng)	1
+sub-Vog282	homo sapiens	19	f	r	09:00	4	Vogel & Machizawa (2004)	Zürich (Prof. Sauseng)	10
+sub-Vog283	homo sapiens	19	m	r	09:00	4	Vogel & Machizawa (2004)	Zürich (Prof. Sauseng)	11
+sub-Vog284	homo sapiens	21	m	r	13:30	3	Vogel & Machizawa (2004)	Zürich (Prof. Sauseng)	12
+sub-Vog285	homo sapiens	21	f	r	14:30	4	Vogel & Machizawa (2004)	Zürich (Prof. Sauseng)	13
+sub-Vog286	homo sapiens	30	m	r	09:00	4	Vogel & Machizawa (2004)	Zürich (Prof. Sauseng)	14
+sub-Vog287	homo sapiens	20	f	r	14:00	4	Vogel & Machizawa (2004)	Zürich (Prof. Sauseng)	15
+sub-Vog288	homo sapiens	21	f	r	09:00	4	Vogel & Machizawa (2004)	Zürich (Prof. Sauseng)	16
+sub-Vog289	homo sapiens	18	f	r	10:00	4	Vogel & Machizawa (2004)	Zürich (Prof. Sauseng)	17
+sub-Vog290	homo sapiens	27	f	r	13:30	5	Vogel & Machizawa (2004)	Zürich (Prof. Sauseng)	18
+sub-Vog291	homo sapiens	25	f	r	13:30	6	Vogel & Machizawa (2004)	Zürich (Prof. Sauseng)	19
+sub-Vog292	homo sapiens	31	m	r	09:00	6	Vogel & Machizawa (2004)	Zürich (Prof. Sauseng)	2
+sub-Vog293	homo sapiens	26	m	r	09:00	5	Vogel & Machizawa (2004)	Zürich (Prof. Sauseng)	20
+sub-Vog294	homo sapiens	25	f	r	10:00	6	Vogel & Machizawa (2004)	Zürich (Prof. Sauseng)	21
+sub-Vog295	homo sapiens	18	f	r	09:00	4	Vogel & Machizawa (2004)	Zürich (Prof. Sauseng)	22
+sub-Vog296	homo sapiens	21	m	r	09:00	4	Vogel & Machizawa (2004)	Zürich (Prof. Sauseng)	23
+sub-Vog297	homo sapiens	20	f	r	n/a	4	Vogel & Machizawa (2004)	Zürich (Prof. Sauseng)	24
+sub-Vog298	homo sapiens	21	f	r	09:00	4	Vogel & Machizawa (2004)	Zürich (Prof. Sauseng)	25
+sub-Vog299	homo sapiens	27	f	r	13:30	6	Vogel & Machizawa (2004)	Zürich (Prof. Sauseng)	3
+sub-Vog300	homo sapiens	28	m	r	08:15	6	Vogel & Machizawa (2004)	Zürich (Prof. Sauseng)	4
+sub-Vog301	homo sapiens	22	f	r	12:30	4	Vogel & Machizawa (2004)	Zürich (Prof. Sauseng)	5
+sub-Vog302	homo sapiens	20	f	r	14:00	4	Vogel & Machizawa (2004)	Zürich (Prof. Sauseng)	6
+sub-Vog303	homo sapiens	27	f	r	09:00	6	Vogel & Machizawa (2004)	Zürich (Prof. Sauseng)	8
+sub-Vog304	homo sapiens	18	f	r	10:00	4	Vogel & Machizawa (2004)	Zürich (Prof. Sauseng)	9
