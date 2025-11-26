@@ -6,7 +6,7 @@ Work is still in progress.
 
 ---
 
-## Project Overview
+## Initial processing
 
 We collected raw EEG data from **10 different laboratories**, each using different acquisition systems and file formats.
 
@@ -20,7 +20,7 @@ The processing workflow consists of:
 These steps produce the following files:
 
 - `id_CDA.mat` – CDA task EEG + behavior  
-- `id_Eye.mat` – Eye-tracking or EOG calibration data (if available)  
+- `id_Eye.mat` – Eye calibration task data (if available)  
 - `id_Resting.mat` – Resting-state EEG (if available)
 
 All scripts for this stage are located in: `scripts/a_prepare_data/`
@@ -32,6 +32,17 @@ All scripts for this stage are located in: `scripts/a_prepare_data/`
 
 After harmonizing the raw data, all datasets were converted to **BIDS** using: `scripts/a1_convert_to_bids/`
 
+All subsequent preprocessing, quality metrics, and analyses are based on the BIDS-formatted data.
 
+---
+
+## Work in Progress
+
+This repository is actively being developed.  
+More documentation, preprocessing pipelines, and analysis scripts will be added soon.
+
+---
+
+If you have questions or suggestions, feel free to open an issue or contact us.
 
 
