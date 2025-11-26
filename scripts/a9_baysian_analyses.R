@@ -15,6 +15,12 @@ library(tidyverse)
 # load data
 dat = read.csv(file.path(project_path, 'data/csv_files/subject_averages_direct.csv'), header = T)
 
+dat = read.csv(file.path(project_path, 'data/csv_files/subject_averages_advanced.csv'), header = T)
+
+dat = read.csv(file.path(project_path, 'data/csv_files/subject_averages_ica.csv'), header = T)
+
+dat = read.csv(file.path(project_path, 'data/csv_files/subject_averages_keep_all.csv'), header = T)
+
 ################################################################################
 ### Statistical analysis for Hypothesis #1 #####################################
 ################################################################################

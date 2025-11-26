@@ -29,8 +29,8 @@ for (pip in 1 : length(pipes_labels)){
   
   
   ############ outcome neutral test: contra vs ipsi
-  d = dat$on_cohensd
-  d_se = dat$on_cohensd_se
+  d = dat$on_gz
+  d_se = dat$on_gz_se
   
   meta_outcome_neutral = metagen(TE = d,
                       seTE = d_se,
@@ -42,9 +42,14 @@ for (pip in 1 : length(pipes_labels)){
                       method.tau = "REML",
                       hakn = TRUE,
                       prediction = TRUE,
-                      title = "Contra vs. Ipsi")
+                      title = "Contra vs. Ipsi",
+                      level.ci = 0.95,
+                      level = 0.95,
+                      level.ma = 0.95,
+                      level.predict = 0.95,
+                      level.comb = 0.95)
   summary(meta_outcome_neutral)
-  meta_outcome_neutral$pval.common
+  meta_outcome_neutral$pval.random
   
   # plot results
   pdf(file.path(figure_path, paste0(pipes_labels[pip], "_outcome_neutral.pdf")), width = 8, height = 4)
@@ -52,7 +57,8 @@ for (pip in 1 : length(pipes_labels)){
        prediction = TRUE, 
        print.tau2 = FALSE,
        leftcols = c("studlab", "TE", "seTE", "ci"),
-       leftlabs = c("Lab", expression("Cohen's d"), "SE", "95% CI"),
+       # leftlabs = c("Lab", expression("Cohen's d"), "SE", "95% CI"),
+       leftlabs = c("Lab", expression(italic("g")["z"]), "SE", "95% CI"),
        rightcols = c("w.random"))
   dev.off()
   png(file.path(figure_path, paste0(pipes_labels[pip], "_outcome_neutral.png")), width = 8, height = 4, units = "in", res = 300)
@@ -60,13 +66,13 @@ for (pip in 1 : length(pipes_labels)){
        prediction = TRUE, 
        print.tau2 = FALSE,
        leftcols = c("studlab", "TE", "seTE", "ci"),
-       leftlabs = c("Lab", expression("Cohen's d"), "SE", "95% CI"),
+       leftlabs = c("Lab", expression(italic("g")["z"]), "SE", "95% CI"),
        rightcols = c("w.random"))
   dev.off()
   
   ############ correct vs incorrect trials
-  d = dat$corrincorr_cohensd
-  d_se = dat$corrincorr_cohensd_se
+  d = dat$corrincorr_gz
+  d_se = dat$corrincorr_gz_se
   meta_correct_vs_incorrect = metagen(TE = d,
                                seTE = d_se,
                                studlab = labs,
@@ -86,7 +92,7 @@ for (pip in 1 : length(pipes_labels)){
        prediction = TRUE, 
        print.tau2 = FALSE,
        leftcols = c("studlab", "TE", "seTE", "ci"),
-       leftlabs = c("Lab", expression("Cohen's d"), "SE", "95% CI"),
+       leftlabs = c("Lab", expression(italic("g")["z"]), "SE", "95% CI"),
        rightcols = c("w.random"))
   dev.off()
   png(file.path(figure_path, paste0(pipes_labels[pip], "_correct_vs_incorrectt.png")), width = 8, height = 4, units = "in", res = 300)
@@ -94,13 +100,13 @@ for (pip in 1 : length(pipes_labels)){
        prediction = TRUE, 
        print.tau2 = FALSE,
        leftcols = c("studlab", "TE", "seTE", "ci"),
-       leftlabs = c("Lab", expression("Cohen's d"), "SE", "95% CI"),
+       leftlabs = c("Lab", expression(italic("g")["z"]), "SE", "95% CI"),
        rightcols = c("w.random"))
   dev.off()
   
   ############ set size 2 vs 4
-  d = dat$ph_2_4_cohensd
-  d_se = dat$ph_2_4_cohensd_se
+  d = dat$ph_2_4_gz
+  d_se = dat$ph_2_4_gz_se
   meta_2_vs_4 = metagen(TE = d,
                                seTE = d_se,
                                studlab = labs,
@@ -121,7 +127,7 @@ for (pip in 1 : length(pipes_labels)){
        prediction = TRUE, 
        print.tau2 = FALSE,
        leftcols = c("studlab", "TE", "seTE", "ci"),
-       leftlabs = c("Lab", expression("Cohen's d"), "SE", "95% CI"),
+       leftlabs = c("Lab", expression(italic("g")["z"]), "SE", "95% CI"),
        rightcols = c("w.random"))
   dev.off()
   png(file.path(figure_path, paste0(pipes_labels[pip], "_t_test_2_vs_4.png")), width = 8, height = 4, units = "in", res = 300)
@@ -129,13 +135,13 @@ for (pip in 1 : length(pipes_labels)){
        prediction = TRUE, 
        print.tau2 = FALSE,
        leftcols = c("studlab", "TE", "seTE", "ci"),
-       leftlabs = c("Lab", expression("Cohen's d"), "SE", "95% CI"),
+       leftlabs = c("Lab", expression(italic("g")["z"]), "SE", "95% CI"),
        rightcols = c("w.random"))
   dev.off()
   
   ############ set size 2 vs 6
-  d = dat$ph_2_6_cohensd
-  d_se = dat$ph_2_6_cohensd_se
+  d = dat$ph_2_6_gz
+  d_se = dat$ph_2_6_gz_se
   meta_2_vs_6 = metagen(TE = d,
                      seTE = d_se,
                      studlab = labs,
@@ -156,7 +162,7 @@ for (pip in 1 : length(pipes_labels)){
        prediction = TRUE, 
        print.tau2 = FALSE,
        leftcols = c("studlab", "TE", "seTE", "ci"),
-       leftlabs = c("Lab", expression("Cohen's d"), "SE", "95% CI"),
+       leftlabs = c("Lab", expression(italic("g")["z"]), "SE", "95% CI"),
        rightcols = c("w.random"))
   dev.off()
   png(file.path(figure_path, paste0(pipes_labels[pip], "_t_test_2_vs_6.png")), width = 8, height = 4, units = "in", res = 300)
@@ -164,13 +170,13 @@ for (pip in 1 : length(pipes_labels)){
        prediction = TRUE, 
        print.tau2 = FALSE,
        leftcols = c("studlab", "TE", "seTE", "ci"),
-       leftlabs = c("Lab", expression("Cohen's d"), "SE", "95% CI"),
+       leftlabs = c("Lab", expression(italic("g")["z"]), "SE", "95% CI"),
        rightcols = c("w.random"))
   dev.off()
   
   ############ set size 4 vs 6
-  d = dat$ph_4_6_cohensd
-  d_se = dat$ph_4_6_cohensd_se
+  d = dat$ph_4_6_gz
+  d_se = dat$ph_4_6_gz_se
   meta_4_vs_6 = metagen(TE = d,
                      seTE = d_se,
                      studlab = labs,
@@ -191,7 +197,7 @@ for (pip in 1 : length(pipes_labels)){
        prediction = TRUE, 
        print.tau2 = FALSE,
        leftcols = c("studlab", "TE", "seTE", "ci"),
-       leftlabs = c("Lab", expression("Cohen's d"), "SE", "95% CI"),
+       leftlabs = c("Lab", expression(italic("g")["z"]), "SE", "95% CI"),
        rightcols = c("w.random"))
   dev.off()
   png(file.path(figure_path, paste0(pipes_labels[pip], "_t_test_4_vs_6.png")), width = 8, height = 4, units = "in", res = 300)
@@ -199,7 +205,7 @@ for (pip in 1 : length(pipes_labels)){
        prediction = TRUE, 
        print.tau2 = FALSE,
        leftcols = c("studlab", "TE", "seTE", "ci"),
-       leftlabs = c("Lab", expression("Cohen's d"), "SE", "95% CI"),
+       leftlabs = c("Lab", expression(italic("g")["z"]), "SE", "95% CI"),
        rightcols = c("w.random"))
   dev.off()
   

@@ -17,7 +17,7 @@ pipelines = {preprocessedDirect, preprocessedAdvanced, preprocessedICA, preproce
 tabs = {'cda_table_direct', 'cda_table_advanced', 'cda_table_ica', 'cda_table_ica_keepall'};
 pipes_labels = {'direct', 'advanced', 'ica', 'keep_all'};
 
-for pip = 1 : 1%length(pipelines)
+for pip = 1 : length(pipelines)
 
     % load data
     load(fullfile(datapath, 'mat_files', strcat(tabs{pip}, '.mat')))
