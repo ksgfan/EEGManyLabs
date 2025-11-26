@@ -331,7 +331,7 @@ for pip = 1 : length(pipelines)
         all_stats.corrincorr_t_stat(lab) = stats.t;
         all_stats.corrincorr_df(lab) = stats.df;
         all_stats.corrincorr_sd(lab) = stats.diff_std;
-        all_stats.corrincorr_p(lab) = p;
+        all_stats.corrincorr_p(lab) = stats.p;
         all_stats.corrincorr_ci1(lab) = stats.mean_diff - stats.diff_ci;
         all_stats.corrincorr_ci2(lab) = stats.mean_diff + stats.diff_ci;
         all_stats.corrincorr_cohensd(lab) = stats.dz.eff;
@@ -374,12 +374,12 @@ for pip = 1 : length(pipelines)
         all_stats.ph_2_4_t_stat(lab, 1) = stats.t;
         all_stats.ph_2_4_df(lab) = stats.df;
         all_stats.ph_2_4_sd(lab) = stats.diff_std;
-        all_stats.ph_2_4_p(lab) = p;
+        all_stats.ph_2_4_p(lab) = stats.p;
         all_stats.ph_2_4_ci1(lab) = stats.mean_diff - stats.diff_ci;
         all_stats.ph_2_4_ci2(lab) = stats.mean_diff + stats.diff_ci;
         all_stats.ph_2_4_cohensd(lab) = stats.dz.eff;
         all_stats.ph_2_4_cohensd_se(lab) = stats.dz.se;
-        all_stats.ph_2_4_gz_se(lab) = stats.gz.eff;
+        all_stats.ph_2_4_gz(lab) = stats.gz.eff;
         all_stats.ph_2_4_gz_se(lab) = stats.gz.se;
 
         
@@ -390,12 +390,12 @@ for pip = 1 : length(pipelines)
         all_stats.ph_2_6_t_stat(lab, 1) = stats.t;
         all_stats.ph_2_6_df(lab) = stats.df;
         all_stats.ph_2_6_sd(lab) = stats.diff_std;
-        all_stats.ph_2_6_p(lab) = p;
+        all_stats.ph_2_6_p(lab) = stats.p;
         all_stats.ph_2_6_ci1(lab) = stats.mean_diff - stats.diff_ci;
         all_stats.ph_2_6_ci2(lab) = stats.mean_diff + stats.diff_ci;
         all_stats.ph_2_6_cohensd(lab) = stats.dz.eff;
         all_stats.ph_2_6_cohensd_se(lab) = stats.dz.se;
-        all_stats.ph_2_6_gz_se(lab) = stats.gz.eff;
+        all_stats.ph_2_6_gz(lab) = stats.gz.eff;
         all_stats.ph_2_6_gz_se(lab) = stats.gz.se;
         
         % post-hoc t-tests
@@ -405,12 +405,12 @@ for pip = 1 : length(pipelines)
         all_stats.ph_4_6_t_stat(lab, 1) = stats.t;
         all_stats.ph_4_6_df(lab) = stats.df;
         all_stats.ph_4_6_sd(lab) = stats.diff_std;
-        all_stats.ph_4_6_p(lab) = p;
+        all_stats.ph_4_6_p(lab) = stats.p;
         all_stats.ph_4_6_ci1(lab) = stats.mean_diff - stats.diff_ci;
         all_stats.ph_4_6_ci2(lab) = stats.mean_diff + stats.diff_ci;
         all_stats.ph_4_6_cohensd(lab) = stats.dz.eff;
         all_stats.ph_4_6_cohensd_se(lab) = stats.dz.se;
-        all_stats.ph_4_6_gz_se(lab) = stats.gz.eff;
+        all_stats.ph_4_6_gz(lab) = stats.gz.eff;
         all_stats.ph_4_6_gz_se(lab) = stats.gz.se;
         
     
