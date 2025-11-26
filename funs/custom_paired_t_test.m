@@ -215,6 +215,7 @@ function [mean_amps, between_confidence_intervals, within_confidence_intervals, 
     % stats.bf_ultrawide = bf_ultrawide;
     stats.mean_diff = mean_diff;
     stats.diff_ci = diff_ci;
+    stats.diff_std = std_diff;
     if p <= alpha
         stats.reject_null = "rejected";
     else

@@ -288,13 +288,9 @@ for pip = 1 : 1%length(pipelines)
         % 1) outcome neutral test, contra vs ipsilateral sites
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         
-        [mean_amps, ~, ~, stats] = custom_paired_t_test(contra, ipsi, 0.05)
-
-        [h,p,ci,stats] = ttest(contra, ipsi);
-        cohensd = computeCohen_d(contra, ipsi, 'paired');
-        % compute standard error of cohen's d (for paired test)
-        r = corr(contra, ipsi);
-        cohensd_se = sqrt( ( (2*(1-r)) / length(contra) ) + ( cohensd^2 / (2 * length(contra)) ) );
+        % compute t-test and effect sizes
+        % script adapted from: https://doi.org/10.1016/j.cortex.2025.05.014
+        [mean_amps, ~, ~, stats] = custom_paired_t_test(contra, ipsi, 0.05);
         
         % save stats
         all_stats.num_subs(lab) = length(contra);
@@ -302,14 +298,16 @@ for pip = 1 : 1%length(pipelines)
         all_stats.on_sd_contra(lab) = nanstd(contra);
         all_stats.on_m_ipsi(lab) = nanmean(ipsi);
         all_stats.on_sd_ipsi(lab) = nanstd(ipsi);
-        all_stats.on_t_stat(lab) = stats.tstat;
+        all_stats.on_t_stat(lab) = stats.t;
         all_stats.on_df(lab) = stats.df;
-        all_stats.on_sd(lab) = stats.sd;
-        all_stats.on_p(lab) = p;
-        all_stats.on_ci1(lab) = ci(1);
-        all_stats.on_ci2(lab) = ci(2);
-        all_stats.on_cohensd(lab) = cohensd;
-        all_stats.on_cohensd_se(lab) = cohensd_se;
+        all_stats.on_sd(lab) = stats.diff_std;
+        all_stats.on_p(lab) = stats.p;
+        all_stats.on_ci1(lab) = stats.mean_diff - stats.diff_ci;
+        all_stats.on_ci2(lab) = stats.mean_diff + stats.diff_ci;
+        all_stats.on_cohensd(lab) = stats.dz.eff;
+        all_stats.on_cohensd_se(lab) = stats.dz.se;
+        all_stats.on_gz(lab) = stats.gz.eff;
+        all_stats.on_gz_se(lab) = stats.gz.se;
     
     
     
@@ -322,25 +320,24 @@ for pip = 1 : 1%length(pipelines)
         m_corr = mean(allSz(:, TOI), 2);
         m_incorr = mean(CDA_INCORR(:, TOI), 2);
     
-        [h,p,ci,stats] = ttest(m_corr, m_incorr);
-        cohensd = computeCohen_d(m_corr, m_incorr, 'paired');
-        % https://real-statistics.com/students-t-distribution/paired-sample-t-test/cohens-d-paired-samples/
-        r = corr(m_corr, m_incorr);
-        cohensd_se = sqrt( ( (2*(1-r)) / length(m_corr) ) + ( cohensd^2 / (2 * length(m_corr)) ) );
+        % compute t-test and effect sizes
+        [mean_amps, ~, ~, stats] = custom_paired_t_test(m_corr, m_incorr, 0.05);
         
         % save stats    
         all_stats.corrincorr_m_corr(lab) = nanmean(m_corr);
         all_stats.corrincorr_sd_corr(lab) = nanstd(m_corr);
         all_stats.corrincorr_m_incorr(lab) = nanmean(m_incorr);
         all_stats.corrincorr_sd_incorr(lab) = nanstd(m_incorr);
-        all_stats.corrincorr_t_stat(lab) = stats.tstat;
+        all_stats.corrincorr_t_stat(lab) = stats.t;
         all_stats.corrincorr_df(lab) = stats.df;
-        all_stats.corrincorr_sd(lab) = stats.sd;
+        all_stats.corrincorr_sd(lab) = stats.diff_std;
         all_stats.corrincorr_p(lab) = p;
-        all_stats.corrincorr_ci1(lab) = ci(1);
-        all_stats.corrincorr_ci2(lab) = ci(2);
-        all_stats.corrincorr_cohensd(lab) = cohensd;
-        all_stats.corrincorr_cohensd_se(lab) = cohensd_se;
+        all_stats.corrincorr_ci1(lab) = stats.mean_diff - stats.diff_ci;
+        all_stats.corrincorr_ci2(lab) = stats.mean_diff + stats.diff_ci;
+        all_stats.corrincorr_cohensd(lab) = stats.dz.eff;
+        all_stats.corrincorr_cohensd_se(lab) = stats.dz.se;
+        all_stats.corrincorr_gz(lab) = stats.gz.eff;
+        all_stats.corrincorr_gz_se(lab) = stats.gz.se;
     
     
     
@@ -371,36 +368,35 @@ for pip = 1 : 1%length(pipelines)
         all_stats.corr_4_6(lab) = corr(meanROI4, meanROI6);
     
         % post-hoc t-tests: 2 vs 4
-        [h,p,ci,stats] = ttest(meanROI2, meanROI4);
-        % effect sizes
-        cohensd = computeCohen_d(meanROI2, meanROI4, 'paired');
-        r = corr(meanROI2, meanROI4);
-        cohensd_se = sqrt( ( (2*(1-r)) / length(meanROI2) ) + ( cohensd^2 / (2 * length(meanROI2)) ) );
+        % compute t-test and effect sizes
+        [mean_amps, ~, ~, stats] = custom_paired_t_test(meanROI2, meanROI4, 0.05);
+
         % save stats
-        all_stats.ph_2_4_t_stat(lab, 1) = stats.tstat;
+        all_stats.ph_2_4_t_stat(lab, 1) = stats.t;
         all_stats.ph_2_4_df(lab) = stats.df;
-        all_stats.ph_2_4_sd(lab) = stats.sd;
+        all_stats.ph_2_4_sd(lab) = stats.diff_std;
         all_stats.ph_2_4_p(lab) = p;
-        all_stats.ph_2_4_ci1(lab) = ci(1);
-        all_stats.ph_2_4_ci2(lab) = ci(2);
-        all_stats.ph_2_4_cohensd(lab) = cohensd;
-        all_stats.ph_2_4_cohensd_se(lab) = cohensd_se;
+        all_stats.ph_2_4_ci1(lab) = stats.mean_diff - stats.diff_ci;
+        all_stats.ph_2_4_ci2(lab) = stats.mean_diff + stats.diff_ci;
+        all_stats.ph_2_4_cohensd(lab) = stats.dz.eff;
+        all_stats.ph_2_4_cohensd_se(lab) = stats.dz.se;
+        all_stats.ph_2_4_gz_se(lab) = stats.gz.eff;
+        all_stats.ph_2_4_gz_se(lab) = stats.gz.se;
+
         
         % post-hoc t-tests: 2 vs 6
-        [h,p,ci,stats] = ttest(meanROI2, meanROI6);
-        % effect sizes
-        cohensd = computeCohen_d(meanROI2, meanROI6, 'paired');
-        r = corr(meanROI2, meanROI6);
-        cohensd_se = sqrt( ( (2*(1-r)) / length(meanROI2) ) + ( cohensd^2 / (2 * length(meanROI2)) ) );
+        % compute t-test and effect sizes
+        [mean_amps, ~, ~, stats] = custom_paired_t_test(meanROI2, meanROI6, 0.05);
+
         % save stats
-        all_stats.ph_2_6_t_stat(lab, 1) = stats.tstat;
+        all_stats.ph_2_6_t_stat(lab, 1) = stats.t;
         all_stats.ph_2_6_df(lab) = stats.df;
-        all_stats.ph_2_6_sd(lab) = stats.sd;
+        all_stats.ph_2_6_sd(lab) = stats.diff_std;
         all_stats.ph_2_6_p(lab) = p;
-        all_stats.ph_2_6_ci1(lab) = ci(1);
-        all_stats.ph_2_6_ci2(lab) = ci(2);
-        all_stats.ph_2_6_cohensd(lab) = cohensd;
-        all_stats.ph_2_6_cohensd_se(lab) = cohensd_se;
+        all_stats.ph_2_6_ci1(lab) = stats.mean_diff - stats.diff_ci;
+        all_stats.ph_2_6_ci2(lab) = stats.mean_diff + stats.diff_ci;
+        all_stats.ph_2_6_cohensd(lab) = stats.dz.eff;
+        all_stats.ph_2_6_cohensd_se(lab) = stats.dz.se;
         
         % post-hoc t-tests
         [h,p,ci,stats] = ttest(meanROI4, meanROI6);
