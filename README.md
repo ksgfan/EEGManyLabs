@@ -1,0 +1,1 @@
+This folder contains experimental code for the replication of Vogel, E. K., & Machizawa, M. G. (2004). Neural activity predicts individual differences in visual working memory capacity. Nature, 428(6984), 748–751.
