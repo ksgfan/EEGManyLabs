@@ -1,4 +1,4 @@
-# EEGManyLabs
+# EEGManyLabs - Vogel & Machizawa (2004) Replication 
 
 This folder contains experimental code for the replication of Vogel, E. K., & Machizawa, M. G. (2004). Neural activity predicts individual differences in visual working memory capacity. Nature, 428(6984), 748–751.
 
@@ -19,9 +19,9 @@ The processing workflow consists of:
 
 These steps produce the following files:
 
-- `id_CDA.mat` – CDA task EEG + behavior  
-- `id_Eye.mat` – Eye calibration task data (if available)  
-- `id_Resting.mat` – Resting-state EEG (if available)
+- `id_CDA_EEG.mat` – CDA task EEG + behavior  
+- `id_Eye_EEG.mat` – Eye calibration task data (if available)  
+- `id_Resting_EEG.mat` – Resting-state EEG (if available)
 
 All scripts for this stage are located in: `scripts/a_prepare_data/`
 
