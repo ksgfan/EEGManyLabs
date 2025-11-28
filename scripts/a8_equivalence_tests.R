@@ -30,7 +30,7 @@ for (pip in 1 : length(pipes_labels)){
   SESOI_d = 0.36
   
   ##### equivalence test for meta-analysis results
-  png(file.path(figure_path, paste0(pipes_labels[pip], "_TOST_H1_1.png")), 
+  png(file.path(figure_path, paste0(pipes_labels[pip], "_TOST_H1_3.png")), 
       width = 15, height = 7, units = "cm", res = 300)
   # do the test
   tost_H13 = TOSTmeta(
@@ -38,7 +38,7 @@ for (pip in 1 : length(pipes_labels)){
     se = meta_4_vs_6$seTE.random,
     low_eqbound_d  = -SESOI_d,
     high_eqbound_d =  SESOI_d,
-    alpha = 0.02   # if you want to keep your p < .02 convention
+    alpha = 0.02
   )
   dev.off()
   
@@ -52,7 +52,7 @@ for (pip in 1 : length(pipes_labels)){
   sd2 = weighted.mean(dat$setsize6_sd, weights) # sd CDA amplitude for set size 6
   r12	= weighted.mean(dat$corr_4_6, weights) # observed correlation of dependent variable between CDA amplitude set size 4 and 6
   
-  png(file.path(figure_path, paste0(pipes_labels[pip], "_TOST_H1_1_collapsed.png")), 
+  png(file.path(figure_path, paste0(pipes_labels[pip], "_TOST_H1_3_collapsed.png")), 
                 width = 15, height = 7, units = "cm", res = 300)
   res = TOSTpaired(n=n,m1=m1,m2=m2,sd1=sd1,sd2=sd2,r12 = r12, low_eqbound_dz=-SESOI_d,high_eqbound_dz=SESOI_d)
   dev.off()
@@ -74,7 +74,7 @@ for (pip in 1 : length(pipes_labels)){
     se = meta_correlation_4_6$seTE.random,
     low_eqbound_d  = -SESOI_r,
     high_eqbound_d =  SESOI_r,
-    alpha = 0.02   # if you want to keep your p < .02 convention
+    alpha = 0.02  
   )
   dev.off()
   
