@@ -284,13 +284,16 @@ for pip = 1 : length(pipelines)
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+        % select alpha level
+        alpha_level = 0.02;
+
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         % 1) outcome neutral test, contra vs ipsilateral sites
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         
         % compute t-test and effect sizes
         % script adapted from: https://doi.org/10.1016/j.cortex.2025.05.014
-        [mean_amps, ~, ~, stats] = custom_paired_t_test(contra, ipsi, 0.05);
+        [mean_amps, ~, ~, stats] = custom_paired_t_test(contra, ipsi, alpha_level);
         
         % save stats
         all_stats.num_subs(lab) = length(contra);
@@ -321,7 +324,7 @@ for pip = 1 : length(pipelines)
         m_incorr = mean(CDA_INCORR(:, TOI), 2);
     
         % compute t-test and effect sizes
-        [mean_amps, ~, ~, stats] = custom_paired_t_test(m_corr, m_incorr, 0.05);
+        [mean_amps, ~, ~, stats] = custom_paired_t_test(m_corr, m_incorr, alpha_level);
         
         % save stats    
         all_stats.corrincorr_m_corr(lab) = nanmean(m_corr);
@@ -369,7 +372,7 @@ for pip = 1 : length(pipelines)
     
         % post-hoc t-tests: 2 vs 4
         % compute t-test and effect sizes
-        [mean_amps, ~, ~, stats] = custom_paired_t_test(meanROI2, meanROI4, 0.05);
+        [mean_amps, ~, ~, stats] = custom_paired_t_test(meanROI2, meanROI4, alpha_level);
         % save stats
         all_stats.ph_2_4_t_stat(lab, 1) = stats.t;
         all_stats.ph_2_4_df(lab) = stats.df;
@@ -385,7 +388,7 @@ for pip = 1 : length(pipelines)
         
         % post-hoc t-tests: 2 vs 6
         % compute t-test and effect sizes
-        [mean_amps, ~, ~, stats] = custom_paired_t_test(meanROI2, meanROI6, 0.05);
+        [mean_amps, ~, ~, stats] = custom_paired_t_test(meanROI2, meanROI6, alpha_level);
         % save stats
         all_stats.ph_2_6_t_stat(lab, 1) = stats.t;
         all_stats.ph_2_6_df(lab) = stats.df;
@@ -400,7 +403,7 @@ for pip = 1 : length(pipelines)
         
         % post-hoc t-tests
         % compute t-test and effect sizes
-        [mean_amps, ~, ~, stats] = custom_paired_t_test(meanROI4, meanROI6, 0.05);
+        [mean_amps, ~, ~, stats] = custom_paired_t_test(meanROI4, meanROI6, alpha_level);
         % save stats
         all_stats.ph_4_6_t_stat(lab, 1) = stats.t;
         all_stats.ph_4_6_df(lab) = stats.df;

@@ -26,10 +26,6 @@ for (pip in 1 : length(pipes_labels)){
   dat = read.csv(file.path(project_path, 'data/csv_files', paste0('all_stats_', pipes_labels[pip], '.csv')), header = T)
   labs = dat$Lab
   
-  # equivalence test results
-  load(file.path(project_path, 'data/csv_files/eq_test_results.Rda'))
-  
-
   ############ outcome neutral test: contra vs ipsi
   d = dat$on_gz
   d_se = dat$on_gz_se
@@ -335,7 +331,7 @@ for (pip in 1 : length(pipes_labels)){
   r = dat$wm_corr_4_6_r * (-1) ### flip sign
   #d = FisherZ(d) # convert to Fischer Z
   r_se = dat$wm_corr_4_6_r_se
-  meta_correlation = metagen(TE = d,
+  meta_correlation_4_6 = metagen(TE = d,
                            seTE = d_se,
                            studlab = labs,
                            data = NULL,
@@ -348,25 +344,25 @@ for (pip in 1 : length(pipes_labels)){
                            transf = FALSE, # If transf = TRUE (default), inputs are expected to be Fisher's z transformed correlations instead of correlations for sm = "ZCOR"
                            backtransf = F,
                            title = "Amplitude decrease vs WM capacity")
-  summary(meta_correlation)
-  meta_correlation$Pearsons_r <- (exp(2 * meta_correlation$TE) - 1) / (exp(2 * meta_correlation$TE) + 1)
+  summary(meta_correlation_4_6)
+  meta_correlation_4_6$Pearsons_r <- (exp(2 * meta_correlation_4_6$TE) - 1) / (exp(2 * meta_correlation_4_6$TE) + 1)
   # save results
   df_results <- rbind(
     df_results,
     data.frame(
       Pipeline = pipes_labels[pip],
       TestType = 'Correlation_4-6_vs_VWM',
-      SMD = meta_correlation$TE.random,
-      CI1 = meta_correlation$lower.random,
-      CI2 = meta_correlation$upper.random,
-      t_stat = meta_correlation$statistic.random,
-      p_val = meta_correlation$pval.random
+      SMD = meta_correlation_4_6$TE.random,
+      CI1 = meta_correlation_4_6$lower.random,
+      CI2 = meta_correlation_4_6$upper.random,
+      t_stat = meta_correlation_4_6$statistic.random,
+      p_val = meta_correlation_4_6$pval.random
     )
   )
   
   # plot results
   pdf(file.path(figure_path, paste0(pipes_labels[pip], "_corr_4_to_6.pdf")), width = 8, height = 4)
-  forest(meta_correlation, 
+  forest(meta_correlation_4_6, 
        prediction = TRUE, 
        print.tau2 = FALSE,
        #leftcols = c("studlab", "TE", "seTE", "ci"),
@@ -378,7 +374,7 @@ for (pip in 1 : length(pipes_labels)){
        at = seq(-1, 1, by = 0.5))
   dev.off()
   png(file.path(figure_path, paste0(pipes_labels[pip], "_corr_4_to_6.png")), width = 8, height = 4, units = "in", res = 300)
-  forest(meta_correlation, 
+  forest(meta_correlation_4_6, 
        prediction = TRUE, 
        print.tau2 = FALSE,
        #leftcols = c("studlab", "TE", "seTE", "ci"),
@@ -390,85 +386,11 @@ for (pip in 1 : length(pipes_labels)){
        at = seq(-1, 1, by = 0.5))
   dev.off()
   
-  ########################################################################  
-  ########################################################################  
-  ########################################################################  
-  ############ meta analysis for equivalence tests result: set size 4 vs 6
-  ########################################################################  
-  ########################################################################  
-  ########################################################################  
-  d = cohens_d_h1.3
-  d_se = cohens_d_se_h1.3
-  meta_4_vs_6 = metagen(TE = d,
-                      seTE = d_se,
-                      studlab = labs,
-                      data = NULL,
-                      sm = "SMD",
-                      common = FALSE,
-                      random = TRUE,
-                      method.tau = "REML",
-                      hakn = TRUE,
-                      prediction = TRUE,
-                      title = "Set Size 4 vs Set Size 6")
-  summary(meta_4_vs_6)
+  save(meta_4_vs_6, meta_correlation_4_6,
+       file = file.path(project_path, 'data/csv_files/', paste0(pipes_labels[pip], '_for_eq_tests.Rda')))
   
-  # plot results
-  pdf(file.path(figure_path, paste0(pipes_labels[pip], "_eq_set_size_4_6.pdf")), width = 8, height = 4)
-  forest(meta_4_vs_6, 
-       prediction = TRUE, 
-       print.tau2 = FALSE,
-       leftcols = c("studlab", "TE", "seTE", "ci"),
-       leftlabs = c("Lab", expression("Cohen's d"), "SE", "95% CI"),
-       rightcols = c("w.random"))
-  dev.off()
-  png(file.path(figure_path, paste0(pipes_labels[pip], "_eq_set_size_4_6.png")), width = 8, height = 4, units = "in", res = 300)
-  forest(meta_4_vs_6, 
-       prediction = TRUE, 
-       print.tau2 = FALSE,
-       leftcols = c("studlab", "TE", "seTE", "ci"),
-       leftlabs = c("Lab", expression("Cohen's d"), "SE", "95% CI"),
-       rightcols = c("w.random"))
-  dev.off()
-  
-  ############ meta analysis for equivalence tests result: H2.2 
-  d = r_h2.2
-  d_se = r_se_h2.2
-  meta_correlation = metagen(TE = d,
-                           seTE = d_se,
-                           studlab = labs,
-                           data = NULL,
-                           sm = "ZCOR",
-                           common = FALSE,
-                           random = TRUE,
-                           method.tau = "REML",
-                           hakn = TRUE,
-                           prediction = TRUE,
-                           transf = FALSE, # If transf = TRUE (default), inputs are expected to be Fisher's z transformed correlations instead of correlations for sm = "ZCOR"
-                           backtransf = F,
-                           title = "Amplitude decrease 4 to 6 vs WM capacity")
-  summary(meta_correlation)
-  
-  # plot results
-  pdf(file.path(figure_path, paste0(pipes_labels[pip], "_eq_correlation_4_to_6.pdf")), width = 8, height = 4)
-  forest(meta_correlation, 
-       prediction = TRUE, 
-       print.tau2 = FALSE,
-       leftcols = c("studlab", "TE", "seTE", "ci"),
-       leftlabs = c("Lab", expression("Fischer's z"), "SE", "95% CI"),
-       rightcols = c("w.random"))
-  dev.off()
-  png(file.path(figure_path, paste0(pipes_labels[pip], "_eq_correlation_4_to_6.png")), width = 8, height = 4, units = "in", res = 300)
-  forest(meta_correlation, 
-       prediction = TRUE, 
-       print.tau2 = FALSE,
-       leftcols = c("studlab", "TE", "seTE", "ci"),
-       leftlabs = c("Lab", expression("Fischer's z"), "SE", "95% CI"),
-       rightcols = c("w.random"))
-  dev.off()
-
 }
 
-
-# save result to a file
-save(df_results, 
+# save result to a file.
+save(df_results,
      file = file.path(project_path, 'data/csv_files/meta_analyses_results.Rda'))
