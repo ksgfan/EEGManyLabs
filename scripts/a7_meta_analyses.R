@@ -19,6 +19,8 @@ pipes_labels = c('direct', 'advanced', 'ica', 'keep_all');
 # init empty df
 df_results = data.frame()
 
+ci_level = 0.98
+
 # loop over pipelines and save results
 for (pip in 1 : length(pipes_labels)){
 
@@ -41,11 +43,11 @@ for (pip in 1 : length(pipes_labels)){
                       hakn = TRUE,
                       prediction = TRUE,
                       title = "Contra vs. Ipsi",
-                      level.ci = 0.95,
-                      level = 0.95,
-                      level.ma = 0.95,
-                      level.predict = 0.95,
-                      level.comb = 0.95)
+                      level.ci = ci_level,
+                      level = ci_level,
+                      level.ma = ci_level,
+                      level.predict = ci_level,
+                      level.comb = ci_level)
   summary(meta_outcome_neutral)
   # save results
   df_results <- rbind(
@@ -93,7 +95,12 @@ for (pip in 1 : length(pipes_labels)){
                                method.tau = "REML",
                                hakn = TRUE,
                                prediction = TRUE,
-                               title = "Correct vs. Incorrect")
+                               title = "Correct vs. Incorrect",
+                               level.ci = ci_level,
+                               level = ci_level,
+                               level.ma = ci_level,
+                               level.predict = ci_level,
+                               level.comb = ci_level)
   summary(meta_correct_vs_incorrect)
   # save results
   df_results <- rbind(
@@ -131,16 +138,21 @@ for (pip in 1 : length(pipes_labels)){
   d = dat$ph_2_4_gz
   d_se = dat$ph_2_4_gz_se
   meta_2_vs_4 = metagen(TE = d,
-                               seTE = d_se,
-                               studlab = labs,
-                               data = NULL,
-                               sm = "SMD",
-                               common = FALSE,
-                               random = TRUE,
-                               method.tau = "REML",
-                               hakn = TRUE,
-                               prediction = TRUE,
-                               title = "Set Size 2 vs Set Size 4")
+                         seTE = d_se,
+                         studlab = labs,
+                         data = NULL,
+                         sm = "SMD",
+                         common = FALSE,
+                         random = TRUE,
+                         method.tau = "REML",
+                         hakn = TRUE,
+                         prediction = TRUE,
+                         title = "Set Size 2 vs Set Size 4",
+                        level.ci = ci_level,
+                        level = ci_level,
+                        level.ma = ci_level,
+                        level.predict = ci_level,
+                        level.comb = ci_level)
   summary(meta_2_vs_4)
   # save results
   df_results <- rbind(
@@ -187,7 +199,12 @@ for (pip in 1 : length(pipes_labels)){
                      method.tau = "REML",
                      hakn = TRUE,
                      prediction = TRUE,
-                     title = "Set Size 2 vs Set Size 6")
+                     title = "Set Size 2 vs Set Size 6",
+                     level.ci = ci_level,
+                     level = ci_level,
+                     level.ma = ci_level,
+                     level.predict = ci_level,
+                     level.comb = ci_level)
   summary(meta_2_vs_6)
   # save results
   df_results <- rbind(
@@ -234,7 +251,12 @@ for (pip in 1 : length(pipes_labels)){
                      method.tau = "REML",
                      hakn = TRUE,
                      prediction = TRUE,
-                     title = "Set Size 4 vs Set Size 6")
+                     title = "Set Size 4 vs Set Size 6",
+                     level.ci = ci_level,
+                     level = ci_level,
+                     level.ma = ci_level,
+                     level.predict = ci_level,
+                     level.comb = ci_level)
   summary(meta_4_vs_6)
   # save results
   df_results <- rbind(
@@ -284,7 +306,12 @@ for (pip in 1 : length(pipes_labels)){
                      prediction = F,
                      transf = FALSE, # If transf = TRUE (default), inputs are expected to be Fisher's z transformed correlations instead of correlations for sm = "ZCOR"
                      backtransf = T,
-                     title = "Amplitude decrease vs WM capacity")
+                     title = "Amplitude decrease vs WM capacity",
+                     level.ci = ci_level,
+                     level = ci_level,
+                     level.ma = ci_level,
+                     level.predict = ci_level,
+                     level.comb = ci_level)
   summary(meta_correlation)
   meta_correlation$Pearsons_r <- (exp(2 * meta_correlation$TE) - 1) / (exp(2 * meta_correlation$TE) + 1)
   # save results
@@ -343,7 +370,12 @@ for (pip in 1 : length(pipes_labels)){
                            prediction = TRUE,
                            transf = FALSE, # If transf = TRUE (default), inputs are expected to be Fisher's z transformed correlations instead of correlations for sm = "ZCOR"
                            backtransf = F,
-                           title = "Amplitude decrease vs WM capacity")
+                           title = "Amplitude decrease vs WM capacity",
+                           level.ci = ci_level,
+                           level = ci_level,
+                           level.ma = ci_level,
+                           level.predict = ci_level,
+                           level.comb = ci_level)
   summary(meta_correlation_4_6)
   meta_correlation_4_6$Pearsons_r <- (exp(2 * meta_correlation_4_6$TE) - 1) / (exp(2 * meta_correlation_4_6$TE) + 1)
   # save results
