@@ -426,3 +426,5 @@ for (pip in 1 : length(pipes_labels)){
 # save result to a file.
 save(df_results,
      file = file.path(project_path, 'data/csv_files/meta_analyses_results.Rda'))
+
+df_results[, 3:6] = round(df_results[, 3:6], 2)

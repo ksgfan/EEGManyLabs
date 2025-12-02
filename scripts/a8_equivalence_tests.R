@@ -29,13 +29,19 @@ for (pip in 1 : length(pipes_labels)){
   ##############################################################################
   SESOI_d = 0.36
   
+  # SESOI is in cohens'd, meta-analytic effect size in hegdes'g. convert
+  N = sum(dat$num_subs)
+  J = 1 - (3 / (4*N - 9))
+  Cohens_d = meta_4_vs_6$TE.random / J
+  Cohens_d_se = meta_4_vs_6$seTE.random / J
+  
   ##### equivalence test for meta-analysis results
   png(file.path(figure_path, paste0(pipes_labels[pip], "_TOST_H1_3.png")), 
       width = 15, height = 7, units = "cm", res = 300)
   # do the test
   tost_H13 = TOSTmeta(
-    ES = meta_4_vs_6$TE.random,
-    se = meta_4_vs_6$seTE.random,
+    ES = Cohens_d,
+    se = Cohens_d_se,
     low_eqbound_d  = -SESOI_d,
     high_eqbound_d =  SESOI_d,
     alpha = 0.02
