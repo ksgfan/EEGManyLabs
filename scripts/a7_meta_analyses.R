@@ -69,8 +69,8 @@ for (pip in 1 : length(pipes_labels)){
        prediction = TRUE, 
        print.tau2 = FALSE,
        leftcols = c("studlab", "TE", "seTE", "ci"),
-       # leftlabs = c("Lab", expression("Cohen's d"), "SE", "95% CI"),
-       leftlabs = c("Lab", expression(italic("g")["z"]), "SE", "95% CI"),
+       # leftlabs = c("Lab", expression("Cohen's d"), "SE", "98% CI"),
+       leftlabs = c("Lab", expression(italic("g")["z"]), "SE", "98% CI"),
        rightcols = c("w.random"))
   dev.off()
   png(file.path(figure_path, paste0(pipes_labels[pip], "_outcome_neutral.png")), width = 8, height = 4, units = "in", res = 300)
@@ -78,7 +78,7 @@ for (pip in 1 : length(pipes_labels)){
        prediction = TRUE, 
        print.tau2 = FALSE,
        leftcols = c("studlab", "TE", "seTE", "ci"),
-       leftlabs = c("Lab", expression(italic("g")["z"]), "SE", "95% CI"),
+       leftlabs = c("Lab", expression(italic("g")["z"]), "SE", "98% CI"),
        rightcols = c("w.random"))
   dev.off()
   
@@ -122,7 +122,7 @@ for (pip in 1 : length(pipes_labels)){
        prediction = TRUE, 
        print.tau2 = FALSE,
        leftcols = c("studlab", "TE", "seTE", "ci"),
-       leftlabs = c("Lab", expression(italic("g")["z"]), "SE", "95% CI"),
+       leftlabs = c("Lab", expression(italic("g")["z"]), "SE", "98% CI"),
        rightcols = c("w.random"))
   dev.off()
   png(file.path(figure_path, paste0(pipes_labels[pip], "_correct_vs_incorrectt.png")), width = 8, height = 4, units = "in", res = 300)
@@ -130,7 +130,7 @@ for (pip in 1 : length(pipes_labels)){
        prediction = TRUE, 
        print.tau2 = FALSE,
        leftcols = c("studlab", "TE", "seTE", "ci"),
-       leftlabs = c("Lab", expression(italic("g")["z"]), "SE", "95% CI"),
+       leftlabs = c("Lab", expression(italic("g")["z"]), "SE", "98% CI"),
        rightcols = c("w.random"))
   dev.off()
   
@@ -174,7 +174,7 @@ for (pip in 1 : length(pipes_labels)){
        prediction = TRUE, 
        print.tau2 = FALSE,
        leftcols = c("studlab", "TE", "seTE", "ci"),
-       leftlabs = c("Lab", expression(italic("g")["z"]), "SE", "95% CI"),
+       leftlabs = c("Lab", expression(italic("g")["z"]), "SE", "98% CI"),
        rightcols = c("w.random"))
   dev.off()
   png(file.path(figure_path, paste0(pipes_labels[pip], "_t_test_2_vs_4.png")), width = 8, height = 4, units = "in", res = 300)
@@ -182,7 +182,7 @@ for (pip in 1 : length(pipes_labels)){
        prediction = TRUE, 
        print.tau2 = FALSE,
        leftcols = c("studlab", "TE", "seTE", "ci"),
-       leftlabs = c("Lab", expression(italic("g")["z"]), "SE", "95% CI"),
+       leftlabs = c("Lab", expression(italic("g")["z"]), "SE", "98% CI"),
        rightcols = c("w.random"))
   dev.off()
   
@@ -226,7 +226,7 @@ for (pip in 1 : length(pipes_labels)){
        prediction = TRUE, 
        print.tau2 = FALSE,
        leftcols = c("studlab", "TE", "seTE", "ci"),
-       leftlabs = c("Lab", expression(italic("g")["z"]), "SE", "95% CI"),
+       leftlabs = c("Lab", expression(italic("g")["z"]), "SE", "98% CI"),
        rightcols = c("w.random"))
   dev.off()
   png(file.path(figure_path, paste0(pipes_labels[pip], "_t_test_2_vs_6.png")), width = 8, height = 4, units = "in", res = 300)
@@ -234,7 +234,7 @@ for (pip in 1 : length(pipes_labels)){
        prediction = TRUE, 
        print.tau2 = FALSE,
        leftcols = c("studlab", "TE", "seTE", "ci"),
-       leftlabs = c("Lab", expression(italic("g")["z"]), "SE", "95% CI"),
+       leftlabs = c("Lab", expression(italic("g")["z"]), "SE", "98% CI"),
        rightcols = c("w.random"))
   dev.off()
   
@@ -278,7 +278,7 @@ for (pip in 1 : length(pipes_labels)){
        prediction = TRUE, 
        print.tau2 = FALSE,
        leftcols = c("studlab", "TE", "seTE", "ci"),
-       leftlabs = c("Lab", expression(italic("g")["z"]), "SE", "95% CI"),
+       leftlabs = c("Lab", expression(italic("g")["z"]), "SE", "98% CI"),
        rightcols = c("w.random"))
   dev.off()
   png(file.path(figure_path, paste0(pipes_labels[pip], "_t_test_4_vs_6.png")), width = 8, height = 4, units = "in", res = 300)
@@ -286,7 +286,7 @@ for (pip in 1 : length(pipes_labels)){
        prediction = TRUE, 
        print.tau2 = FALSE,
        leftcols = c("studlab", "TE", "seTE", "ci"),
-       leftlabs = c("Lab", expression(italic("g")["z"]), "SE", "95% CI"),
+       leftlabs = c("Lab", expression(italic("g")["z"]), "SE", "98% CI"),
        rightcols = c("w.random"))
   dev.off()
   
@@ -335,8 +335,8 @@ for (pip in 1 : length(pipes_labels)){
        print.tau2 = FALSE,
        #leftcols = c("studlab", "TE", "seTE", "ci"),
        leftcols = c("studlab", "Pearsons_r", "seTE", "ci"),
-       #leftlabs = c("Lab", expression("Fischer's z"), "SE", "95% CI"),
-       leftlabs = c("Lab", expression("Pearson's r"), "SE", "95% CI"),
+       #leftlabs = c("Lab", expression("Fischer's z"), "SE", "98% CI"),
+       leftlabs = c("Lab", expression("Pearson's r"), "SE", "98% CI"),
        rightcols = c("w.random"),
        xlim = c(-0.5, 0.9),
        at = seq(-0.4, 0.8, by = 0.2))
@@ -347,8 +347,8 @@ for (pip in 1 : length(pipes_labels)){
        print.tau2 = FALSE,
        #leftcols = c("studlab", "TE", "seTE", "ci"),
        leftcols = c("studlab", "Pearsons_r", "seTE", "ci"),
-       #leftlabs = c("Lab", expression("Fischer's z"), "SE", "95% CI"),
-       leftlabs = c("Lab", expression("Pearson's r"), "SE", "95% CI"),
+       #leftlabs = c("Lab", expression("Fischer's z"), "SE", "98% CI"),
+       leftlabs = c("Lab", expression("Pearson's r"), "SE", "98% CI"),
        rightcols = c("w.random"),
        xlim = c(-0.5, 0.9),
        at = seq(-0.4, 0.8, by = 0.2))
@@ -399,8 +399,8 @@ for (pip in 1 : length(pipes_labels)){
        print.tau2 = FALSE,
        #leftcols = c("studlab", "TE", "seTE", "ci"),
        leftcols = c("studlab", "Pearsons_r", "seTE", "ci"),
-       #leftlabs = c("Lab", expression("Fischer's z"), "SE", "95% CI"),
-       leftlabs = c("Lab", expression("Pearson's r"), "SE", "95% CI"),
+       #leftlabs = c("Lab", expression("Fischer's z"), "SE", "98% CI"),
+       leftlabs = c("Lab", expression("Pearson's r"), "SE", "98% CI"),
        rightcols = c("w.random"),
        xlim = c(-1, 1),
        at = seq(-1, 1, by = 0.5))
@@ -411,8 +411,8 @@ for (pip in 1 : length(pipes_labels)){
        print.tau2 = FALSE,
        #leftcols = c("studlab", "TE", "seTE", "ci"),
        leftcols = c("studlab", "Pearsons_r", "seTE", "ci"),
-       #leftlabs = c("Lab", expression("Fischer's z"), "SE", "95% CI"),
-       leftlabs = c("Lab", expression("Pearson's r"), "SE", "95% CI"),
+       #leftlabs = c("Lab", expression("Fischer's z"), "SE", "98% CI"),
+       leftlabs = c("Lab", expression("Pearson's r"), "SE", "98% CI"),
        rightcols = c("w.random"),
        xlim = c(-1, 1),
        at = seq(-1, 1, by = 0.5))
