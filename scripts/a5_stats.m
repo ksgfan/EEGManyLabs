@@ -83,6 +83,9 @@ for pip = 1 : length(pipelines)
     
     save(fullfile(datapath, 'mat_files', strcat('excl_tab_', pipes_labels{pip}, '.mat')), 'excl_tab')
     save(fullfile(datapath, 'mat_files', strcat('perf_tab_', pipes_labels{pip} ,'.mat')), 'perf_tab')
+    writetable(excl_tab, fullfile(datapath, 'csv_files', strcat('excl_tab_', pipes_labels{pip}, '.csv')))
+    writetable(perf_tab, fullfile(datapath, 'csv_files', strcat('perf_tab_', pipes_labels{pip}, '.csv')))
+
     
     % find subjects that should be excluded and exclude them
     excl = tab.K2 < 0 | ...                             % performance
