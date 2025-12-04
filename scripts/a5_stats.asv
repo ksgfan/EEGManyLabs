@@ -52,7 +52,7 @@ for pip = 1 : length(pipelines)
             excl_tab.(strcat('sd_', exclude_vars{e}))(lab) = round(std(lab_tab.(exclude_vars{e})), 2); 
         end
 
-        excl_tab.all_excluded_subs_bad_trials_and_performance(lab) = ...
+        excl_tab.all_excluded_subs_bad_trials_and_performance = ...
             sum((lab_tab.excl_total ./ lab_tab.total_trials) > 0.3 | lab_tab.K2 < 0);
 
     
@@ -90,6 +90,7 @@ for pip = 1 : length(pipelines)
     writetable(excl_tab, fullfile(datapath, 'csv_files', strcat('excl_tab_', pipes_labels{pip}, '.csv')))
     writetable(perf_tab, fullfile(datapath, 'csv_files', strcat('perf_tab_', pipes_labels{pip}, '.csv')))
 
+    
     % find subjects that should be excluded and exclude them
     excl = tab.K2 < 0 | ...                             % performance
            (tab.excl_total ./ tab.total_trials) > 0.3;  % bad trials

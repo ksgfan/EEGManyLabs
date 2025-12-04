@@ -210,6 +210,7 @@ for (pip in 1 : length(pipes_labels)){
 
 all_dat_bind = bind_rows(all_dat)
 colnames(all_dat_bind)
+all_dat_bind$final_N = all_dat_bind$N - all_dat_bind$all_excluded_subs_bad_trials_and_performance
 
 table1 = all_dat_bind %>%
   arrange(Lab, factor(Pipeline, levels = pipes_labels)) %>%
@@ -227,7 +228,8 @@ table1 = all_dat_bind %>%
     ET_Blink_M    = avg_excl_ET_Blink,
     ET_Blink_SD   = sd_excl_ET_Blink,
     ET_Saccade_M  = avg_excl_ET_Sacc,
-    ET_Saccade_SD = sd_excl_ET_Sacc
+    ET_Saccade_SD = sd_excl_ET_Sacc,
+    Final_N      = final_N
   )
 
 # round all values except p-vals
