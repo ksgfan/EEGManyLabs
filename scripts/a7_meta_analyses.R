@@ -297,13 +297,13 @@ for (pip in 1 : length(pipes_labels)){
     n = dat$num_subs,
     studlab = labs,
     data = NULL,
-    sm = "COR",
+    sm = "ZCOR", # concert to Fischer's z
     common = FALSE,
     random = TRUE,
     method.tau = "REML",
     hakn = TRUE,
     prediction = T,
-    transf = FALSE, # If transf = TRUE (default), inputs are expected to be Fisher's z transformed correlations instead of correlations for sm = "ZCOR"
+    backtransf = TRUE, # convert Fishers'z back to correlation
     title = "Amplitude decrease vs WM capacity",
     level.ci = ci_level,
     level = ci_level,
@@ -370,13 +370,13 @@ for (pip in 1 : length(pipes_labels)){
     n = dat$num_subs,
     studlab = labs,
     data = NULL,
-    sm = "COR",
+    sm = "ZCOR",
     common = FALSE,
     random = TRUE,
     method.tau = "REML",
     hakn = TRUE,
     prediction = T,
-    transf = FALSE, # If transf = TRUE (default), inputs are expected to be Fisher's z transformed correlations instead of correlations for sm = "ZCOR"
+    backtransf = TRUE, 
     title = "Amplitude decrease vs WM capacity",
     level.ci = ci_level,
     level = ci_level,
