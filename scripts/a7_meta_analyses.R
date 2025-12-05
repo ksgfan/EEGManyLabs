@@ -292,28 +292,37 @@ for (pip in 1 : length(pipes_labels)){
   
   ############ correlation of amplitude increase with WM capacity 2 to 4
   r = dat$wm_corr_2_4_r * (-1) ### flip sign
-  #d = FisherZ(d) # convert to Fischer Z
-  r_se = dat$wm_corr_2_4_r_se
-  meta_correlation = metagen(TE = r,
-                     seTE = r_se,
-                     studlab = labs,
-                     data = NULL,
-                     sm = "ZCOR",
-                     common = FALSE,
-                     random = TRUE,
-                     method.tau = "REML",
-                     hakn = TRUE,
-                     prediction = F,
-                     transf = FALSE, # If transf = TRUE (default), inputs are expected to be Fisher's z transformed correlations instead of correlations for sm = "ZCOR"
-                     backtransf = T,
-                     title = "Amplitude decrease vs WM capacity",
-                     level.ci = ci_level,
-                     level = ci_level,
-                     level.ma = ci_level,
-                     level.predict = ci_level,
-                     level.comb = ci_level)
+  meta_correlation = metacor(
+    cor = r,
+    n = dat$num_subs,
+    studlab = labs,
+    data = NULL,
+    sm = "COR",
+    common = FALSE,
+    random = TRUE,
+    method.tau = "REML",
+    hakn = TRUE,
+    prediction = T,
+    transf = FALSE, # If transf = TRUE (default), inputs are expected to be Fisher's z transformed correlations instead of correlations for sm = "ZCOR"
+    title = "Amplitude decrease vs WM capacity",
+    level.ci = ci_level,
+    level = ci_level,
+    level.ma = ci_level,
+    level.predict = ci_level,
+    level.comb = ci_level
+  )
+  meta_correlation$Pearsons_r <- r
   summary(meta_correlation)
-  meta_correlation$Pearsons_r <- (exp(2 * meta_correlation$TE) - 1) / (exp(2 * meta_correlation$TE) + 1)
+  forest(meta_correlation, 
+         prediction = TRUE, 
+         print.tau2 = FALSE,
+         #leftcols = c("studlab", "TE", "seTE", "ci"),
+         leftcols = c("studlab", "Pearsons_r", "seTE", "ci"),
+         #leftlabs = c("Lab", expression("Fischer's z"), "SE", "98% CI"),
+         leftlabs = c("Lab", expression("Pearson's r"), "SE", "98% CI"),
+         rightcols = c("w.random"),
+         xlim = c(-0.5, 0.9),
+         at = seq(-0.4, 0.8, by = 0.2))
   # save results
   df_results <- rbind(
     df_results,
@@ -356,28 +365,27 @@ for (pip in 1 : length(pipes_labels)){
   
   ############ correlation of amplitude increase with WM capacity 4 to 6
   r = dat$wm_corr_4_6_r * (-1) ### flip sign
-  #d = FisherZ(d) # convert to Fischer Z
-  r_se = dat$wm_corr_4_6_r_se
-  meta_correlation_4_6 = metagen(TE = d,
-                           seTE = d_se,
-                           studlab = labs,
-                           data = NULL,
-                           sm = "ZCOR",
-                           common = FALSE,
-                           random = TRUE,
-                           method.tau = "REML",
-                           hakn = TRUE,
-                           prediction = TRUE,
-                           transf = FALSE, # If transf = TRUE (default), inputs are expected to be Fisher's z transformed correlations instead of correlations for sm = "ZCOR"
-                           backtransf = F,
-                           title = "Amplitude decrease vs WM capacity",
-                           level.ci = ci_level,
-                           level = ci_level,
-                           level.ma = ci_level,
-                           level.predict = ci_level,
-                           level.comb = ci_level)
+  meta_correlation_4_6 = metacor(
+    cor = r,
+    n = dat$num_subs,
+    studlab = labs,
+    data = NULL,
+    sm = "COR",
+    common = FALSE,
+    random = TRUE,
+    method.tau = "REML",
+    hakn = TRUE,
+    prediction = T,
+    transf = FALSE, # If transf = TRUE (default), inputs are expected to be Fisher's z transformed correlations instead of correlations for sm = "ZCOR"
+    title = "Amplitude decrease vs WM capacity",
+    level.ci = ci_level,
+    level = ci_level,
+    level.ma = ci_level,
+    level.predict = ci_level,
+    level.comb = ci_level
+  )
+  meta_correlation_4_6$Pearsons_r <- r
   summary(meta_correlation_4_6)
-  meta_correlation_4_6$Pearsons_r <- (exp(2 * meta_correlation_4_6$TE) - 1) / (exp(2 * meta_correlation_4_6$TE) + 1)
   # save results
   df_results <- rbind(
     df_results,
