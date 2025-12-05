@@ -17,7 +17,7 @@ pipelines = {preprocessedDirect, preprocessedAdvanced, preprocessedICA, preproce
 tabs = {'cda_table_direct', 'cda_table_advanced', 'cda_table_ica', 'cda_table_ica_keepall'};
 pipes_labels = {'direct', 'advanced', 'ica', 'keep_all'};
 
-for pip = 3 : 3% length(pipelines)
+for pip = 1 : 3% length(pipelines)
 
     % load data
     load(fullfile(datapath, 'mat_files', strcat(tabs{pip}, '.mat')))
@@ -66,10 +66,10 @@ for pip = 3 : 3% length(pipelines)
     % compute amplitude increase from 2 to 4 items and memory capacity
     ampIncrease_2_to_4 = meanROI4 - meanROI2;
     memoryCapacity = (clean_tab.K2 + clean_tab.K4 + clean_tab.K6) / 3; % average over all setsizes
-    % 95% confidence interval
-    ciCDA2 = 1.96 * (nanstd(meanROI2) / sqrt(size(meanROI2, 1))); % 95% CI
-    ciCDA4 = 1.96 * (nanstd(meanROI4) / sqrt(size(meanROI4, 1))); % 95% CI
-    ciCDA6 = 1.96 * (nanstd(meanROI6) / sqrt(size(meanROI6, 1))); % 95% CI
+    % 98% confidence interval
+    ciCDA2 = 2.326 * (nanstd(meanROI2) / sqrt(size(meanROI2, 1))); % 95% CI
+    ciCDA4 = 2.326 * (nanstd(meanROI4) / sqrt(size(meanROI4, 1))); % 95% CI
+    ciCDA6 = 2.326 * (nanstd(meanROI6) / sqrt(size(meanROI6, 1))); % 95% CI
 
 
     % filter used only for visualization
@@ -138,6 +138,9 @@ for pip = 3 : 3% length(pipelines)
     box on
     text(-0.25, 1.15, 'D' ,'FontSize', 20, 'Units', 'normalized')
     f1.Position = [10 10 420*2 420*2];
+
+    % print out the correlation
+    [rho, pval] = corr(memoryCapacity, ampIncrease_2_to_4)
 
 end
 

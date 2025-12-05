@@ -426,7 +426,7 @@ for (pip in 1 : length(pipes_labels)){
        at = seq(-1, 1, by = 0.5))
   dev.off()
   
-  save(meta_4_vs_6, meta_correlation_4_6,
+  save(meta_4_vs_6, meta_correlation, meta_correlation_4_6,
        file = file.path(project_path, 'data/csv_files/', paste0(pipes_labels[pip], '_for_eq_tests.Rda')))
   
 }
