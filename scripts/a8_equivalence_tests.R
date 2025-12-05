@@ -63,7 +63,38 @@ for (pip in 1 : length(pipes_labels)){
   res = TOSTpaired(n=n,m1=m1,m2=m2,sd1=sd1,sd2=sd2,r12 = r12, low_eqbound_dz=-SESOI_d,high_eqbound_dz=SESOI_d)
   dev.off()
   
-
+  ##############################################################################
+  ##############################################################################
+  ##### Equivalence Test for H2.1.
+  ##############################################################################
+  ##############################################################################
+  SESOI_r = 0.299
+  
+  ##### equivalence test for meta-analysis results
+  png(file.path(figure_path, paste0(pipes_labels[pip], "_TOST_H2_1.png")), 
+      width = 15, height = 7, units = "cm", res = 300)
+  # do the test
+  tost_H22 = TOSTmeta(
+    ES = meta_correlation$TE.random,
+    se = meta_correlation$seTE.random,
+    low_eqbound_d  = -SESOI_r,
+    high_eqbound_d =  SESOI_r,
+    alpha = 0.02  
+  )
+  dev.off()
+  
+  ##### Now do only 1 equivalence test for H2.2 that treats all data as coming from 1 lab
+  # reverse the correlation to be positive
+  dat$wm_corr_2_4_r = dat$wm_corr_2_4_r*(-1)
+  n = sum(dat$num_subs)
+  weights = dat$num_subs
+  obs_r = weighted.mean(dat$wm_corr_2_4_r, weights)
+  
+  png(file.path(figure_path, paste0(pipes_labels[pip], "_TOST_H2_1_collapsed.png")), 
+      width = 15, height = 7, units = "cm", res = 300)
+  res = TOSTr(n = n, r = obs_r, low_eqbound_r=-SESOI_r, high_eqbound_r = SESOI_r, alpha=0.05, plot = TRUE, verbose = TRUE)
+  dev.off()
+  
   ##############################################################################
   ##############################################################################
   ##### Equivalence Test for H2.2.
