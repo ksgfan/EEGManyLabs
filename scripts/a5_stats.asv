@@ -86,17 +86,11 @@ for pip = 1 : length(pipelines)
     end
 
     % print average Ks
-    disp([mean(tab.K2), std(tab.K2)])
-    disp([mean(tab.K4), std(tab.K4)])
-    disp([mean(tab.K6), std(tab.K6)])
-    disp([mean((tab.K2+tab.K4+tab.K6)/3),     std((tab.K2+tab.K4+tab.K6)/3)])
+    mean(perf_tab.avgK2)
+    mean(perf_tab.avgK4)
+    mean(perf_tab.avgK6)
+    mean(/perf_tab.avgK2+perf_tab.avgK2+perf_tab.avgK2)/3)
     
-    % print average Ds
-    disp([mean(tab.d_prime2), std(tab.d_prime2)])
-    disp([mean(tab.d_prime4), std(tab.d_prime4)])
-    disp([mean(tab.d_prime6), std(tab.d_prime6)])
-    disp([mean((tab.d_prime2+tab.d_prime4+tab.d_prime6)/3),     std((tab.d_prime2+tab.d_prime4+tab.d_prime6)/3)])
-
     save(fullfile(datapath, 'mat_files', strcat('excl_tab_', pipes_labels{pip}, '.mat')), 'excl_tab')
     save(fullfile(datapath, 'mat_files', strcat('perf_tab_', pipes_labels{pip} ,'.mat')), 'perf_tab')
     writetable(excl_tab, fullfile(datapath, 'csv_files', strcat('excl_tab_', pipes_labels{pip}, '.csv')))
