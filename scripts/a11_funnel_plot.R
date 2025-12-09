@@ -13,14 +13,14 @@ r   = c(0.61, 0.48, 0.72, 0.48, 0.62, 0.65, 0.63, 0.52, 0.59, 0.40, 0.80, 0.78, 
 n   = c(14, 33, 18, 25, 24, 30, 18, 39, 23, 35, 25, 36,
         170, 72, 55)
 
-group <- c(
+group = c(
   rep("Luria (2017)", 12),
   rep("Unsworth (2015)", 1),
   rep("Adam (2018)", 1),
   rep("Tröndle (2024)", 1)
 )
 
-cols <- c(
+cols = c(
   "Luria (2017)" = "blue",
   "Unsworth (2015)"   = "#006400", 
   "Adam (2018)"       = "#228B22", 
@@ -31,29 +31,37 @@ cols <- c(
 dat = escalc(measure = "ZCOR", ri = r, ni = n)
 
 # Random-effects meta-analysis
-res = rma(yi, vi, data = dat)
+res_without = rma(yi, vi, data = dat)
 
 # Funnel plot
 cex_vec = 0.05 * n
-funnel(res, 
+funnel(res_without, 
        xlab = "Fisher's z",
        main = "Funnel Plot", 
        pch = 19, 
        cex = cex_vec,
        col = cols[group])
-
 legend("topright", legend = names(cols), col = cols, pch = 1, bty = "n")
 
 
-rtest = regtest(res, model = "rma")
-taf = trimfill(res)
+rtest_without = regtest(res_without, model = "rma")
+taf_without = trimfill(res_without)
+
+# funnel with missing studies
+funnel(taf_without, 
+       xlab = "Fisher's z",
+       main = "Funnel Plot", 
+       pch = 19, 
+       cex = cex_vec,
+       col = cols[group])
+legend("topright", legend = names(cols), col = cols, pch = 1, bty = "n")
 
 # print
-res
-res$pval
-rtest
-taf
-taf$pval
+res_without
+res_without$pval
+rtest_without
+taf_without
+taf_without$pval
 
 ################################################################################
 ################################################################################
@@ -70,7 +78,7 @@ n   = c(14, 33, 18, 25, 24, 30, 18, 39, 23, 35, 25, 36,
          23, 26,11,26,22,20,24,15,30,20,
          170, 72, 55)
 
-group <- c(
+group = c(
   rep("Luria (2017)", 12),
   rep("EEGManyLabs", 10),
   rep("Unsworth (2015)", 1),
@@ -78,7 +86,7 @@ group <- c(
   rep("Tröndle (2024)", 1)
 )
 
-cols <- c(
+cols = c(
   "Luria (2017)" = "blue",
   "EEGManyLabs" = "red",
   "Unsworth (2015)"   = "#006400", 
@@ -100,12 +108,19 @@ funnel(res,
        pch = 19, 
        cex = cex_vec,
        col = cols[group])
-
 legend("topright", legend = names(cols), col = cols, pch = 1, bty = "n")
-
 
 rtest = regtest(res, model = "rma")
 taf = trimfill(res)
+
+# funnel with missing studies
+funnel(taf, 
+       xlab = "Fisher's z",
+       main = "Funnel Plot", 
+       pch = 19, 
+       cex = cex_vec,
+       col = cols[group])
+legend("topright", legend = names(cols), col = cols, pch = 1, bty = "n")
 
 # print
 res
