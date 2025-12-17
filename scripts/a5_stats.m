@@ -13,15 +13,17 @@ participants = readtable(fullfile(bidspath, 'participants.tsv'), 'FileType', 'te
 %% loop over all preprocessing pipelines
 
 % list pipelines
-pipelines = {preprocessedDirect, preprocessedAdvanced, preprocessedICA, preprocessedICA};
-tabs = {'cda_table_direct', 'cda_table_advanced', 'cda_table_ica', 'cda_table_ica_keepall'};
-pipes_labels = {'direct', 'advanced', 'ica', 'keep_all'};
+pipelines = {preprocessedDirect, preprocessedAdvanced, preprocessedICA};
+tabs = {'cda_table_direct', 'cda_table_advanced', 'cda_table_ica'};
+pipes_labels = {'direct', 'advanced', 'ica'};
 
 for pip = 1 : length(pipelines)
 
     % load data
     load(fullfile(datapath, 'mat_files', strcat(tabs{pip}, '.mat')))
-    
+
+    % load 1 file for times
+    load(fullfile(pipelines{pip}, 'sub-Vog001/EEG.mat'))
     
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -130,6 +132,13 @@ for pip = 1 : length(pipelines)
     CDA2 = cell2mat(clean_tab.CDA2);
     CDA4 = cell2mat(clean_tab.CDA4);
     CDA6 = cell2mat(clean_tab.CDA6);
+    % contra and ipsi
+    GAcontra1 = cell2mat(clean_tab.GAcontra1);
+    GAcontra2 = cell2mat(clean_tab.GAcontra2);
+    GAipsi1 = cell2mat(clean_tab.GAipsi1);
+    GAipsi2 = cell2mat(clean_tab.GAipsi2);
+    GAcontra = [GAcontra1 + GAcontra2] / 2;
+    GAipsi = [GAipsi1 + GAipsi2] / 2;
     % add values to table
     subject_averages.ID = clean_tab.ID;
     subject_averages.Lab = clean_tab.Lab;
@@ -138,6 +147,8 @@ for pip = 1 : length(pipelines)
     subject_averages.CDA2 = mean(CDA2(:, TOI), 2);
     subject_averages.CDA4 = mean(CDA4(:, TOI), 2);
     subject_averages.CDA6 = mean(CDA6(:, TOI), 2);
+    subject_averages.Contra = mean(GAcontra(:, TOI), 2);
+    subject_averages.Ipsi = mean(GAipsi(:, TOI), 2);
     subject_averages.K = (clean_tab.K2 + clean_tab.K4 + clean_tab.K6) / 3;
     subject_averages.D_prime = (clean_tab.d_prime2 + clean_tab.d_prime4 + clean_tab.d_prime6) / 3;
     % save
@@ -155,11 +166,7 @@ for pip = 1 : length(pipelines)
     
     % init table
     all_stats = table;
-    
-    % load 1 file for times
-    load(fullfile(pipelines{pip}, 'sub-Vog001/EEG.mat'))
-    labs = unique(participants.lab);
-    
+ 
     % time of interest for correlation with VWM
     TOI = find(EEG.times >= 300 & EEG.times <= 900);
     

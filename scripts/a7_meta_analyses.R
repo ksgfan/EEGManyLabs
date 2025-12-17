@@ -14,7 +14,7 @@ figure_path = file.path(project_path, 'figures')
 setwd(file.path(project_path, 'scripts'))
 
 # pipelines
-pipes_labels = c('direct', 'advanced', 'ica', 'keep_all');
+pipes_labels = c('direct', 'advanced', 'ica');
 
 # init empty df for summary stats
 df_results = data.frame()
@@ -26,6 +26,7 @@ for (pip in 1 : length(pipes_labels)){
 
   # load data
   dat = read.csv(file.path(project_path, 'data/csv_files', paste0('all_stats_', pipes_labels[pip], '.csv')), header = T)
+  # dat = dat[dat$Lab != "Florida",] # check the results, when Florida is excluded
   labs = dat$Lab
   
   ############ outcome neutral test: contra vs ipsi
@@ -321,7 +322,7 @@ for (pip in 1 : length(pipes_labels)){
          #leftlabs = c("Lab", expression("Fischer's z"), "SE", "98% CI"),
          leftlabs = c("Lab", expression("Pearson's r"), "SE", "98% CI"),
          rightcols = c("w.random"),
-         xlim = c(-0.5, 0.9),
+         xlim = c(-0.7, 0.9),
          at = seq(-0.4, 0.8, by = 0.2))
   # save results
   df_results <- rbind(
@@ -347,7 +348,7 @@ for (pip in 1 : length(pipes_labels)){
        #leftlabs = c("Lab", expression("Fischer's z"), "SE", "98% CI"),
        leftlabs = c("Lab", expression("Pearson's r"), "SE", "98% CI"),
        rightcols = c("w.random"),
-       xlim = c(-0.5, 0.9),
+       xlim = c(-0.7, 0.9),
        at = seq(-0.4, 0.8, by = 0.2))
   dev.off()
   png(file.path(figure_path, paste0(pipes_labels[pip], "_corr_2_to_4.png")), width = 8, height = 4, units = "in", res = 300)
@@ -359,7 +360,7 @@ for (pip in 1 : length(pipes_labels)){
        #leftlabs = c("Lab", expression("Fischer's z"), "SE", "98% CI"),
        leftlabs = c("Lab", expression("Pearson's r"), "SE", "98% CI"),
        rightcols = c("w.random"),
-       xlim = c(-0.5, 0.9),
+       xlim = c(-0.7, 0.9),
        at = seq(-0.4, 0.8, by = 0.2))
   dev.off()
   
@@ -394,7 +395,7 @@ for (pip in 1 : length(pipes_labels)){
          #leftlabs = c("Lab", expression("Fischer's z"), "SE", "98% CI"),
          leftlabs = c("Lab", expression("Pearson's r"), "SE", "98% CI"),
          rightcols = c("w.random"),
-         xlim = c(-0.5, 0.9),
+         xlim = c(-0.7, 0.9),
          at = seq(-0.4, 0.8, by = 0.2))
   # save results
   df_results <- rbind(
@@ -420,7 +421,7 @@ for (pip in 1 : length(pipes_labels)){
          #leftlabs = c("Lab", expression("Fischer's z"), "SE", "98% CI"),
          leftlabs = c("Lab", expression("Pearson's r"), "SE", "98% CI"),
          rightcols = c("w.random"),
-         xlim = c(-0.5, 0.9),
+         xlim = c(-0.7, 0.9),
          at = seq(-0.4, 0.8, by = 0.2))
   dev.off()
   png(file.path(figure_path, paste0(pipes_labels[pip], "_corr_6.png")), width = 8, height = 4, units = "in", res = 300)
@@ -432,7 +433,7 @@ for (pip in 1 : length(pipes_labels)){
          #leftlabs = c("Lab", expression("Fischer's z"), "SE", "98% CI"),
          leftlabs = c("Lab", expression("Pearson's r"), "SE", "98% CI"),
          rightcols = c("w.random"),
-         xlim = c(-0.5, 0.9),
+         xlim = c(-0.7, 0.9),
          at = seq(-0.4, 0.8, by = 0.2))
   dev.off()
   
