@@ -120,7 +120,111 @@ for f = 1 : size(d, 1)
         newBEH.trialSOA = beh_csv.trialSOA(1:num_trials)';
         newBEH.TrialID = beh_csv.TrialID(1:num_trials);
     end
+
+    % the data was recorded using the old version of the paradigm. We have
+    % to change trigger values so that they are the same as for other labs.
+    %TASK_START: 11, 12, .. 15
+    %TASK_END: 91, ..95
+    %CUE_LEFT: 3
+    %CUE_RIGHT: 7
+    %SETSIZE2: 21
+    %SETSIZE4: 41
+    %SETSIZE6: 61
+    %RETENTION: 50
+    %TEST2: 22
+    %TEST4: 42
+    %TEST6: 62
+    %RESP_SAME_CORR: 76
+    %RESP_DIFF_CORR: 77
+    %RESP_SAME_INCORR: 78
+    %RESP_DIFF_INCORR: 79
+
+    % In Münster, we have:
+    unique({EEG.event.type})
+    % where:
+    %TASK_START: always 10 
+    %TASK_END: always 90
+    %CUE_LEFT: 3
+    %CUE_RIGHT: 7
+    %RETENTION: 50
+    %TEST: 27, 28, 47, 48, 67, 68
+
+    %RESP_SAME: 77
+    %RESP_DIFF: 78
     
+    % 250, 80, - block start - can be removed
+    % 91 - trial end - can be removed
+    % remove them
+    badTypes = {'250', '80', '91'};
+    rm_idx = ismember({EEG.event.type}, badTypes);
+    EEG.event(rm_idx) = [];
+
+    % create new vars
+    [EEG.event.type_old] = EEG.event.type;
+    [EEG.event.type_new] = EEG.event.type;
+
+    % blocs should start with triggers 11-15 and end with 91-95
+    idx10 = find(ismember({EEG.event.type}, '10'));
+    idx90 = find(ismember({EEG.event.type}, '90'));
+    for k = 1:numel(idx10)
+        EEG.event(idx10(k)).type_new = num2str(10 + k);
+    end
+
+    for k = 1:numel(idx90)
+        EEG.event(idx90(k)).type_new = num2str(90 + k);
+    end
+
+    % find 'test' indices
+    test_idx = find(ismember({EEG.event.type}, {'27', '28', '47', '48', '67', '68'}));
+    test_idx2 = find(ismember({EEG.event.type}, {'27', '28'}));
+    for i = test_idx2
+        EEG.event(i).type_new = '22';
+    end
+    test_idx4 = find(ismember({EEG.event.type}, {'47', '48'}));
+    for i = test_idx4
+        EEG.event(i).type_new = '42';
+    end
+    test_idx6 = find(ismember({EEG.event.type}, {'67', '68'}));
+    for i = test_idx6
+        EEG.event(i).type_new = '62';
+    end
+
+
+    % responses
+    old_resp_idx = find(ismember({EEG.event.type}, {'77', '78'}));
+    % newBEH.allResponses % NaN means that response is missing
+    missing_resp = isnan(newBEH.allResponses);
+    % remove missing resp from beh file
+    allResp = newBEH.allResponses(not(missing_resp));
+    allCorr = newBEH.allCorrect(not(missing_resp));
+    % now the three vectors have the same length
+    for resp = 1 : length(old_resp_idx)
+
+        old_resp = EEG.event(old_resp_idx(resp)).type_old;
+        
+        % if RESP_SAME
+        if strcmp(old_resp, '77')
+            if allCorr(resp) == 1
+                EEG.event(old_resp_idx(resp)).type_new = '76'; % same, correct
+            elseif allCorr(resp) == 0
+                EEG.event(old_resp_idx(resp)).type_new = '78'; % same, incorrect
+            end
+        % if RESP_DIFF
+        elseif strcmp(old_resp, '78')
+            if allCorr(resp) == 1
+                EEG.event(old_resp_idx(resp)).type_new = '77'; % diff, correct
+            elseif allCorr(resp) == 0
+                EEG.event(old_resp_idx(resp)).type_new = '79'; % diff, incorrect
+            end
+        end
+    end
+
+    % sanity check
+    unique({EEG.event.type_new})
+
+    % replace type
+    [EEG.event.type] = EEG.event.type_new;
+
     % append  behavioral
     EEG.beh.data = newBEH; % replace with merged data
     mkdir(fullfile(result_folder, id))

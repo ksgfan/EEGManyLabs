@@ -10,21 +10,21 @@ initPaths;
 % data format: 
 % - sub-Vog001
 %   - eeg
-%     - sub-Vog001_task-CDA_channels.tsv
-%     - sub-Vog001_task-CDA_eeg.eeg
-%     - sub-Vog001_task-CDA_eeg.json
-%     - sub-Vog001_task-CDA_eeg.vhdr
-%     - sub-Vog001_task-CDA_eeg.vmrk
-%     - sub-Vog001_task-CDA_events.json
-%     - sub-Vog001_task-CDA_events.tsv
-%     - sub-Vog001_task-Eye_channels.tsv
-%     - sub-Vog001_task-Eye_eeg.eeg
-%     - sub-Vog001_task-Eye_eeg.json
-%     - sub-Vog001_task-Eye_eeg.vhdr
-%     - sub-Vog001_task-Eye_eeg.vmrk
-%     - sub-Vog001_task-Eye_events.json
-%     - sub-Vog001_task-Eye_events.tsv
-%   - sub-Vog001_scans.tsv with filename and acq_time
+%     - sub-Voge0001_task-CDA_channels.tsv
+%     - sub-Voge0001_task-CDA_eeg.eeg
+%     - sub-Voge0001_task-CDA_eeg.json
+%     - sub-Voge0001_task-CDA_eeg.vhdr
+%     - sub-Voge0001_task-CDA_eeg.vmrk
+%     - sub-Voge0001_task-CDA_events.json
+%     - sub-Voge0001_task-CDA_events.tsv
+%     - sub-Voge0001_task-Eye_channels.tsv
+%     - sub-Voge0001_task-Eye_eeg.eeg
+%     - sub-Voge0001_task-Eye_eeg.json
+%     - sub-Voge0001_task-Eye_eeg.vhdr
+%     - sub-Voge0001_task-Eye_eeg.vmrk
+%     - sub-Voge0001_task-Eye_events.json
+%     - sub-Voge0001_task-Eye_events.tsv
+%   - sub-Voge0001_task.tsv with filename and acq_time
 % - dataset_description.json
 % - participants.json
 % - participants.tsv with id, age, gender etc
@@ -49,6 +49,7 @@ initPaths;
 % 6: Universität / Hochschulabschluss
 % 7: Anderer Abschluss
 
+% NOTE: Age and Sex information can be also found in EEG.beh.subject
 
 %% create data structure with all subjects
 
@@ -68,7 +69,7 @@ headers = {'participant_id', 'species', 'age', 'sex', 'handedness', 'tod', 'educ
 demo_table = table('Size', [0 11], ...           
                   'VariableNames', headers, ...
                   'VariableTypes', {'cell', 'cell', 'cell', 'cell', 'cell', 'cell' , 'cell', 'cell', 'cell', 'cell', 'cell'});
-ids = arrayfun(@(x) sprintf('%03d', x), 1:320, 'UniformOutput', false);
+ids = arrayfun(@(x) sprintf('%04d', x), 1:320, 'UniformOutput', false);
 labs = {'Dartmouth', 'Florida', 'Mainz', 'Münster', 'NorthDakota', 'Ohio', 'Reykjavik', 'Sheffield', 'Zürich (Prof. Langer)', 'Zürich (Prof. Sauseng)'};
 
 
@@ -177,7 +178,7 @@ for lab = 1 : size(d, 1)
         end
         
         % insert to table
-        demo_table.participant_id{sub_count} = strcat('Vog', ids{sub_count});
+        demo_table.participant_id{sub_count} = strcat('Voge', ids{sub_count});
         demo_table.species{sub_count} = 'homo sapiens';
         demo_table.age{sub_count} = AGE;
         demo_table.sex{sub_count} = SEX;
@@ -224,7 +225,7 @@ generalInfo.Authors = {'Dawid Strzelczyk', 'Peter E. Clayson', 'Heida Maria Sigu
 'Niko A. Busch', 'Maro G. Machizawa', 'William X. Q. Ngiam', 'Edward K. Vogel', ...
 'Samuel A. Birkholz', 'Emily Johnson', 'Jeffrey S. Johnson', 'Charline Peylo', 'Larissa Behnke', ...
 'Yannik Hilla', 'Paul Sauseng', 'Faisal Mushtaq', 'Yuri G. Pavlov', 'Nicolas Langer'};
-
+generalInfo.HEDVersion = 'HED annotations are not included in the current release.';
 
 % participant column description for participants.json file - check OSF!!!
 % ---------------------------------------------------------
@@ -303,3 +304,35 @@ bids_export_dawid(data, 'targetdir', bidspath, 'taskName', 'EEGManyLabs', ...
 
 
 %
+
+
+%%
+
+% dd = dir('/Volumes/G_PSYPLAFOR_methlab$/EEGManyLabs/data/formatted_data/reykjavik/*/*CDA*');
+% 
+% tt = readtable('/Volumes/G_PSYPLAFOR_methlab$/EEGManyLabs/data/csv_files/demo_data/reykjavik/demo_reykjavik.xlsx');
+% 
+% for sub = 1 : size(dd, 1)
+% 
+%     disp(sub)
+% 
+%     load(fullfile(dd(sub).folder, dd(sub).name))
+% 
+%     if isfield(EEG.beh, 'subject')
+%         id = EEG.beh.subject.ID;
+% 
+%         ii = find(ismember(tt.ID, id));
+% 
+%         if strcmp(tt.Age{ii}, 'NA')
+%             tt.Age{ii} = EEG.beh.subject.age;
+%         end
+% 
+%         if strcmp(tt.Sex{ii}, 'NA')
+%             tt.Sex{ii} = EEG.beh.subject.gender;
+%         end
+%     end 
+% 
+% end
+% 
+% writetable(tt, '/Volumes/G_PSYPLAFOR_methlab$/EEGManyLabs/data/csv_files/demo_data/reykjavik/demo_reykjavik.xlsx');
+%%

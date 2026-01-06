@@ -884,7 +884,7 @@ tInfo.EEGReference = EEG.tInfo.EEGReference;
 tInfo.EEGGround = EEG.tInfo.EEGGround;
 tInfo.InstitutionName = EEG.tInfo.InstitutionName;
 tInfo.PowerLineFrequency = EEG.tInfo.PowerLineFrequency;
-tInfo.CapManufacturer = EEG.tInfo.CapManufacturer;
+tInfo.Manufacturer = EEG.tInfo.CapManufacturer;
 tInfo.SoftwareFilters = EEG.tInfo.SoftwareFilters;
 %%%%% Dawid end
 
@@ -911,17 +911,55 @@ if ~isequal(opt.exportformat, 'same') || isequal(ext, '.set')
     if isequal(opt.exportformat, 'eeglab')
         pop_saveset(EEG, 'filename', [ fileOutNoExt '.set' ], 'filepath', filePathTmp);
     elseif isequal(opt.exportformat, 'vhdr')
-        %%%% DAWID
+        %%%%%%%%%%%%%%%%%%%% DAWID
         pop_writebva_dawid(EEG, fullfile(filePathTmp, [ fileOutNoExt '.' opt.exportformat])) 
         % save EEG.beh as json
         if isfield(EEG, 'beh')
-            filePathBeh = fullfile(filePathTmp(1:end-4), 'beh');
-            mkdir(filePathBeh);
-            fileOutNoExtBeh = strcat(fileOutNoExt(1:end-3), 'beh.json');
+            % derive sourcedata path
+            sourcePath = fullfile(opt.targetdir, 'sourcedata', subjectStr, 'eeg');
+            if not(exist(sourcePath, 'dir'))
+                mkdir(sourcePath); 
+            end
+            % save
+            fileOutNoExtBeh = strcat(fileOutNoExt(1:end-3), 'desc-taskmeta.json');
             jsonStr = jsonencode(EEG.beh);
-            fid = fopen(fullfile(filePathBeh, fileOutNoExtBeh), 'w');
+            fid = fopen(fullfile(sourcePath, fileOutNoExtBeh), 'w');
             fprintf(fid, '%s', jsonStr);
             fclose(fid);
+            % build description json
+            fileOutDesc = strrep(fileOutNoExtBeh, '.json', '_description.json');   % description json
+            desc = struct();
+            desc.Name = 'taskmeta';
+            desc.Description = 'Auxiliary task metadata and behavioural log exported from MATLAB/EEGLAB. Stored in sourcedata because it contains nested and non-tabular fields not suitable for BIDS events.tsv.';
+            desc.Variables = struct();
+            desc.Variables.allResponses.Description = ['Per-trial participant responses recorded during the test phase. ' ...
+                                                       'Values correspond to keyboard key codes indicating the participant’s ' ...
+                                                       'change / no-change decision. On Linux systems, keycode A = 39 and keycode L = 47; ' ...
+                                                       'on Windows systems, keycode A = 65 and keycode L = 76. ' ...
+                                                       'Response mapping depends on the original subject ID: for odd IDs (e.g., 1, 3, 5), ' ...
+                                                       'L indicates no change and A indicates change; for even IDs (e.g., 2, 4, 6), ' ...
+                                                       'L indicates change and A indicates no change. Missing responses are encoded as null.'];
+            desc.Variables.allCorrect.Description        = 'Per-trial accuracy indicator derived from participant responses. Values indicate whether the response on a given trial was correct (1) or incorrect (0). Missing or invalid trials are encoded as null.';
+            desc.Variables.whichChangedItem.Description  = 'Index of the item that changed between memory and test array on change trials. Null values indicate no-change trials or trials where this information is not applicable. The index corresponds to CordX/CordY variables';
+            desc.Variables.allLeftItemCoordX.Description = 'X pixel coordinates of all memory items presented in the left visual hemifield for each trial. Each trial contains a vector with one entry per item; unused entries are padded with null values depending on set size.';
+            desc.Variables.allLeftItemCoordY.Description = 'Y pixel coordinates of all memory items presented in the left visual hemifield for each trial. Each trial contains a vector with one entry per item; unused entries are padded with null values depending on set size.';
+            desc.Variables.allRightItemCoordX.Description = 'X pixel coordinates of all memory items presented in the right visual hemifield for each trial. Each trial contains a vector with one entry per item; unused entries are padded with null values depending on set size.';
+            desc.Variables.allRightItemCoordY.Description = 'Y pixel coordinates of all memory items presented in the right visual hemifield for each trial. Each trial contains a vector with one entry per item; unused entries are padded with null values depending on set size.';
+            desc.Variables.allLeftItemColors.Description = 'Colors of the items presented un the left hemifield. 1 = red. 2 = blue. 3 = violet. 4 = green. 5 = yellow. 6 = black. 7 = white.';
+            desc.Variables.allRightItemColors.Description = 'Colors of the items presented un the right hemifield.  1 = red. 2 = blue. 3 = violet. 4 = green. 5 = yellow. 6 = black. 7 = white.';
+            desc.Variables.changedItemFoil.Description = 'Indicates, which color changed. Null indicates no change.';
+            desc.Variables.trialSetSize.Description           = 'Number of items presented in the memory array on each trial (visual working memory load).';
+            desc.Variables.trialChange.Description           = 'Indicates whether trial was change (1) or no change (0) trial';
+            desc.Variables.trialCuedSide.Description           = 'Spatial cue direction for each trial, indicating whether participants were instructed to attend to the left (0) or right (1) visual hemifield.';
+            desc.Variables.trialSOA.Description = 'Determine each trials stimulus onset asychrony';
+            desc.Variables.trialITI.Description = 'Determine each trials trial onset asychrony';
+            % save
+            jsonDescStr = jsonencode(desc, 'PrettyPrint', true);
+            fid = fopen(fullfile(sourcePath, fileOutDesc), 'w');
+            assert(fid > 0, 'Could not open file for writing: %s', fullfile(sourcePath, fileOutDesc));
+            fprintf(fid, '%s', jsonDescStr);
+            fclose(fid); 
+            %%%%%%%%%%%%%%%%%%%% DAWID end
         end
     else
         pop_writeeeg(EEG, fullfile(filePathTmp, [ fileOutNoExt '.' opt.exportformat]), 'TYPE',upper(opt.exportformat));
@@ -959,10 +997,53 @@ end
 eyeWritenStatus = save_bids_eye_tracking(sIn, fileBase, EEG, opt);
 
 
-%%%% Dawid
+%%%%%%%%%%%%%%%% Dawid
 [EEG.event.sample] = EEG.event.latency;
 [EEG.event.value] = EEG.event.type;
+[EEG.event.trial_type] = EEG.event.type;
 
+% keep only relevant events
+relevant_events = {'9', '10', '11', '12', '13', '14', '15', ... % start events
+                   '89', '90', '91', '92', '93', '94', '95', ... & end events
+                   '3', '7', ... % cue
+                   '21', '41', '61', ... % memory array
+                   '50', ... % retention 
+                   '22', '42', '62', ... % test array
+                   '76', '77', '78', '79', ... responses
+                   '101', '102', '103', '104', '55', ... eye calib task
+                   'L_saccade', 'L_fixation', 'L_blink', ... eye tracker events
+                    };
+
+keep_idx = ismember({EEG.event.trial_type}, relevant_events);
+% keep only those events
+EEG.event = EEG.event(keep_idx);
+
+% add trial type
+i_start = {'9', '10', '11', '12', '13', '14', '15'};
+[EEG.event(ismember({EEG.event.type}, i_start)).trial_type] = deal('block_start');
+i_end = {'89', '90', '91', '92', '93', '94', '95'};
+[EEG.event(ismember({EEG.event.type}, i_end)).trial_type] = deal('block_end');
+[EEG.event(strcmp({EEG.event.type}, '3')).trial_type] = deal('cue_left');
+[EEG.event(strcmp({EEG.event.type}, '7')).trial_type] = deal('cue_right');
+[EEG.event(strcmp({EEG.event.type}, '21')).trial_type] = deal('setsize2_onset');
+[EEG.event(strcmp({EEG.event.type}, '41')).trial_type] = deal('setsize4_onset');
+[EEG.event(strcmp({EEG.event.type}, '61')).trial_type] = deal('setsize6_onset');
+[EEG.event(strcmp({EEG.event.type}, '50')).trial_type] = deal('retention');
+[EEG.event(strcmp({EEG.event.type}, '22')).trial_type] = deal('setsize2_test');
+[EEG.event(strcmp({EEG.event.type}, '42')).trial_type] = deal('setsize4_test');
+[EEG.event(strcmp({EEG.event.type}, '62')).trial_type] = deal('setsize6_test');
+[EEG.event(strcmp({EEG.event.type}, '76')).trial_type] = deal('response_nochange_correct');
+[EEG.event(strcmp({EEG.event.type}, '77')).trial_type] = deal('response_change_correct');
+[EEG.event(strcmp({EEG.event.type}, '78')).trial_type] = deal('response_nochange_incorrect');
+[EEG.event(strcmp({EEG.event.type}, '79')).trial_type] = deal('response_change_incorrect');
+
+[EEG.event(strcmp({EEG.event.type}, '101')).trial_type] = deal('stimulus_6_degree_left');
+[EEG.event(strcmp({EEG.event.type}, '102')).trial_type] = deal('stimulus_3_degree_left');
+[EEG.event(strcmp({EEG.event.type}, '103')).trial_type] = deal('stimulus_3_degree_right');
+[EEG.event(strcmp({EEG.event.type}, '104')).trial_type] = deal('stimulus_6_degree_right');
+[EEG.event(strcmp({EEG.event.type}, '55')).trial_type] = deal('response');
+
+% list event names
 ev_names = fieldnames(EEG.event);
 opt.eInfoDesc = struct();
 opt.eInfo = {};
@@ -982,6 +1063,32 @@ opt.eInfoDesc.(ev_names{i_value}).Description = 'The event code (also known as t
 i_sam = find(ismember(ev_names, 'sample'));
 opt.eInfo{4, 1} = ev_names{i_sam}; opt.eInfo{4, 2} = ev_names{i_sam};
 opt.eInfoDesc.(ev_names{i_sam}).Description = 'The event onset time in number of sampling points.';
+% trial type
+i_trial_type = find(ismember(ev_names, 'trial_type'));
+opt.eInfo{5, 1} = ev_names{i_trial_type}; opt.eInfo{5, 2} = ev_names{i_trial_type};
+opt.eInfoDesc.(ev_names{i_trial_type}).Description = 'Description of the event type';
+opt.eInfoDesc.trial_type.Levels = struct();
+opt.eInfoDesc.trial_type.Levels.block_start = 'Start of a task block. 9 = Eye calibration task. 10 = Resting EEG. 11-15 = Change detection task.';
+opt.eInfoDesc.trial_type.Levels.block_end = 'End of a task block. 89 = Eye calibration task. 90 = Resting EEG. 91-95 = Change detection task.';
+opt.eInfoDesc.trial_type.Levels.cue_left = 'Spatial cue indicating left hemifield';
+opt.eInfoDesc.trial_type.Levels.cue_right = 'Spatial cue indicating right hemifield';
+opt.eInfoDesc.trial_type.Levels.setsize2_onset = 'Memory array onset with set size 2';
+opt.eInfoDesc.trial_type.Levels.setsize4_onset = 'Memory array onset with set size 4';
+opt.eInfoDesc.trial_type.Levels.setsize6_onset = 'Memory array onset with set size 6';
+opt.eInfoDesc.trial_type.Levels.retention = 'Retention interval following memory array';
+opt.eInfoDesc.trial_type.Levels.setsize2_test = 'Test array onset with set size 2';
+opt.eInfoDesc.trial_type.Levels.setsize4_test = 'Test array onset with set size 4';
+opt.eInfoDesc.trial_type.Levels.setsize6_test = 'Test array onset with set size 6';
+opt.eInfoDesc.trial_type.Levels.response_nochange_correct = 'Correct response indicating no change';
+opt.eInfoDesc.trial_type.Levels.response_change_correct = 'Correct response indicating a change';
+opt.eInfoDesc.trial_type.Levels.response_nochange_incorrect = 'Incorrect response indicating no change';
+opt.eInfoDesc.trial_type.Levels.response_change_incorrect = 'Incorrect response indicating a change';
+opt.eInfoDesc.trial_type.Levels.stimulus_6_degree_left = 'Calibration stimulus presented 6 degrees left of fixation';
+opt.eInfoDesc.trial_type.Levels.stimulus_3_degree_left = 'Calibration stimulus presented 3 degrees left of fixation';
+opt.eInfoDesc.trial_type.Levels.stimulus_3_degree_right = 'Calibration stimulus presented 3 degrees right of fixation';
+opt.eInfoDesc.trial_type.Levels.stimulus_6_degree_right = 'Calibration stimulus presented 6 degrees right of fixation';
+opt.eInfoDesc.trial_type.Levels.response = 'Spacebar response during eye calibration task';
+
 % additional ET events, if available
 if any(ismember(ev_names, 'sac_amplitude'))
     et_names = ev_names(contains(ev_names, 'sac_') | contains(ev_names, 'fix_'));
@@ -990,7 +1097,7 @@ if any(ismember(ev_names, 'sac_amplitude'))
         opt.eInfoDesc.(et_names{et_n}).Description = 'Eye-tracker events';
     end
 end
-%%%% Dawid end
+%%%%%%%%%%%%%%%%%%%% Dawid end
 
 % write events
 indExt = find(fileOut == '_');

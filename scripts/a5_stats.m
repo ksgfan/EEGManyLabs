@@ -57,13 +57,13 @@ for pip = 1 : length(pipelines)
         excl_tab.all_excluded_subs_bad_trials_and_performance(lab) = ...
             sum((lab_tab.excl_total ./ lab_tab.total_trials) > 0.3 | lab_tab.K2 < 0);
 
-    
+
         excl_tab.N{lab} = size(lab_tab, 1);
         perf_tab.N{lab} = size(lab_tab, 1);
 
         % find number of subjects with low performance (K2 < 0)
         excl_tab.sub_rejected_perf(lab) = sum(lab_tab.K2 < 0);
-    
+
         % Accuracy  
         perf_tab.avgAcc2(lab) = round(mean(lab_tab.Accuracy2), 2);
         perf_tab.sdAcc2(lab) = round(std(lab_tab.Accuracy2), 2);
@@ -85,6 +85,16 @@ for pip = 1 : length(pipelines)
         perf_tab.sdD4(lab) = round(std(lab_tab.d_prime4), 2);
         perf_tab.avgD6(lab) = round(mean(lab_tab.d_prime6), 2);
         perf_tab.sdD6(lab) = round(std(lab_tab.d_prime6), 2);
+        % Age, Sex, Hand
+        perf_tab.avgAge(lab) = round(nanmean(lab_tab.Age), 2);
+        perf_tab.sdAge(lab) = round(nanstd(lab_tab.Age), 2);
+        [ctab, chi2, p, labels] = crosstab(lab_tab.Sex);
+        perf_tab.sex_val(lab) = {ctab};
+        perf_tab.sex_labels(lab) = {labels};
+        [ctab, chi2, p, labels] = crosstab(lab_tab.Hand);
+        perf_tab.hand_val(lab) = {ctab};
+        perf_tab.hand_labels(lab) = {labels};
+
     end
 
     % print average Ks
