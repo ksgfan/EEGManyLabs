@@ -21,13 +21,16 @@ df_results = data.frame()
 
 ci_level = 0.98
 
+lab_labels = c('DART', 'USF', 'JGU', 'WWU', 'NDSU', 'OSU', 'UI' , 'TUOS', 'UZH-MPR', 'UZH-NCN')
+
+
 # loop over pipelines and save results
 for (pip in 1 : length(pipes_labels)){
 
   # load data
   dat = read.csv(file.path(project_path, 'data/csv_files', paste0('all_stats_', pipes_labels[pip], '.csv')), header = T)
   # dat = dat[dat$Lab != "Florida",] # check the results, when Florida is excluded
-  labs = dat$Lab
+  labs = lab_labels
   
   ############ outcome neutral test: contra vs ipsi
   d = dat$on_gz

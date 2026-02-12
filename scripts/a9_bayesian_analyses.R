@@ -17,6 +17,8 @@ pipes_labels = c('direct', 'advanced', 'ica');
 # init empty df for summary stats
 df_results = data.frame()
 
+ci_level = 0.98
+
 # loop over pipelines and save results
 for (pip in 1 : length(pipes_labels)){
   
@@ -24,7 +26,10 @@ for (pip in 1 : length(pipes_labels)){
   dat = read.csv(file.path(project_path, 'data/csv_files', paste0('subject_averages_', pipes_labels[pip], '.csv')), header = T)
   dat$Hand[dat$Hand == "n/a"] = NA
   dat$Sex[dat$Sex == "n/a"] = NA
-  
+  # exclude gender 'o' and hand 'a': not enough data
+  dat$Hand[dat$Hand == "a"] = NA 
+  dat$Sex[dat$Sex == "o"] = NA
+
   ##############################################################################
   ### Statistical analysis for Hypothesis Outcome Neutral ######################
   ##############################################################################
@@ -44,14 +49,22 @@ for (pip in 1 : length(pipes_labels)){
   # convert vars to factor, scale CDA
   df = df_long %>%
     mutate(
-      Cluster = factor(Cluster),
-      Sex  = factor(Sex),
-      Hand     = factor(Hand, levels = c("l", "r", "a")), 
+      Cluster = factor(Cluster, levels = c("Contra", "Ipsi")),
+      Sex  = factor(Sex, levels = c("f", "m")),
+      Hand     = factor(Hand, levels = c("r", "l")), 
       Lab    = factor(Lab),
+      ID = factor(ID),
       
       # Scale CDA (Gelman 2007: SD = 0.5)
       CDA_s = as.numeric(scale(CDA)) / 2
     )
+  
+  # sanity check
+  levels(df$Cluster)
+  levels(df$Hand)
+  levels(df$Hand)
+  contrasts(df$Hand)
+  contrasts(df$Sex)
   
   # priors
   priors = c(
@@ -61,8 +74,8 @@ for (pip in 1 : length(pipes_labels)){
   )
   
   # model formula with covariates and lab as random effect
-  formula_cda = bf(
-    CDA_s ~ Cluster + Sex + Hand + (1 | Lab),
+  formula_cda <- bf(
+    CDA_s ~ Cluster * Sex * Hand + (1|ID) + (1|Lab),
     family = gaussian()
   )
   
@@ -76,15 +89,15 @@ for (pip in 1 : length(pipes_labels)){
     warmup = 2000,
     cores = 4,
     sample_prior = "no",
-    control = list(adapt_delta = 0.95)
+    control = list(adapt_delta = 0.99)
   )
-  summary(fit_cda)
+  summary(fit_cda, prob = ci_level)
 
   # Extract exact posterior
   post = posterior_summary(
     fit_cda,
     pars = "^b_",
-    probs = c(0.025, 0.975)
+    probs = c(0.01, 0.99)
   )
   post
   
@@ -92,7 +105,7 @@ for (pip in 1 : length(pipes_labels)){
   res = as.data.frame(post) %>%
     mutate(
       parameter = rownames(post),
-      sig95 = if_else(Q2.5 > 0 | Q97.5 < 0, "CI excludes 0*", "CI includes 0")
+      sig98 = if_else(Q1 > 0 | Q99 < 0, "CI excludes 0*", "CI includes 0")
     )
   res
   
@@ -103,9 +116,9 @@ for (pip in 1 : length(pipes_labels)){
       TestType = 'ON_LMM',
       Param = res$parameter,
       SMD = res$Estimate,
-      CI1 = res$Q2.5,
-      CI2 = res$Q97.5,
-      sig95 = res$sig95
+      CI1 = res$Q1,
+      CI2 = res$Q99,
+      sig98 = res$sig98
     )
   )
   
@@ -124,7 +137,7 @@ for (pip in 1 : length(pipes_labels)){
   
   # formula
   formula_h1_su = bf(
-    CDA_s ~ Cluster, # + Sex + Hand #### contrast need at lweast 2 levels! sometimes a lab has only right-handed subject, or e.g. demographics are missing (n/a)
+    CDA_s ~ Cluster + (1|ID), # + Sex + Hand #### contrast need at lweast 2 levels! sometimes a lab has only right-handed subject, or e.g. demographics are missing (n/a)
     family = gaussian()
   )
   
@@ -146,9 +159,10 @@ for (pip in 1 : length(pipes_labels)){
     df_lab = data_lab %>%
       mutate(
         Cluster = factor(Cluster),
-        Sex  = factor(Sex),
-        Hand     = factor(Hand, levels = c("l", "r", "a")), 
+        Sex  = factor(Sex, levels = c("f", "m")),
+        Hand     = factor(Hand, levels = c("r", "l")), 
         Lab    = factor(Lab),
+        ID = factor(ID),
         
         # Scale CDA (Gelman 2007: SD = 0.5)
         CDA_s = as.numeric(scale(CDA)) / 2
@@ -166,12 +180,12 @@ for (pip in 1 : length(pipes_labels)){
       warmup  = 2000,
       cores   = 4,
       sample_prior = "yes", 
-      control = list(adapt_delta = 0.95)
+      control = list(adapt_delta = 0.99)
     )
     fits[[lab_name]] = fit
     
     # update prioirs
-    post_summ = posterior_summary(fit, probs = c(0.025, 0.975))
+    post_summ = posterior_summary(fit, probs = c(0.01, 0.99))
     post_b = post_summ[grepl("^b_", rownames(post_summ)), ]
     
     current_priors = c(
@@ -199,7 +213,7 @@ for (pip in 1 : length(pipes_labels)){
   post = posterior_summary(
     final_fit,                         
     pars = "^b_",
-    probs = c(0.025, 0.975)
+    probs = c(0.01, 0.99)
   )
   
   # Convert to dataframe
@@ -209,8 +223,8 @@ for (pip in 1 : length(pipes_labels)){
   res$parameter = rownames(post)
   
   # Flag whether the 95% CI excludes zero
-  res$sig95 = ifelse(
-    res$Q2.5 > 0 | res$Q97.5 < 0,
+  res$sig98 = ifelse(
+    res$Q1 > 0 | res$Q99 < 0,
     "CI excludes 0*",
     "CI includes 0"
   )
@@ -223,9 +237,9 @@ for (pip in 1 : length(pipes_labels)){
       TestType = 'ON_Seq',
       Param = res$parameter,
       SMD = res$Estimate,
-      CI1 = res$Q2.5,
-      CI2 = res$Q97.5,
-      sig95 = res$sig95
+      CI1 = res$Q1,
+      CI2 = res$Q99,
+      sig98 = res$sig98
     )
   )
   
@@ -253,9 +267,10 @@ for (pip in 1 : length(pipes_labels)){
   df = df_long %>%
     mutate(
       SetSize = factor(SetSize),
-      Sex  = factor(Sex),
-      Hand     = factor(Hand, levels = c("l", "r", "a")), 
+      Sex  = factor(Sex, levels = c("f", "m")),
+      Hand     = factor(Hand, levels = c("r", "l")), 
       Lab    = factor(Lab),
+      ID = factor(ID),
       
       # Scale CDA (Gelman 2007: SD = 0.5)
       CDA_s = as.numeric(scale(CDA)) / 2
@@ -270,7 +285,7 @@ for (pip in 1 : length(pipes_labels)){
   
   # model formula with covariates and lab as random effect
   formula_cda = bf(
-    CDA_s ~ SetSize + Sex + Hand + (1 | Lab),
+    CDA_s ~ SetSize * Sex * Hand + (1|ID) + (1|Lab),
     family = gaussian()
   )
   
@@ -284,16 +299,16 @@ for (pip in 1 : length(pipes_labels)){
     warmup = 2000,
     cores = 4,
     sample_prior = "no",
-    control = list(adapt_delta = 0.95)
+    control = list(adapt_delta = 0.99)
   )
-  summary(fit_cda)
+  summary(fit_cda, prob = ci_level)
   # contrast 4 vs 6: option 1
   h = hypothesis(fit_cda, "SetSizeCDA6 - SetSizeCDA4 = 0")
   # contrast 4 vs 6: option 2
   #df_relevel = df
   #df_relevel$SetSize <- relevel(df_relevel$SetSize, ref = "CDA4")
   #fit_cda2 <- update(fit_cda, newdata = df_relevel)
-  #summary(fit_cda2)
+  #summary(fit_cda, prob = ci_level)2)
   # equivalent to 'hypothesis' command
   
   
@@ -301,7 +316,7 @@ for (pip in 1 : length(pipes_labels)){
   post = posterior_summary(
     fit_cda,
     pars = "^b_",
-    probs = c(0.025, 0.975)
+    probs = c(0.01, 0.99)
   )
   post
   
@@ -309,7 +324,7 @@ for (pip in 1 : length(pipes_labels)){
   res = as.data.frame(post) %>%
     mutate(
       parameter = rownames(post),
-      sig95 = if_else(Q2.5 > 0 | Q97.5 < 0, "CI excludes 0*", "CI includes 0")
+      sig98 = if_else(Q1 > 0 | Q99 < 0, "CI excludes 0*", "CI includes 0")
     )
   res
   # save results
@@ -320,9 +335,9 @@ for (pip in 1 : length(pipes_labels)){
       TestType = 'H1_LMM',
       Param = res$parameter,
       SMD = res$Estimate,
-      CI1 = res$Q2.5,
-      CI2 = res$Q97.5,
-      sig95 = res$sig95
+      CI1 = res$Q1,
+      CI2 = res$Q99,
+      sig98 = res$sig98
     )
   )
   # save results set size 4 vs 6.
@@ -335,7 +350,7 @@ for (pip in 1 : length(pipes_labels)){
       SMD = h$hypothesis$Estimate,
       CI1 = h$hypothesis$CI.Lower,
       CI2 = h$hypothesis$CI.Upper,
-      sig95 = if_else(h$hypothesis$CI.Lower > 0 | h$hypothesis$CI.Upper < 0, "CI excludes 0*", "CI includes 0")
+      sig98 = if_else(h$hypothesis$CI.Lower > 0 | h$hypothesis$CI.Upper < 0, "CI excludes 0*", "CI includes 0")
     )
   )
   
@@ -354,7 +369,7 @@ for (pip in 1 : length(pipes_labels)){
   
   # formula
   formula_h1_su = bf(
-    CDA_s ~ SetSize, # + Sex + Hand #### contrast need at lweast 2 levels! sometimes a lab has only right-handed subject, or e.g. demographics are missing (n/a)
+    CDA_s ~ SetSize + (1|ID), # + Sex + Hand #### contrast need at lweast 2 levels! sometimes a lab has only right-handed subject, or e.g. demographics are missing (n/a)
     family = gaussian()
   )
   
@@ -376,9 +391,10 @@ for (pip in 1 : length(pipes_labels)){
     df_lab = data_lab %>%
       mutate(
         SetSize = factor(SetSize),
-        Sex  = factor(Sex),
-        Hand     = factor(Hand, levels = c("l", "r", "a")), 
+        Sex  = factor(Sex, levels = c("f", "m")),
+        Hand     = factor(Hand, levels = c("r", "l")), 
         Lab    = factor(Lab),
+        ID = factor(ID),
         
         # Scale CDA (Gelman 2007: SD = 0.5)
         CDA_s = as.numeric(scale(CDA)) / 2
@@ -396,12 +412,12 @@ for (pip in 1 : length(pipes_labels)){
       warmup  = 2000,
       cores   = 4,
       sample_prior = "yes", 
-      control = list(adapt_delta = 0.95)
+      control = list(adapt_delta = 0.99)
     )
     fits[[lab_name]] = fit
     
     # update prioirs
-    post_summ = posterior_summary(fit, probs = c(0.025, 0.975))
+    post_summ = posterior_summary(fit, probs = c(0.01, 0.99))
     post_b = post_summ[grepl("^b_", rownames(post_summ)), ]
     
     current_priors = c(
@@ -437,7 +453,7 @@ for (pip in 1 : length(pipes_labels)){
   post = posterior_summary(
     final_fit,                         
     pars = "^b_",
-    probs = c(0.025, 0.975)
+    probs = c(0.01, 0.99)
   )
   
   # Convert to dataframe
@@ -447,8 +463,8 @@ for (pip in 1 : length(pipes_labels)){
   res$parameter = rownames(post)
   
   # Flag whether the 95% CI excludes zero
-  res$sig95 = ifelse(
-    res$Q2.5 > 0 | res$Q97.5 < 0,
+  res$sig98 = ifelse(
+    res$Q1 > 0 | res$Q99 < 0,
     "CI excludes 0*",
     "CI includes 0"
   )
@@ -461,9 +477,9 @@ for (pip in 1 : length(pipes_labels)){
       TestType = 'H1_Seq',
       Param = res$parameter,
       SMD = res$Estimate,
-      CI1 = res$Q2.5,
-      CI2 = res$Q97.5,
-      sig95 = res$sig95
+      CI1 = res$Q1,
+      CI2 = res$Q99,
+      sig98 = res$sig98
     )
   )
   # save results set size 4 vs 6.
@@ -476,7 +492,7 @@ for (pip in 1 : length(pipes_labels)){
       SMD = h$hypothesis$Estimate,
       CI1 = h$hypothesis$CI.Lower,
       CI2 = h$hypothesis$CI.Upper,
-      sig95 = if_else(h$hypothesis$CI.Lower > 0 | h$hypothesis$CI.Upper < 0, "CI excludes 0*", "CI includes 0")
+      sig98 = if_else(h$hypothesis$CI.Lower > 0 | h$hypothesis$CI.Upper < 0, "CI excludes 0*", "CI includes 0")
     )
   )
   
@@ -505,9 +521,10 @@ for (pip in 1 : length(pipes_labels)){
     mutate(
       K_s  = as.numeric(scale(K)) / 2,
       CDA_24_s  = as.numeric(scale(CDA_24)) / 2,
-      Sex  = factor(Sex),
-      Hand = factor(Hand),
-      Lab  = factor(Lab)
+      Sex  = factor(Sex, levels = c("f", "m")),
+      Hand = factor(Hand, levels = c("r", "l")),
+      Lab  = factor(Lab),
+      ID = factor(ID),
     )
   
   # priors
@@ -527,7 +544,7 @@ for (pip in 1 : length(pipes_labels)){
   
   # model with lab as random effect
   formula_h2_mixed = bf(
-    CDA_24_s ~ K_s + Sex + Hand + (1 | Lab),
+    CDA_24_s ~ K_s * Sex * Hand + (1 | Lab),
     family = gaussian()
   )
   fit_h2_mixed = brm(
@@ -538,7 +555,7 @@ for (pip in 1 : length(pipes_labels)){
     iter    = 4000,
     warmup  = 2000,
     cores   = 4,
-    control = list(adapt_delta = 0.95),
+    control = list(adapt_delta = 0.99),
     sample_prior = "no"
   )
   # show summary
@@ -546,13 +563,13 @@ for (pip in 1 : length(pipes_labels)){
   post_h2_mixed = posterior_summary(
     fit_h2_mixed,
     pars = "^b_",
-    probs = c(0.025, 0.975)
+    probs = c(0.01, 0.99)
   )
   post_h2_mixed
   res_h2_mixed = as.data.frame(post_h2_mixed) %>%
     mutate(
       parameter = rownames(post_h2_mixed),
-      sig95 = if_else(Q2.5 > 0 | Q97.5 < 0,
+      sig98 = if_else(Q1 > 0 | Q99 < 0,
                       "CI excludes 0*",
                       "CI includes 0")
     )
@@ -566,9 +583,9 @@ for (pip in 1 : length(pipes_labels)){
       TestType = 'H2.1_LMM',
       Param = res_h2_mixed$parameter,
       SMD = res_h2_mixed$Estimate,
-      CI1 = res_h2_mixed$Q2.5,
-      CI2 = res_h2_mixed$Q97.5,
-      sig95 = res_h2_mixed$sig95
+      CI1 = res_h2_mixed$Q1,
+      CI2 = res_h2_mixed$Q99,
+      sig98 = res_h2_mixed$sig98
     )
   )
   
@@ -604,9 +621,10 @@ for (pip in 1 : length(pipes_labels)){
     
     df_lab = data_lab %>%
       mutate(
-        Sex  = factor(Sex),
-        Hand     = factor(Hand, levels = c("l", "r", "a")), 
+        Sex  = factor(Sex, levels = c("f", "m")),
+        Hand     = factor(Hand, levels = c("r", "l")), 
         Lab    = factor(Lab),
+        ID = factor(ID),
         
         # Scale CDA (Gelman 2007: SD = 0.5)
         CDA_24_s = as.numeric(scale(CDA_24)) / 2,
@@ -625,12 +643,12 @@ for (pip in 1 : length(pipes_labels)){
       warmup  = 2000,
       cores   = 4,
       sample_prior = "yes", 
-      control = list(adapt_delta = 0.95)
+      control = list(adapt_delta = 0.99)
     )
     fits_h2[[lab_name]] = fit
     
     # update prioirs
-    post_summ = posterior_summary(fit, probs = c(0.025, 0.975))
+    post_summ = posterior_summary(fit, probs = c(0.01, 0.99))
     post_b = post_summ[grepl("^b_", rownames(post_summ)), ]
     
     current_priors = c(
@@ -658,7 +676,7 @@ for (pip in 1 : length(pipes_labels)){
   post_h2 = posterior_summary(
     final_fit_h2,                         
     pars = "^b_",
-    probs = c(0.025, 0.975)
+    probs = c(0.01, 0.99)
   )
   
   # Convert to dataframe
@@ -668,8 +686,8 @@ for (pip in 1 : length(pipes_labels)){
   res_h2$parameter = rownames(post_h2)
   
   # Flag whether the 95% CI excludes zero
-  res_h2$sig95 = ifelse(
-    res_h2$Q2.5 > 0 | res_h2$Q97.5 < 0,
+  res_h2$sig98 = ifelse(
+    res_h2$Q1 > 0 | res_h2$Q99 < 0,
     "CI excludes 0*",
     "CI includes 0"
   )
@@ -683,9 +701,9 @@ for (pip in 1 : length(pipes_labels)){
       TestType = 'H2.1_Seq',
       Param = res_h2$parameter,
       SMD = res_h2$Estimate,
-      CI1 = res_h2$Q2.5,
-      CI2 = res_h2$Q97.5,
-      sig95 = res_h2$sig95
+      CI1 = res_h2$Q1,
+      CI2 = res_h2$Q99,
+      sig98 = res_h2$sig98
     )
   )
   
@@ -712,9 +730,10 @@ for (pip in 1 : length(pipes_labels)){
     mutate(
       K_s  = as.numeric(scale(K)) / 2,
       CDA_46_s  = as.numeric(scale(CDA_46)) / 2,
-      Sex  = factor(Sex),
-      Hand = factor(Hand),
-      Lab  = factor(Lab)
+      Sex  = factor(Sex, levels = c("f", "m")),
+      Hand = factor(Hand, levels = c("r", "l")),
+      Lab  = factor(Lab),
+      ID = factor(ID),
     )
   
   # priors
@@ -734,7 +753,7 @@ for (pip in 1 : length(pipes_labels)){
   
   # model with lab as random effect
   formula_h2_mixed = bf(
-    CDA_46_s ~ K_s + Sex + Hand + (1 | Lab),
+    CDA_46_s ~ K_s * Sex * Hand + (1 | Lab),
     family = gaussian()
   )
   fit_h2_mixed = brm(
@@ -745,7 +764,7 @@ for (pip in 1 : length(pipes_labels)){
     iter    = 4000,
     warmup  = 2000,
     cores   = 4,
-    control = list(adapt_delta = 0.95),
+    control = list(adapt_delta = 0.99),
     sample_prior = "no"
   )
   # show summary
@@ -753,13 +772,13 @@ for (pip in 1 : length(pipes_labels)){
   post_h2_mixed = posterior_summary(
     fit_h2_mixed,
     pars = "^b_",
-    probs = c(0.025, 0.975)
+    probs = c(0.01, 0.99)
   )
   post_h2_mixed
   res_h2_mixed = as.data.frame(post_h2_mixed) %>%
     mutate(
       parameter = rownames(post_h2_mixed),
-      sig95 = if_else(Q2.5 > 0 | Q97.5 < 0,
+      sig98 = if_else(Q1 > 0 | Q99 < 0,
                       "CI excludes 0*",
                       "CI includes 0")
     )
@@ -773,9 +792,9 @@ for (pip in 1 : length(pipes_labels)){
       TestType = 'H2.2_LMM',
       Param = res_h2_mixed$parameter,
       SMD = res_h2_mixed$Estimate,
-      CI1 = res_h2_mixed$Q2.5,
-      CI2 = res_h2_mixed$Q97.5,
-      sig95 = res_h2_mixed$sig95
+      CI1 = res_h2_mixed$Q1,
+      CI2 = res_h2_mixed$Q99,
+      sig98 = res_h2_mixed$sig98
     )
   )
   
@@ -811,9 +830,10 @@ for (pip in 1 : length(pipes_labels)){
     
     df_lab = data_lab %>%
       mutate(
-        Sex  = factor(Sex),
-        Hand     = factor(Hand, levels = c("l", "r", "a")), 
+        Sex  = factor(Sex, levels = c("f", "m")),
+        Hand     = factor(Hand, levels = c("r", "l")), 
         Lab    = factor(Lab),
+        ID = factor(ID),
         
         # Scale CDA (Gelman 2007: SD = 0.5)
         CDA_46_s = as.numeric(scale(CDA_46)) / 2,
@@ -832,12 +852,12 @@ for (pip in 1 : length(pipes_labels)){
       warmup  = 2000,
       cores   = 4,
       sample_prior = "yes", 
-      control = list(adapt_delta = 0.95)
+      control = list(adapt_delta = 0.99)
     )
     fits_h2[[lab_name]] = fit
     
     # update prioirs
-    post_summ = posterior_summary(fit, probs = c(0.025, 0.975))
+    post_summ = posterior_summary(fit, probs = c(0.01, 0.99))
     post_b = post_summ[grepl("^b_", rownames(post_summ)), ]
     
     current_priors = c(
@@ -865,7 +885,7 @@ for (pip in 1 : length(pipes_labels)){
   post_h2 = posterior_summary(
     final_fit_h2,                         
     pars = "^b_",
-    probs = c(0.025, 0.975)
+    probs = c(0.01, 0.99)
   )
   
   # Convert to dataframe
@@ -875,8 +895,8 @@ for (pip in 1 : length(pipes_labels)){
   res_h2$parameter = rownames(post_h2)
   
   # Flag whether the 95% CI excludes zero
-  res_h2$sig95 = ifelse(
-    res_h2$Q2.5 > 0 | res_h2$Q97.5 < 0,
+  res_h2$sig98 = ifelse(
+    res_h2$Q1 > 0 | res_h2$Q99 < 0,
     "CI excludes 0*",
     "CI includes 0"
   )
@@ -890,9 +910,9 @@ for (pip in 1 : length(pipes_labels)){
       TestType = 'H2.2_Seq',
       Param = res_h2$parameter,
       SMD = res_h2$Estimate,
-      CI1 = res_h2$Q2.5,
-      CI2 = res_h2$Q97.5,
-      sig95 = res_h2$sig95
+      CI1 = res_h2$Q1,
+      CI2 = res_h2$Q99,
+      sig98 = res_h2$sig98
     )
   )
   

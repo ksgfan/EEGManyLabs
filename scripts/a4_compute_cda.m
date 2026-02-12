@@ -13,14 +13,13 @@ participants = readtable(fullfile(bidspath, 'participants.tsv'), 'FileType', 'te
 %% Compute CDA for all preprocessing pipelines
 
 % list pipelines
-pipelines = {preprocessedDirect, preprocessedAdvanced, preprocessedICA, preprocessedICA};
-tabs = {'cda_table_direct', 'cda_table_advanced', 'cda_table_ica', 'cda_table_ica_keepall'};
+pipelines = {preprocessedDirect, preprocessedAdvanced, preprocessedICA};
+tabs = {'cda_table_direct', 'cda_table_advanced', 'cda_table_ica'};
 % we need a table in long format with single trial CDA estimates for 
 % data quality measurements 
 tabs_quality = {'tab_data_quality_direct', ...
                 'tab_data_quality_advanced', ...
-                'tab_data_quality_ica', ...
-                'tab_data_quality_ica_keepall'};
+                'tab_data_quality_ica'};
 
 for pip = 1 : length(pipelines)
 

@@ -97,6 +97,12 @@ for pip = 1 : length(pipelines)
 
     end
 
+    % print average Acc
+    disp([mean(tab.Accuracy2), std(tab.Accuracy2)])
+    disp([mean(tab.Accuracy4), std(tab.Accuracy4)])
+    disp([mean(tab.Accuracy6), std(tab.Accuracy6)])
+    disp([mean((tab.Accuracy2+tab.Accuracy4+tab.Accuracy6)/3),     std((tab.Accuracy2+tab.Accuracy4+tab.Accuracy6)/3)])
+
     % print average Ks
     disp([mean(tab.K2), std(tab.K2)])
     disp([mean(tab.K4), std(tab.K4)])

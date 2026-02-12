@@ -14,8 +14,11 @@ participants = readtable(fullfile(bidspath, 'participants.tsv'), 'FileType', 'te
 
 % list pipelines
 pipelines = {preprocessedDirect, preprocessedAdvanced, preprocessedICA, preprocessedICA};
-tabs = {'cda_table_direct', 'cda_table_advanced', 'cda_table_ica', 'cda_table_ica_keepall'};
-pipes_labels = {'direct', 'advanced', 'ica', 'keep_all'};
+tabs = {'cda_table_direct', 'cda_table_advanced', 'cda_table_ica'};
+pipes_labels = {'direct', 'advanced', 'ica'};
+sem = @(x) nanstd(x,0,1) ./ sqrt(sum(~isnan(x),1));
+ci99 = @(x) tinv(0.99, sum(~isnan(x),1)-1) .* (nanstd(x,0,1) ./ sqrt(sum(~isnan(x),1)));
+TOI = find(EEG.times >= 300 & EEG.times <= 900);
 
 for pip = 1 : 3% length(pipelines)
 
@@ -82,17 +85,24 @@ for pip = 1 : 3% length(pipelines)
     meanCDA4filt=eegfilt(meanCDA4,250,0,filt);
     meanCDA6filt=eegfilt(meanCDA6,250,0,filt);
 
+    CDA2filt=eegfilt(CDA2,250,0,filt);
+    CDA4filt=eegfilt(CDA4,250,0,filt);
+    CDA6filt=eegfilt(CDA6,250,0,filt);
+
 
     % ERP
     f1 = figure;
     subplot(2, 2, 1)
-    plot(EEG.times, nanmean([meanGAcontra1filt; meanGAcontra2filt]), 'Color', [199,21,133]/255, 'LineWidth', 2);set(gca,'Ydir','reverse')
+    %plot(EEG.times, nanmean([meanGAcontra1filt; meanGAcontra2filt]), 'Color', [199,21,133]/255, 'LineWidth', 2);set(gca,'Ydir','reverse')
+    s1 = shadedErrorBar(EEG.times, nanmean([meanGAcontra1filt; meanGAcontra2filt],1), sem([meanGAcontra1filt; meanGAcontra2filt]), {'Color',[199,21,133]/255,'LineWidth',2});
     hold on
-    plot(EEG.times, nanmean([meanGAipsi1filt; meanGAipsi2filt]), 'Color', 'black', 'LineWidth', 2);set(gca,'Ydir','reverse')
+    %plot(EEG.times, nanmean([meanGAipsi1filt; meanGAipsi2filt]), 'Color', 'black', 'LineWidth', 2);set(gca,'Ydir','reverse')
+    s2 = shadedErrorBar(EEG.times, nanmean([meanGAipsi1filt; meanGAipsi2filt],1), sem([meanGAipsi1filt; meanGAipsi2filt]), {'Color','k','LineWidth',2});
+    set(gca,'Ydir','reverse')
     ylim([-6, 2])
     xlim([-200, 1000])
     xlabel('Time (ms)')
-    legend('Contralateral','Ipsilateral')
+    legend([s1.mainLine, s2.mainLine], 'Contralateral','Ipsilateral')
     xlabel('Time (ms)')
     ylabel('Amplitude (μV)')
     set(gca, 'FontSize', 16)
@@ -100,14 +110,29 @@ for pip = 1 : 3% length(pipelines)
     axis square
     text(-0.25, 1.15, 'A' ,'FontSize', 20, 'Units', 'normalized')
     subplot(2, 2, 2)
-    plot(EEG.times, meanCDA2filt,'b', 'LineWidth', 2);set(gca,'Ydir','reverse')
+    % plot(EEG.times, meanCDA2filt,'b', 'LineWidth', 2);set(gca,'Ydir','reverse')
+    s1 = shadedErrorBar(EEG.times, nanmean(CDA2filt,1), sem(CDA2filt), {'Color','blue','LineWidth',2});
+    set(s1.patch, 'FaceAlpha', 0.3); 
     hold on;
-    plot(EEG.times, meanCDA4filt,'g', 'LineWidth', 2);set(gca,'Ydir','reverse')
-    plot(EEG.times, meanCDA6filt,'r', 'LineWidth', 2);set(gca,'Ydir','reverse')
-    legend({'Set size 2','Set size 4', 'Set size 6'}, 'NumColumns', 3, 'Position', ...
-        [0.522916666666667,0.935732647814908,0.371428571428571,0.027634961439589])
-    % ylim([-1.2, 1])
+    % plot(EEG.times, meanCDA4filt,'g', 'LineWidth', 2);set(gca,'Ydir','reverse')
+    % plot(EEG.times, meanCDA6filt,'r', 'LineWidth', 2);set(gca,'Ydir','reverse')
+    s2 = shadedErrorBar(EEG.times, nanmean(CDA4filt,1), sem(CDA4filt), {'Color','green','LineWidth',2});
+    set(s2.patch, 'FaceAlpha', 0.3); 
+    s3 = shadedErrorBar(EEG.times, nanmean(CDA6filt,1), sem(CDA6filt), {'Color','red','LineWidth',2});
+    set(s3.patch, 'FaceAlpha', 0.3); 
+    set(gca,'Ydir','reverse')
+    ylim([-1.2, 0.5])
     xlim([-200, 1000])
+    yl = ylim;
+    p = patch([300 900 900 300], ...
+          [yl(1) yl(1) yl(2) yl(2)], ...
+          [0.8 0.8 0.8], ...   % grey color
+          'EdgeColor','none', ...
+          'FaceAlpha',0.2);    % transparency (0–1)
+    legend([s1.mainLine, s2.mainLine, s3.mainLine], {'Set size 2','Set size 4', 'Set size 6'}, 'NumColumns', 3, 'Position', ...
+        [0.522916666666667,0.935732647814908,0.371428571428571,0.027634961439589])
+    % send patch behind the lines
+    uistack(p,'bottom')
     xlabel('Time (ms)')
     ylabel('Amplitude (μV)')
     set(gca, 'FontSize', 16)
@@ -128,7 +153,9 @@ for pip = 1 : 3% length(pipelines)
     % Figure 3b
     subplot(2, 2, 4)
     p = scatter(memoryCapacity, ampIncrease_2_to_4, 50, 'dblack');set(gca,'Ydir','reverse')
-    lsline
+    l = lsline;
+    l.LineWidth = 2;
+    l.Color = 'black';
     xlabel('Memory capacity'); ylabel('Amplitude increase from two to four items')
     xlim([0.5, 4])
     p.MarkerFaceColor = [0 0 0];

@@ -219,12 +219,11 @@ generalInfo.ReferencesAndLinks = {'https://osf.io/pbr8c/overview'};
 generalInfo.Authors = {'Dawid Strzelczyk', 'Peter E. Clayson', 'Heida Maria Sigurdardottir', ...
 'Hélène Devillez', 'Anton Lukashevich', 'Harold A. Rocha', ...
 'Yong Hoon Chung', 'Kevin M. Ortego', 'Viola S. Stoermer', 'José C. García Alanis', ...
-'Christoph Löffler', 'Anna-Lena Schubert', 'Anna Lena Biel', 'Ariane Tretow', ...
-'Weiyong Xu', 'Jarmo Hämäläinen', 'Zitong Lu', 'Yong Min Choi', 'Eva Lout', ...
+'Christoph Löffler', 'Anna-Lena Schubert', 'Anna Lena Biel', 'Zitong Lu', 'Yong Min Choi', 'Eva Lout', ...
 'Julie D. Golomb', 'Shuangke Jiang', 'Myles Jones', 'Eda Mizrak', 'Claudia C. von Bastian', ...
 'Niko A. Busch', 'Maro G. Machizawa', 'William X. Q. Ngiam', 'Edward K. Vogel', ...
 'Samuel A. Birkholz', 'Emily Johnson', 'Jeffrey S. Johnson', 'Charline Peylo', 'Larissa Behnke', ...
-'Yannik Hilla', 'Paul Sauseng', 'Faisal Mushtaq', 'Yuri G. Pavlov', 'Nicolas Langer'};
+'Yannik Hilla', 'Faisal Mushtaq', 'Yuri G. Pavlov', 'Nicolas Langer'};
 generalInfo.HEDVersion = 'HED annotations are not included in the current release.';
 
 % participant column description for participants.json file - check OSF!!!
@@ -336,3 +335,18 @@ bids_export_dawid(data, 'targetdir', bidspath, 'taskName', 'EEGManyLabs', ...
 % 
 % writetable(tt, '/Volumes/G_PSYPLAFOR_methlab$/EEGManyLabs/data/csv_files/demo_data/reykjavik/demo_reykjavik.xlsx');
 %%
+
+
+dddd = dir(['/Volumes/G_PSYPLAFOR_methlab_data$/GPS_project/data' filesep '*' filesep 'Ses1', filesep 'GPS*', filesep, '*csv'])
+
+for f = 1 : size(dddd)
+
+
+    csvfile = readtable(fullfile(dddd(f).folder, dddd(f).name));
+    csvfile = sortrows(csvfile,"timestamp","descend");
+
+    timediff = csvfile.timestamp(1) - csvfile.timestamp(end);
+    disp(['Subject: ' dddd(f).name ',   ' num2str(days(timediff)) ' days...'])
+
+end
+
