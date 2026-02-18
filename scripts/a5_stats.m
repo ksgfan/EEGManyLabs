@@ -477,8 +477,33 @@ for pip = 1 : length(pipelines)
         all_stats.wm_corr_2_4_p(lab) = pval;
         all_stats.wm_corr_2_4_r_se(lab) = rho_se;
         
-        % correlation, where amplitude is CDA at set size 6, instead of
-        % increase (see Unsworth, 2015 or Adam, 2018)
+        % correlation, where amplitude is CDA at set sizes 2,4,6, instead of
+        % amplitude increase (see Unsworth, 2015 or Adam, 2018)
+        % setsize 2
+        [rho, pval] = corr(meanROI2, memoryCapacity);
+        % compute SE for correlations
+        rho_se = (1-rho^2) / sqrt(length(meanROI6) - 3);
+        % save stats
+        all_stats.wm_corr_2_amp_m(lab) = nanmean(meanROI2);
+        all_stats.wm_corr_2_amp_sd(lab) = nanstd(meanROI2);
+        all_stats.wm_corr_2_wm_m(lab) = nanmean(memoryCapacity);
+        all_stats.wm_corr_2_wm_sd(lab) = nanstd(memoryCapacity);
+        all_stats.wm_corr_2_r(lab) = rho;
+        all_stats.wm_corr_2_p(lab) = pval;
+        all_stats.wm_corr_2_r_se(lab) = rho_se;
+        % setsize 4
+        [rho, pval] = corr(meanROI4, memoryCapacity);
+        % compute SE for correlations
+        rho_se = (1-rho^2) / sqrt(length(meanROI6) - 3);
+        % save stats
+        all_stats.wm_corr_4_amp_m(lab) = nanmean(meanROI4);
+        all_stats.wm_corr_4_amp_sd(lab) = nanstd(meanROI4);
+        all_stats.wm_corr_4_wm_m(lab) = nanmean(memoryCapacity);
+        all_stats.wm_corr_4_wm_sd(lab) = nanstd(memoryCapacity);
+        all_stats.wm_corr_4_r(lab) = rho;
+        all_stats.wm_corr_4_p(lab) = pval;
+        all_stats.wm_corr_4_r_se(lab) = rho_se;
+        % setsize 6
         [rho, pval] = corr(meanROI6, memoryCapacity);
         % compute SE for correlations
         rho_se = (1-rho^2) / sqrt(length(meanROI6) - 3);

@@ -99,8 +99,17 @@ for sub = 1 : size(d, 1)
         EEG.tInfo.InstitutionName = 'Dartmouth College';
         EEG.tInfo.PowerLineFrequency = 60;
         EEG.tInfo.EEGGround = 'Fpz';
-        EEG.tInfo.CapManufacturer = 'BrainVision';
-        EEG.tInfo.SoftwareFilters = "n/a";
+        EEG.tInfo.Manufacturer =  'Brain Products';% amplifier
+        EEG.tInfo.ManufacturersModelName =  'actiCHamp (Base Unit 5002; 32 CH Module 5011)';
+        EEG.tInfo.CapManufacturer = 'Easy Cap'; % cap
+        EEG.tInfo.CapManufacturersModelName = 'CACS-64-SCMW';
+        EEG.tInfo.HardwareFilters.Highpass=struct('CutoffFrequency',0,'Description','DC (no hardware high-pass filter)');
+        EEG.tInfo.HardwareFilters.Lowpass=struct('CutoffFrequency',140,'Description','Hardware low-pass filter');
+        EEG.tInfo.HardwareFilters.Notch=struct('CutoffFrequency','n/a','Description','No hardware notch filter');
+        tau=15.9155; f_hp=1/(2*pi*tau);
+        EEG.tInfo.SoftwareFilters.Highpass=struct('CutoffFrequency',f_hp,'Description','Software high-pass filter derived from BrainVision time constant');
+        EEG.tInfo.SoftwareFilters.Lowpass=struct('CutoffFrequency','n/a','Description','No software low-pass filter');
+        EEG.tInfo.SoftwareFilters.Notch=struct('CutoffFrequency','n/a','Description','No software notch filter');
         
         % rename FP1 to Fp1
         fp1 = find(ismember({EEG.chanlocs.labels}, 'FP1'));
@@ -271,8 +280,6 @@ for sub = 1 : size(d, 1)
         end
     end
 end
-
-
 
 
 

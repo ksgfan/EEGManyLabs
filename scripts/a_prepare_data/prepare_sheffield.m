@@ -89,8 +89,18 @@ for f = 1 : size(d, 1)
     EEG.tInfo.InstitutionName = 'University of Sheffield';
     EEG.tInfo.PowerLineFrequency = 50;
     EEG.tInfo.EEGGround = 'adjacent to POz';
-    EEG.tInfo.CapManufacturer = 'Biosemi';
-    EEG.tInfo.SoftwareFilters = "n/a";
+    
+    EEG.tInfo.Manufacturer="Biosemi";
+    EEG.tInfo.ManufacturersModelName = "ActiveTwo";
+    EEG.tInfo.CapManufacturer = "Biosemi";
+    EEG.tInfo.CapManufacturersModelName = "BioSemi ActiveTwo 64-channel cap";
+
+    EEG.tInfo.HardwareFilters.Highpass=struct('CutoffFrequency','n/a','Description','No hardware high-pass filter');
+    EEG.tInfo.HardwareFilters.Lowpass=struct('CutoffFrequency',200,'Description','Built-in ADC sinc anti-aliasing filter (~0.4 x Fs at 500 Hz, fixed, not user configurable)');
+    EEG.tInfo.HardwareFilters.Notch=struct('CutoffFrequency','n/a','Description','No hardware notch filter');
+    EEG.tInfo.SoftwareFilters.Highpass=struct('CutoffFrequency','n/a','Description','No software high-pass filter');
+    EEG.tInfo.SoftwareFilters.Lowpass=struct('CutoffFrequency','n/a','Description','No software low-pass filter');
+    EEG.tInfo.SoftwareFilters.Notch=struct('CutoffFrequency','n/a','Description','No software notch filter');
     
     % Convert numbers to strings in EEG.event
     A = {EEG.event.type};

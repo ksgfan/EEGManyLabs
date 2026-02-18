@@ -136,8 +136,18 @@ for f = 1 : size(d, 1)
     EEG.tInfo.InstitutionName = 'University of Zurich (Prof. Sauseng)';
     EEG.tInfo.PowerLineFrequency = 50;
     EEG.tInfo.EEGGround = 'Fpz';
-    EEG.tInfo.CapManufacturer = 'BrainProducts';
-    EEG.tInfo.SoftwareFilters = "n/a";
+
+    EEG.tInfo.Manufacturer="Brain Products"; 
+    EEG.tInfo.ManufacturersModelName="actiCHamp Base Unit (5002)"; 
+    EEG.tInfo.CapManufacturer="Brain Products"; 
+    EEG.tInfo.CapManufacturersModelName="actiCAP snap cap (actiCAP slim electrodes)"; 
+    EEG.tInfo.HardwareFilters.Highpass=struct('CutoffFrequency',0,'Description','DC (no hardware high-pass filter)');
+    EEG.tInfo.HardwareFilters.Lowpass=struct('CutoffFrequency',280,'Description','Hardware low-pass filter');
+    EEG.tInfo.HardwareFilters.Notch=struct('CutoffFrequency','n/a','Description','No hardware notch filter');
+    EEG.tInfo.SoftwareFilters.Highpass=struct('CutoffFrequency','n/a','Description','No software high-pass filter');
+    EEG.tInfo.SoftwareFilters.Lowpass=struct('CutoffFrequency','n/a','Description','No software low-pass filter');
+    EEG.tInfo.SoftwareFilters.Notch=struct('CutoffFrequency','n/a','Description','No software notch filter');
+
     
     % Rename TP9/TP10 to M1/M2
     EEG.chanlocs(find(ismember({EEG.chanlocs.labels}, 'TP9'))).labels = 'M1'; 

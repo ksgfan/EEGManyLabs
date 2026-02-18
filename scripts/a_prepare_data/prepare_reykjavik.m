@@ -31,7 +31,7 @@ locspath = 'BrainVision-AC-32.bvef';
 chanlocs = loadbvef(locspath);
 chanlocs(ismember({chanlocs.labels}, 'GND')).labels = 'Fpz';
 
-for f = 23 : size(d, 1)
+for f = 1 : size(d, 1)
    
     id = strsplit(d(f).folder, filesep);
     id = id{end};
@@ -77,8 +77,20 @@ for f = 23 : size(d, 1)
     EEG.tInfo.InstitutionName = 'University of Iceland';
     EEG.tInfo.PowerLineFrequency = 50;
     EEG.tInfo.EEGGround = 'Fpz';
-    EEG.tInfo.CapManufacturer = 'BrainVision';
-    EEG.tInfo.SoftwareFilters = "n/a";
+
+    EEG.tInfo.Manufacturer="Brain Products"; 
+    EEG.tInfo.ManufacturersModelName="actiCHamp Base Unit (5001)"; 
+    EEG.tInfo.CapManufacturer="Brain Products"; 
+    EEG.tInfo.CapManufacturersModelName="actiCAP 32"; 
+    EEG.tInfo.HardwareFilters.Highpass=struct('CutoffFrequency',0,'Description','DC (no hardware high-pass filter)');
+    EEG.tInfo.HardwareFilters.Lowpass=struct('CutoffFrequency',280,'Description','Hardware low-pass filter');
+    EEG.tInfo.HardwareFilters.Notch=struct('CutoffFrequency','n/a','Description','No hardware notch filter');
+    EEG.tInfo.SoftwareFilters.Highpass=struct('CutoffFrequency','n/a','Description','No software high-pass filter (software filters disabled)');
+    EEG.tInfo.SoftwareFilters.Lowpass=struct('CutoffFrequency','n/a','Description','No software low-pass filter (software filters disabled)');
+    EEG.tInfo.SoftwareFilters.Notch=struct('CutoffFrequency','n/a','Description','No software notch filter (software filters disabled)');
+
+
+
     
     % % sanity check
     % figure;

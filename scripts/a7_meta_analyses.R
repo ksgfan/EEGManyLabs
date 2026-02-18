@@ -368,6 +368,152 @@ for (pip in 1 : length(pipes_labels)){
   dev.off()
   
   ############ correlation of amplitude at set size 6 with WMC (K)
+  r = dat$wm_corr_2_r * (-1) ### flip sign
+  meta_correlation_2 = metacor(
+    cor = r,
+    n = dat$num_subs,
+    studlab = labs,
+    data = NULL,
+    sm = "ZCOR", # concert to Fischer's z
+    common = FALSE,
+    random = TRUE,
+    method.tau = "REML",
+    hakn = TRUE,
+    prediction = T,
+    backtransf = TRUE, # convert Fishers'z back to correlation
+    title = "Amplitude decrease vs WM capacity",
+    level.ci = ci_level,
+    level = ci_level,
+    level.ma = ci_level,
+    level.predict = ci_level,
+    level.comb = ci_level
+  )
+  meta_correlation_2$Pearsons_r <- r
+  summary(meta_correlation_2)
+  forest(meta_correlation_2, 
+         prediction = TRUE, 
+         print.tau2 = FALSE,
+         #leftcols = c("studlab", "TE", "seTE", "ci"),
+         leftcols = c("studlab", "Pearsons_r", "seTE", "ci"),
+         #leftlabs = c("Lab", expression("Fischer's z"), "SE", "98% CI"),
+         leftlabs = c("Lab", expression("Pearson's r"), "SE", "98% CI"),
+         rightcols = c("w.random"),
+         xlim = c(-0.7, 0.9),
+         at = seq(-0.4, 0.8, by = 0.2))
+  # save results
+  df_results <- rbind(
+    df_results,
+    data.frame(
+      Pipeline = pipes_labels[pip],
+      TestType = 'Correlation_2_vs_VWM',
+      SMD = meta_correlation_2$TE.random,
+      CI1 = meta_correlation_2$lower.random,
+      CI2 = meta_correlation_2$upper.random,
+      t_stat = meta_correlation_2$statistic.random,
+      p_val = meta_correlation_2$pval.random
+    )
+  )
+  
+  # plot results
+  pdf(file.path(figure_path, paste0(pipes_labels[pip], "_corr_2.pdf")), width = 8, height = 4)
+  forest(meta_correlation_2, 
+         prediction = TRUE, 
+         print.tau2 = FALSE,
+         #leftcols = c("studlab", "TE", "seTE", "ci"),
+         leftcols = c("studlab", "Pearsons_r", "seTE", "ci"),
+         #leftlabs = c("Lab", expression("Fischer's z"), "SE", "98% CI"),
+         leftlabs = c("Lab", expression("Pearson's r"), "SE", "98% CI"),
+         rightcols = c("w.random"),
+         xlim = c(-0.7, 0.9),
+         at = seq(-0.4, 0.8, by = 0.2))
+  dev.off()
+  png(file.path(figure_path, paste0(pipes_labels[pip], "_corr_2.png")), width = 8, height = 4, units = "in", res = 300)
+  forest(meta_correlation_2, 
+         prediction = TRUE, 
+         print.tau2 = FALSE,
+         #leftcols = c("studlab", "TE", "seTE", "ci"),
+         leftcols = c("studlab", "Pearsons_r", "seTE", "ci"),
+         #leftlabs = c("Lab", expression("Fischer's z"), "SE", "98% CI"),
+         leftlabs = c("Lab", expression("Pearson's r"), "SE", "98% CI"),
+         rightcols = c("w.random"),
+         xlim = c(-0.7, 0.9),
+         at = seq(-0.4, 0.8, by = 0.2))
+  dev.off()
+  
+  ############ correlation of amplitude at set size 6 with WMC (K)
+  r = dat$wm_corr_4_r * (-1) ### flip sign
+  meta_correlation_4 = metacor(
+    cor = r,
+    n = dat$num_subs,
+    studlab = labs,
+    data = NULL,
+    sm = "ZCOR", # concert to Fischer's z
+    common = FALSE,
+    random = TRUE,
+    method.tau = "REML",
+    hakn = TRUE,
+    prediction = T,
+    backtransf = TRUE, # convert Fishers'z back to correlation
+    title = "Amplitude decrease vs WM capacity",
+    level.ci = ci_level,
+    level = ci_level,
+    level.ma = ci_level,
+    level.predict = ci_level,
+    level.comb = ci_level
+  )
+  meta_correlation_4$Pearsons_r <- r
+  summary(meta_correlation_4)
+  forest(meta_correlation_4, 
+         prediction = TRUE, 
+         print.tau2 = FALSE,
+         #leftcols = c("studlab", "TE", "seTE", "ci"),
+         leftcols = c("studlab", "Pearsons_r", "seTE", "ci"),
+         #leftlabs = c("Lab", expression("Fischer's z"), "SE", "98% CI"),
+         leftlabs = c("Lab", expression("Pearson's r"), "SE", "98% CI"),
+         rightcols = c("w.random"),
+         xlim = c(-0.7, 0.9),
+         at = seq(-0.4, 0.8, by = 0.2))
+  # save results
+  df_results <- rbind(
+    df_results,
+    data.frame(
+      Pipeline = pipes_labels[pip],
+      TestType = 'Correlation_4_vs_VWM',
+      SMD = meta_correlation_4$TE.random,
+      CI1 = meta_correlation_4$lower.random,
+      CI2 = meta_correlation_4$upper.random,
+      t_stat = meta_correlation_4$statistic.random,
+      p_val = meta_correlation_4$pval.random
+    )
+  )
+  
+  # plot results
+  pdf(file.path(figure_path, paste0(pipes_labels[pip], "_corr_4.pdf")), width = 8, height = 4)
+  forest(meta_correlation_4, 
+         prediction = TRUE, 
+         print.tau2 = FALSE,
+         #leftcols = c("studlab", "TE", "seTE", "ci"),
+         leftcols = c("studlab", "Pearsons_r", "seTE", "ci"),
+         #leftlabs = c("Lab", expression("Fischer's z"), "SE", "98% CI"),
+         leftlabs = c("Lab", expression("Pearson's r"), "SE", "98% CI"),
+         rightcols = c("w.random"),
+         xlim = c(-0.7, 0.9),
+         at = seq(-0.4, 0.8, by = 0.2))
+  dev.off()
+  png(file.path(figure_path, paste0(pipes_labels[pip], "_corr_4.png")), width = 8, height = 4, units = "in", res = 300)
+  forest(meta_correlation_4, 
+         prediction = TRUE, 
+         print.tau2 = FALSE,
+         #leftcols = c("studlab", "TE", "seTE", "ci"),
+         leftcols = c("studlab", "Pearsons_r", "seTE", "ci"),
+         #leftlabs = c("Lab", expression("Fischer's z"), "SE", "98% CI"),
+         leftlabs = c("Lab", expression("Pearson's r"), "SE", "98% CI"),
+         rightcols = c("w.random"),
+         xlim = c(-0.7, 0.9),
+         at = seq(-0.4, 0.8, by = 0.2))
+  dev.off()
+  
+  ############ correlation of amplitude at set size 6 with WMC (K)
   r = dat$wm_corr_6_r * (-1) ### flip sign
   meta_correlation_6 = metacor(
     cor = r,

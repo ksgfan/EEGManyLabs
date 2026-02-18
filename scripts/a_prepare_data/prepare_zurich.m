@@ -20,32 +20,32 @@
 
 %% convert ET files (asci to mat)
 
-% IMPORTANT !!!!!
-% convert asci to mat - use the parseeyelink that is changed by Dawid (line282) should be: 
-% test  = regexp(et.messages,'MSG\s+(\d+)\s+(.*)','tokens')'; => MSG not INPUT
-
-d = dir(strcat(fullfile(rawdatapath, 'data_zurich/*/', '*asc')));
-
-for i = 1 : size(d, 1) 
-
-    inputFile = fullfile(d(i).folder, d(i).name);
-
-    filename = d(i).name(1:end-4); % remove .asc   
-    x = strsplit(filename, '_');
-
-    if strcmp(x{2}, '1') | strcmp(x{2}, '2') | strcmp(x{2}, '3') | strcmp(x{2}, '4') | strcmp(x{2}, '5')
-        newfilename = [x{1}, '_ManyLabsCDA_block' x{2} '_task_ET.mat'];
-    elseif strcmp(x{2}, 'Eye')
-        newfilename = [x{1}, '_Eye_ET.mat'];
-    elseif strcmp(x{2}, 'Res')
-        newfilename = [x{1}, '_Resting_ET.mat'];
-    end
-
-    % convert
-    outputFile = fullfile(d(i).folder, newfilename);
-    ET = parseeyelink(inputFile, outputFile);
-
-end
+% % IMPORTANT !!!!!
+% % convert asci to mat - use the parseeyelink that is changed by Dawid (line282) should be: 
+% % test  = regexp(et.messages,'MSG\s+(\d+)\s+(.*)','tokens')'; => MSG not INPUT
+% 
+% d = dir(strcat(fullfile(rawdatapath, 'data_zurich/*/', '*asc')));
+% 
+% for i = 1 : size(d, 1) 
+% 
+%     inputFile = fullfile(d(i).folder, d(i).name);
+% 
+%     filename = d(i).name(1:end-4); % remove .asc   
+%     x = strsplit(filename, '_');
+% 
+%     if strcmp(x{2}, '1') | strcmp(x{2}, '2') | strcmp(x{2}, '3') | strcmp(x{2}, '4') | strcmp(x{2}, '5')
+%         newfilename = [x{1}, '_ManyLabsCDA_block' x{2} '_task_ET.mat'];
+%     elseif strcmp(x{2}, 'Eye')
+%         newfilename = [x{1}, '_Eye_ET.mat'];
+%     elseif strcmp(x{2}, 'Res')
+%         newfilename = [x{1}, '_Resting_ET.mat'];
+%     end
+% 
+%     % convert
+%     outputFile = fullfile(d(i).folder, newfilename);
+%     ET = parseeyelink(inputFile, outputFile);
+% 
+% end
 
 %% merge EEG and ET data, and save as mat file
 d = dir(strcat(fullfile(rawdatapath, 'data_zurich/*/', '*cnt')));
@@ -87,8 +87,17 @@ for f = 1 : size(d, 1)
     EEGorig.tInfo.InstitutionName = 'University of Zurich (Prof. Langer)';
     EEGorig.tInfo.PowerLineFrequency = 50;
     EEGorig.tInfo.EEGGround = 'adjacent to M1';
-    EEGorig.tInfo.CapManufacturer = 'ANT Neuro';
-    EEGorig.tInfo.SoftwareFilters = "n/a";
+
+    EEGorig.tInfo.Manufacturer = "ANT Neuro";
+    EEGorig.tInfo.ManufacturersModelName = "eego 64";
+    EEGorig.tInfo.CapManufacturer = "ANT Neuro";
+    EEGorig.tInfo.CapManufacturersModelName = "Waveguard Original 128 (Ag/AgCl, gel-based)";
+    EEGorig.tInfo.SoftwareFilters.Highpass=struct('CutoffFrequency','n/a','Description','No software high-pass filter');
+    EEGorig.tInfo.SoftwareFilters.Lowpass=struct('CutoffFrequency','n/a','Description','No software low-pass filter');
+    EEGorig.tInfo.SoftwareFilters.Notch=struct('CutoffFrequency','n/a','Description','No software notch filter');
+    EEGorig.tInfo.HardwareFilters.Highpass=struct('CutoffFrequency',0,'Description','DC (no hardware high-pass filter)');
+    EEGorig.tInfo.HardwareFilters.Lowpass=struct('CutoffFrequency',140,'Description','Hardware low-pass filter');
+    EEGorig.tInfo.HardwareFilters.Notch=struct('CutoffFrequency','n/a','Description','No hardware notch filter');
    
     
 %     % sanity check

@@ -198,6 +198,12 @@ end
 
 
 pInfo = table2cell(demo_table);
+for i = 1:numel(pInfo)
+    if isnumeric(pInfo{i}) && isscalar(pInfo{i}) && isnan(pInfo{i})
+        pInfo{i} = 'n/a';
+    end
+end
+
 pInfo = [headers; pInfo];
         
 %% Descriptions
@@ -301,52 +307,4 @@ bids_export_dawid(data, 'targetdir', bidspath, 'taskName', 'EEGManyLabs', ...
             'deleteExportDir', 'off');
 
 
-
-%
-
-
 %%
-
-% dd = dir('/Volumes/G_PSYPLAFOR_methlab$/EEGManyLabs/data/formatted_data/reykjavik/*/*CDA*');
-% 
-% tt = readtable('/Volumes/G_PSYPLAFOR_methlab$/EEGManyLabs/data/csv_files/demo_data/reykjavik/demo_reykjavik.xlsx');
-% 
-% for sub = 1 : size(dd, 1)
-% 
-%     disp(sub)
-% 
-%     load(fullfile(dd(sub).folder, dd(sub).name))
-% 
-%     if isfield(EEG.beh, 'subject')
-%         id = EEG.beh.subject.ID;
-% 
-%         ii = find(ismember(tt.ID, id));
-% 
-%         if strcmp(tt.Age{ii}, 'NA')
-%             tt.Age{ii} = EEG.beh.subject.age;
-%         end
-% 
-%         if strcmp(tt.Sex{ii}, 'NA')
-%             tt.Sex{ii} = EEG.beh.subject.gender;
-%         end
-%     end 
-% 
-% end
-% 
-% writetable(tt, '/Volumes/G_PSYPLAFOR_methlab$/EEGManyLabs/data/csv_files/demo_data/reykjavik/demo_reykjavik.xlsx');
-%%
-
-
-dddd = dir(['/Volumes/G_PSYPLAFOR_methlab_data$/GPS_project/data' filesep '*' filesep 'Ses1', filesep 'GPS*', filesep, '*csv'])
-
-for f = 1 : size(dddd)
-
-
-    csvfile = readtable(fullfile(dddd(f).folder, dddd(f).name));
-    csvfile = sortrows(csvfile,"timestamp","descend");
-
-    timediff = csvfile.timestamp(1) - csvfile.timestamp(end);
-    disp(['Subject: ' dddd(f).name ',   ' num2str(days(timediff)) ' days...'])
-
-end
-

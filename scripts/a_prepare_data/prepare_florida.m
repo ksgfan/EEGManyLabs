@@ -194,8 +194,17 @@ for sub = 1 : size(d, 1)
     EEG.tInfo.InstitutionName = 'University of South Florida';
     EEG.tInfo.PowerLineFrequency = 60;
     EEG.tInfo.EEGGround = 'PCz';
-    EEG.tInfo.CapManufacturer = 'Magstim EGI';
-    EEG.tInfo.SoftwareFilters = "n/a";
+
+    EEG.tInfo.Manufacturer="EGI";
+    EEG.tInfo.ManufacturersModelName="Net Amps 400 (NA400)";
+    EEG.tInfo.CapManufacturer="EGI";
+    EEG.tInfo.CapManufacturersModelName="HydroCel GSN 128 1.0";
+    EEG.tInfo.HardwareFilters.Highpass=struct('CutoffFrequency','n/a','Description','No hardware high-pass filter');
+    EEG.tInfo.HardwareFilters.Lowpass=struct('CutoffFrequency','n/a','Description','No hardware low-pass filter');
+    EEG.tInfo.HardwareFilters.Notch=struct('CutoffFrequency','n/a','Description','No hardware notch filter');
+    EEG.tInfo.SoftwareFilters.Highpass=struct('CutoffFrequency','n/a','Description','No software high-pass filter');
+    EEG.tInfo.SoftwareFilters.Lowpass=struct('CutoffFrequency','n/a','Description','No software low-pass filter');
+    EEG.tInfo.SoftwareFilters.Notch=struct('CutoffFrequency','n/a','Description','No software notch filter');
 
     % now concat BD data
     BEH = [BEHconcat{:}];
@@ -243,8 +252,16 @@ for sub = 1 : size(d, 1)
     EEG.tInfo.InstitutionName = 'University of South Florida';
     EEG.tInfo.PowerLineFrequency = 60;
     EEG.tInfo.EEGGround = 'PCz';
-    EEG.tInfo.CapManufacturer = 'Magstim EGI';
-    EEG.tInfo.SoftwareFilters = "n/a";
+    EEG.tInfo.Manufacturer="EGI";
+    EEG.tInfo.ManufacturersModelName="Net Amps 400 (NA400)";
+    EEG.tInfo.CapManufacturer="EGI";
+    EEG.tInfo.CapManufacturersModelName="HydroCel GSN 128 1.0";
+    EEG.tInfo.HardwareFilters.Highpass=struct('CutoffFrequency','n/a','Description','No hardware high-pass filter');
+    EEG.tInfo.HardwareFilters.Lowpass=struct('CutoffFrequency','n/a','Description','No hardware low-pass filter');
+    EEG.tInfo.HardwareFilters.Notch=struct('CutoffFrequency','n/a','Description','No hardware notch filter');
+    EEG.tInfo.SoftwareFilters.Highpass=struct('CutoffFrequency','n/a','Description','No software high-pass filter');
+    EEG.tInfo.SoftwareFilters.Lowpass=struct('CutoffFrequency','n/a','Description','No software low-pass filter');
+    EEG.tInfo.SoftwareFilters.Notch=struct('CutoffFrequency','n/a','Description','No software notch filter');
 
     % trim whitespaces
     for i = 1:length(EEG.event)
@@ -280,8 +297,16 @@ for sub = 1 : size(d, 1)
     EEG.tInfo.InstitutionName = 'University of South Florida';
     EEG.tInfo.PowerLineFrequency = 60;
     EEG.tInfo.EEGGround = 'PCz';
-    EEG.tInfo.CapManufacturer = 'Magstim EGI';
-    EEG.tInfo.SoftwareFilters = "n/a";
+    EEG.tInfo.Manufacturer="EGI";
+    EEG.tInfo.ManufacturersModelName="Net Amps 400 (NA400)";
+    EEG.tInfo.CapManufacturer="EGI";
+    EEG.tInfo.CapManufacturersModelName="HydroCel GSN 128 1.0";
+    EEG.tInfo.HardwareFilters.Highpass=struct('CutoffFrequency','n/a','Description','No hardware high-pass filter');
+    EEG.tInfo.HardwareFilters.Lowpass=struct('CutoffFrequency','n/a','Description','No hardware low-pass filter');
+    EEG.tInfo.HardwareFilters.Notch=struct('CutoffFrequency','n/a','Description','No hardware notch filter');
+    EEG.tInfo.SoftwareFilters.Highpass=struct('CutoffFrequency','n/a','Description','No software high-pass filter');
+    EEG.tInfo.SoftwareFilters.Lowpass=struct('CutoffFrequency','n/a','Description','No software low-pass filter');
+    EEG.tInfo.SoftwareFilters.Notch=struct('CutoffFrequency','n/a','Description','No software notch filter');
 
     % trim whitespaces
     for i = 1:length(EEG.event)

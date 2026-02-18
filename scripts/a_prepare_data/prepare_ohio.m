@@ -119,9 +119,19 @@ for f = 1 : size(d_eeg, 1)
     EEG.tInfo.EEGReference = 'Cz';
     EEG.tInfo.InstitutionName = 'The Ohio State University';
     EEG.tInfo.PowerLineFrequency = 60;
-    EEG.tInfo.EEGGround = 'Fpz';
-    EEG.tInfo.CapManufacturer = 'BrainVision';
-    EEG.tInfo.SoftwareFilters = "n/a";
+    EEG.tInfo.EEGGround = 'Fpz'; 
+
+    EEG.tInfo.Manufacturer = "Brain Products";
+    EEG.tInfo.ManufacturersModelName = "actiCHamp";
+    EEG.tInfo.CapManufacturer = "Brain Products";
+    EEG.tInfo.CapManufacturersModelName = "actiCAP slim (AS-32)";
+    EEG.tInfo.HardwareFilters.Highpass=struct('CutoffFrequency',0,'Description','DC (no hardware high-pass filter)');
+    EEG.tInfo.HardwareFilters.Lowpass=struct('CutoffFrequency',280,'Description','Hardware low-pass filter');
+    EEG.tInfo.HardwareFilters.Notch=struct('CutoffFrequency','n/a','Description','No hardware notch filter');
+    EEG.tInfo.SoftwareFilters.Highpass=struct('TimeConstantSec',15.9155,'CutoffFrequency',1/(2*pi*15.9155),'Description','Software high-pass derived from time constant');
+    EEG.tInfo.SoftwareFilters.Lowpass=struct('CutoffFrequency',80,'Description','Software low-pass filter');
+    EEG.tInfo.SoftwareFilters.Notch=struct('CutoffFrequency','n/a','Description','No software notch filter');
+
     
     % % rename channels
     % EEG.chanlocs(find(ismember({EEG.chanlocs.labels}, 'Fp1'))).labels = 'VEOGU'; % above left
@@ -256,8 +266,17 @@ for f = 1 : size(d_eeg, 1)
     EEG.tInfo.InstitutionName = 'The Ohio State University';
     EEG.tInfo.PowerLineFrequency = 60;
     EEG.tInfo.EEGGround = 'Fpz';
-    EEG.tInfo.CapManufacturer = 'BrainVision';
-    EEG.tInfo.SoftwareFilters = struct();
+    EEG.tInfo.Manufacturer = "Brain Products";
+    EEG.tInfo.ManufacturersModelName = "actiCHamp";
+    EEG.tInfo.CapManufacturer = "Brain Products";
+    EEG.tInfo.CapManufacturersModelName = "actiCAP slim (AS-32)";
+    EEG.tInfo.HardwareFilters.Highpass=struct('CutoffFrequency',0,'Description','DC (no hardware high-pass filter)');
+    EEG.tInfo.HardwareFilters.Lowpass=struct('CutoffFrequency',280,'Description','Hardware low-pass filter');
+    EEG.tInfo.HardwareFilters.Notch=struct('CutoffFrequency','n/a','Description','No hardware notch filter');
+    EEG.tInfo.SoftwareFilters.Highpass=struct('TimeConstantSec',15.9155,'CutoffFrequency',1/(2*pi*15.9155),'Description','Software high-pass derived from time constant');
+    EEG.tInfo.SoftwareFilters.Lowpass=struct('CutoffFrequency',80,'Description','Software low-pass filter');
+    EEG.tInfo.SoftwareFilters.Notch=struct('CutoffFrequency','n/a','Description','No software notch filter');
+
     
     % % rename channels
     % EEG.chanlocs(find(ismember({EEG.chanlocs.labels}, 'Fp1'))).labels = 'VEOGU'; % above left

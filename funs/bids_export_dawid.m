@@ -879,13 +879,29 @@ end
 
 %%%%% Dawid
 % set up individual tInfo file
+tInfo.InstitutionName = EEG.tInfo.InstitutionName;
+clear taskname taskdesc
+if contains(fileStr, 'CDA')
+    taskname = 'Color Change Detection Task';
+    taskdesc = ['Participants viewed bilateral arrays of colored squares and were instructed to remember the colors on the cued side while maintaining central fixation. ' ...
+                'After a short retention interval, a test array appeared and participants indicated whether any color on the remembered side had changed.'];
+elseif contains(fileStr, 'Eye')
+    taskname = 'Eye Calibration Task';
+    taskdesc = ['Participants performed an eye-movement calibration task with instructed horizontal saccades of 3° and 6° visual angle between central fixation and lateral targets. ' ...
+                'The task was used to estimate the EEG/EOG amplitude corresponding to a 1° eye movement, which served as the threshold for detecting saccades and identifying trials contaminated by eye movements.'];
+end
+tInfo.TaskName = taskname;
+tInfo.TaskDescription = taskdesc;
 tInfo.SamplingFrequency = EEG.srate;
+tInfo.PowerLineFrequency = EEG.tInfo.PowerLineFrequency;
 tInfo.EEGReference = EEG.tInfo.EEGReference;
 tInfo.EEGGround = EEG.tInfo.EEGGround;
-tInfo.InstitutionName = EEG.tInfo.InstitutionName;
-tInfo.PowerLineFrequency = EEG.tInfo.PowerLineFrequency;
-tInfo.Manufacturer = EEG.tInfo.CapManufacturer;
+tInfo.Manufacturer =  EEG.tInfo.Manufacturer;% amplifier
+tInfo.ManufacturersModelName =  EEG.tInfo.ManufacturersModelName;
+tInfo.CapManufacturer = EEG.tInfo.CapManufacturer; % cap
+tInfo.CapManufacturersModelName = EEG.tInfo.CapManufacturersModelName;
 tInfo.SoftwareFilters = EEG.tInfo.SoftwareFilters;
+tInfo.HardwareFilters = EEG.tInfo.HardwareFilters;
 %%%%% Dawid end
 
 % Add description tag if any to the files
@@ -926,11 +942,13 @@ if ~isequal(opt.exportformat, 'same') || isequal(ext, '.set')
             fid = fopen(fullfile(sourcePath, fileOutNoExtBeh), 'w');
             fprintf(fid, '%s', jsonStr);
             fclose(fid);
+            
             % build description json
             fileOutDesc = strrep(fileOutNoExtBeh, '.json', '_description.json');   % description json
             desc = struct();
             desc.Name = 'taskmeta';
-            desc.Description = 'Auxiliary task metadata and behavioural log exported from MATLAB/EEGLAB. Stored in sourcedata because it contains nested and non-tabular fields not suitable for BIDS events.tsv.';
+            desc.Description = ['Auxiliary task metadata and behavioural log exported from MATLAB/EEGLAB. Stored in sourcedata because it contains nested and non-tabular fields not suitable for BIDS events.tsv. ' ...
+                                'This file is not required to reproduce the EEGManyLabs results, as the important information is stored in EEG.event. However, this file contains additional detailed information, as described below.'];
             desc.Variables = struct();
             desc.Variables.allResponses.Description = ['Per-trial participant responses recorded during the test phase. ' ...
                                                        'Values correspond to keyboard key codes indicating the participant’s ' ...
@@ -953,6 +971,41 @@ if ~isequal(opt.exportformat, 'same') || isequal(ext, '.set')
             desc.Variables.trialCuedSide.Description           = 'Spatial cue direction for each trial, indicating whether participants were instructed to attend to the left (0) or right (1) visual hemifield.';
             desc.Variables.trialSOA.Description = 'Determine each trials stimulus onset asychrony';
             desc.Variables.trialITI.Description = 'Determine each trials trial onset asychrony';
+            
+            % experiment
+            desc.Variables.experiment.Description = 'Experiment-wide parameters (number of trials, set sizes, and run order metadata).';
+            desc.Variables.itemRect.Description = 'Stimulus item bounding box in pixels [x0 y0 x1 y1] defining item size used for drawing.';
+            desc.Variables.leftItemDist.Description = 'Per-trial distances (in pixels) between items within the left hemifield region; null indicates trials without a left memory array.';
+            desc.Variables.rightItemDist.Description = 'Per-trial distances (in pixels) between items within the right hemifield region; null indicates trials without a right memory array.';
+            desc.Variables.leftRegionRect.Description = 'Left stimulus region rectangle in pixels [x0 y0 x1 y1] used to place memory items.';
+            desc.Variables.rightRegionRect.Description = 'Right stimulus region rectangle in pixels [x0 y0 x1 y1] used to place memory items.';
+            desc.Variables.screenWidth.Description = 'Display width in pixels.';
+            desc.Variables.screenHeight.Description = 'Display height in pixels.';
+            desc.Variables.screenCentreX.Description = 'Horizontal screen centre in pixels.';
+            desc.Variables.screenCentreY.Description = 'Vertical screen centre in pixels.';
+            desc.Variables.winRect.Description = 'Full display window rectangle in pixels [x0 y0 x1 y1].';
+            desc.Variables.flipInterval.Description = 'Inter-frame interval (seconds) measured by the display system (1 / refresh rate).';
+            
+            desc.Variables.stimulus.Description = 'Stimulus geometry and appearance settings (fixation, cue, region, item sizes and minimum distances in dva and pixels).';
+            desc.Variables.startExperimentTime.Description = 'Experiment start timestamp from the stimulus computer clock (arbitrary origin; seconds).';
+            desc.Variables.timing.Description = 'Nominal task timing parameters in seconds (cue duration, SOA, memory array duration, retention interval, test array duration, and ITI bounds).';
+            desc.Variables.triggers.Description = 'Mapping from event labels to trigger codes sent to the EEG system (integer codes).';
+            desc.Variables.triggers_TASK_START.Description     = 'Trigger code marking task start.';
+            desc.Variables.triggers_TASK_END.Description       = 'Trigger code marking task end.';
+            desc.Variables.triggers_CUE_LEFT.Description       = 'Trigger code indicating a left cue.';
+            desc.Variables.triggers_CUE_RIGHT.Description      = 'Trigger code indicating a right cue.';
+            desc.Variables.triggers_SETSIZE2.Description       = 'Trigger code indicating set size 2.';
+            desc.Variables.triggers_SETSIZE4.Description       = 'Trigger code indicating set size 4.';
+            desc.Variables.triggers_SETSIZE6.Description       = 'Trigger code indicating set size 6.';
+            desc.Variables.triggers_RETENTION.Description      = 'Trigger code indicating retention interval onset.';
+            desc.Variables.triggers_TEST2.Description          = 'Trigger code indicating test display for set size 2 trials.';
+            desc.Variables.triggers_TEST4.Description          = 'Trigger code indicating test display for set size 4 trials.';
+            desc.Variables.triggers_TEST6.Description          = 'Trigger code indicating test display for set size 6 trials.';
+            desc.Variables.triggers_RESP_SAME_CORR.Description = 'Trigger code for correct "no change" response.';
+            desc.Variables.triggers_RESP_DIFF_CORR.Description = 'Trigger code for correct "change" response.';
+            desc.Variables.triggers_RESP_SAME_INCORR.Description = 'Trigger code for incorrect "no change" response.';
+            desc.Variables.triggers_RESP_DIFF_INCORR.Description = 'Trigger code for incorrect "change" response.';
+
             % save
             jsonDescStr = jsonencode(desc, 'PrettyPrint', true);
             fid = fopen(fullfile(sourcePath, fileOutDesc), 'w');

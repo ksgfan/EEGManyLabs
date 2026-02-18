@@ -17,9 +17,9 @@ initPaths;
 
 % prepare_dartmouth % OK, ch OK
 % 
-% prepare_florida % OK, ch OK
-% 
-% prepare_mainz % OK, ch OK
+prepare_florida % OK, ch OK
+
+prepare_mainz % OK, ch OK
 % 
 % prepare_munster % OK, ch OK
 % 
@@ -30,7 +30,7 @@ initPaths;
 % prepare_reykjavik % OK, ch OK
 % 
 % prepare_sheffield % OK, ch OK
-
+% 
 % prepare_zurich % OK, ch OK
 
 % prepare_zurich_sauseng % OK, ch OK

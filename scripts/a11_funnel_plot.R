@@ -7,24 +7,20 @@ library(metafor)
 ################################################################################
 
 # correlations and samples
-r   = c(0.61, 0.48, 0.72, 0.48, 0.62, 0.65, 0.63, 0.52, 0.59, 0.40, 0.80, 0.78, # Luria, 2017, from Fig2.A. 
+r   = c(0.61, 0.48, 0.72, 0.48, 0.62, 0.62, 0.63, 0.52, 0.59, 0.41, 0.80, 0.78, # Luria, 2016, from Fig2.A.
+        0.43, 0.45, # from Roy & Faubert (Feldmann-Wüstefeld (2021); Villena-Gonzalez et al. (2020))
         0.33, 0.27, 0.24) # Unsworth 2015, Adam 2018, Tröndle, 2024
 
 n   = c(14, 33, 18, 25, 24, 30, 18, 39, 23, 35, 25, 36,
+        21, 23,
         170, 72, 55)
 
 group = c(
-  rep("Luria (2017)", 12),
-  rep("Unsworth (2015)", 1),
-  rep("Adam (2018)", 1),
-  rep("Tröndle (2024)", 1)
+  rep("Prior Studies", 17)
 )
 
 cols = c(
-  "Luria (2017)" = "blue",
-  "Unsworth (2015)"   = "#006400", 
-  "Adam (2018)"       = "#228B22", 
-  "Tröndle (2024)"    = "#32CD32" 
+  "Prior Studies" = "blue"
 )
 
 # Convert correlations to Fisher's z
@@ -47,21 +43,12 @@ legend("topright", legend = names(cols), col = cols, pch = 1, bty = "n")
 rtest_without = regtest(res_without, model = "rma")
 taf_without = trimfill(res_without)
 
-# funnel with missing studies
-funnel(taf_without, 
-       xlab = "Fisher's z",
-       main = "Funnel Plot", 
-       pch = 19, 
-       cex = cex_vec,
-       col = cols[group])
-legend("topright", legend = names(cols), col = cols, pch = 1, bty = "n")
 
 # print
 res_without
 res_without$pval
 rtest_without
-taf_without
-taf_without$pval
+
 
 ################################################################################
 ################################################################################
@@ -71,27 +58,25 @@ taf_without$pval
 
 # correlations and samples
 r   = c(0.61, 0.48, 0.72, 0.48, 0.62, 0.65, 0.63, 0.52, 0.59, 0.40, 0.80, 0.78, # Luria, 2017, from Fig2.A. 
-         0.38, -0.30, 0.42, 0.13,0.23,0.32,0.26,0.38, -0.05, 0.05, # EEGManyLabs
-         0.33, 0.27, 0.24) # Unsworth 2015, Adam 2018, Tröndle, 2024
+        0.43, 0.45, # from Roy & Faubert (Feldmann-Wüstefeld (2021); Villena-Gonzalez et al. (2020))
+        0.33, 0.27, 0.24, # Unsworth 2015, Adam 2018, Tröndle, 2024
+        0.38, -0.30, 0.42, 0.13,0.23,0.32,0.26,0.38, -0.05, 0.05) # EEGManyLabs
 
 n   = c(14, 33, 18, 25, 24, 30, 18, 39, 23, 35, 25, 36,
-         23, 26,11,26,22,20,24,15,30,20,
-         170, 72, 55)
+        21, 23,
+         170, 72, 55,
+        23, 26,11,26,22,20,24,15,30,20)
 
 group = c(
-  rep("Luria (2017)", 12),
-  rep("EEGManyLabs", 10),
-  rep("Unsworth (2015)", 1),
-  rep("Adam (2018)", 1),
-  rep("Tröndle (2024)", 1)
+  rep("Prior Studies", 17),
+  rep("EEGManyLabs", 10)
+
 )
 
 cols = c(
-  "Luria (2017)" = "blue",
-  "EEGManyLabs" = "red",
-  "Unsworth (2015)"   = "#006400", 
-  "Adam (2018)"       = "#228B22", 
-  "Tröndle (2024)"    = "#32CD32" 
+  "Prior Studies" = "blue",
+  "EEGManyLabs" = "red"
+
 )
 
 # Convert correlations to Fisher's z
@@ -111,23 +96,12 @@ funnel(res,
 legend("topright", legend = names(cols), col = cols, pch = 1, bty = "n")
 
 rtest = regtest(res, model = "rma")
-taf = trimfill(res)
-
-# funnel with missing studies
-funnel(taf, 
-       xlab = "Fisher's z",
-       main = "Funnel Plot", 
-       pch = 19, 
-       cex = cex_vec,
-       col = cols[group])
-legend("topright", legend = names(cols), col = cols, pch = 1, bty = "n")
 
 # print
 res
 res$pval
 rtest
-taf
-taf$pval
+
 
 
 
