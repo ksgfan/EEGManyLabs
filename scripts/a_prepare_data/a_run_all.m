@@ -17,9 +17,9 @@ initPaths;
 
 % prepare_dartmouth % OK, ch OK
 % 
-prepare_florida % OK, ch OK
-
-prepare_mainz % OK, ch OK
+% prepare_florida % OK, ch OK
+% 
+% prepare_mainz % OK, ch OK
 % 
 % prepare_munster % OK, ch OK
 % 

@@ -882,11 +882,11 @@ end
 tInfo.InstitutionName = EEG.tInfo.InstitutionName;
 clear taskname taskdesc
 if contains(fileStr, 'CDA')
-    taskname = 'Color Change Detection Task';
+    taskname = 'ColorChangeDetectionTask';
     taskdesc = ['Participants viewed bilateral arrays of colored squares and were instructed to remember the colors on the cued side while maintaining central fixation. ' ...
                 'After a short retention interval, a test array appeared and participants indicated whether any color on the remembered side had changed.'];
 elseif contains(fileStr, 'Eye')
-    taskname = 'Eye Calibration Task';
+    taskname = 'EyeCalibrationTask';
     taskdesc = ['Participants performed an eye-movement calibration task with instructed horizontal saccades of 3° and 6° visual angle between central fixation and lateral targets. ' ...
                 'The task was used to estimate the EEG/EOG amplitude corresponding to a 1° eye movement, which served as the threshold for detecting saccades and identifying trials contaminated by eye movements.'];
 end
@@ -896,10 +896,10 @@ tInfo.SamplingFrequency = EEG.srate;
 tInfo.PowerLineFrequency = EEG.tInfo.PowerLineFrequency;
 tInfo.EEGReference = EEG.tInfo.EEGReference;
 tInfo.EEGGround = EEG.tInfo.EEGGround;
-tInfo.Manufacturer =  EEG.tInfo.Manufacturer;% amplifier
-tInfo.ManufacturersModelName =  EEG.tInfo.ManufacturersModelName;
-tInfo.CapManufacturer = EEG.tInfo.CapManufacturer; % cap
-tInfo.CapManufacturersModelName = EEG.tInfo.CapManufacturersModelName;
+tInfo.Manufacturer =  char(EEG.tInfo.Manufacturer);% amplifier
+tInfo.ManufacturersModelName =  char(EEG.tInfo.ManufacturersModelName);
+tInfo.CapManufacturer = char(EEG.tInfo.CapManufacturer); % cap
+tInfo.CapManufacturersModelName = char(EEG.tInfo.CapManufacturersModelName);
 tInfo.SoftwareFilters = EEG.tInfo.SoftwareFilters;
 tInfo.HardwareFilters = EEG.tInfo.HardwareFilters;
 %%%%% Dawid end

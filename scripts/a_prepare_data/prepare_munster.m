@@ -71,9 +71,9 @@ for f = 1 : size(d, 1)
     EEG.tInfo.EEGGround = 'adjacent to POz';
     
     EEG.tInfo.Manufacturer = "Biosemi";
-    EEG.tInfo.ManufacturersModelName =;
+    EEG.tInfo.ManufacturersModelName = "BioSemi ActiveTwo";
     EEG.tInfo.CapManufacturer = "Biosemi";
-    EEG.tInfo.CapManufacturersModelName =;
+    EEG.tInfo.CapManufacturersModelName = "Cap X 64";
 
     EEG.tInfo.HardwareFilters.Highpass=struct('CutoffFrequency','n/a','Description','No hardware high-pass filter');
     EEG.tInfo.HardwareFilters.Lowpass=struct('CutoffFrequency',200,'Description','Built-in ADC sinc anti-aliasing filter (~0.4 x Fs at 500 Hz, fixed, not user configurable)');
